@@ -8,14 +8,14 @@
         </webroots>
         <sourceRoots>
           <root url="file://$MODULE_DIR$/src/main/java" />
+          <root url="file://$MODULE_DIR$/src/main/resources" />
         </sourceRoots>
       </configuration>
     </facet>
     <facet type="Spring" name="Spring">
-      <configuration>
+      <configuration process_explicitly_annotated="false">
         <fileset id="fileset" name="Spring Application Context" removed="false">
           <file>file://$MODULE_DIR$/src/main/java/com/geekhub/HotelBookingServiceApplication.java</file>
-          <file>file://$MODULE_DIR$/src/main/java/com/geekhub/config/OrmConfig.java</file>
           <file>file://$MODULE_DIR$/src/main/java/com/geekhub/config/WebMvcConfig.java</file>
         </fileset>
       </configuration>
@@ -98,6 +98,6 @@
     <orderEntry type="library" name="Maven: org.apache.tomcat.embed:tomcat-embed-core:8.0.30" level="project" />
     <orderEntry type="library" name="Maven: org.apache.tomcat.embed:tomcat-embed-el:8.0.30" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.eclipse.jdt.core.compiler:ecj:4.4.2" level="project" />
-    <orderEntry type="library" name="Maven: javax.servlet:jstl:1.2" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: javax.servlet:jstl:1.2" level="project" />
   </component>
 </module>

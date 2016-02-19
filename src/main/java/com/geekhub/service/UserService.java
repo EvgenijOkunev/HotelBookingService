@@ -5,6 +5,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.internal.util.type.PrimitiveWrapperHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -42,7 +43,7 @@ public class UserService {
      * @return an instance of user
      */
     public User getUserById(int id) {
-        Session session = sessionFactory.openSession();
+        Session session = sessionFactory.getCurrentSession();
         try {
             return (User) session.createCriteria(User.class)
                     .add(Restrictions.eq("id", id));
@@ -57,7 +58,7 @@ public class UserService {
      * @return an instance of user
      */
     public User getUserByEmail(int email) {
-        Session session = sessionFactory.openSession();
+        Session session = sessionFactory.getCurrentSession();
         try {
             return (User) session.createCriteria(User.class)
                     .add(Restrictions.eq("email", email));
@@ -72,7 +73,7 @@ public class UserService {
      * @param user an instance of a new user
      */
     public void saveUser(User user) {
-        Session session = sessionFactory.openSession();
+        Session session = sessionFactory.getCurrentSession();
         try {
             session.save(user);
         } finally {
@@ -81,14 +82,14 @@ public class UserService {
     }
 
     /**
-     * Saves a new user
+     * Deletes an existing user
      *
-     * @param user an instance of an existing user
+     * @param id an id of the existing user
      */
-    public void deleteUser(User user) {
-        Session session = sessionFactory.openSession();
+    public void deleteUser(Integer id) {
+        Session session = sessionFactory.getCurrentSession();
         try {
-            session.delete(user);
+            session.delete(session.get(User.class, id));
         } finally {
             session.close();
         }
@@ -101,7 +102,7 @@ public class UserService {
      */
     public void editUser(User user) {
 
-        Session session = sessionFactory.openSession();
+        Session session = sessionFactory.getCurrentSession();
 
         // Retrieve existing user via id
         User existingUser = (User) session.get(User.class, user.getId());
