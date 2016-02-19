@@ -55,8 +55,9 @@
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>jstl</artifactId>
-            <scope>provided</scope>
+            <version>1.2</version>
         </dependency>
+
     </dependencies>
 
     <build>

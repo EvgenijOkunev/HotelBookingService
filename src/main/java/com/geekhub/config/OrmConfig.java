@@ -17,7 +17,7 @@ import java.util.Properties;
 
 @Configuration
 @EnableTransactionManagement
-@ComponentScan()
+@ComponentScan
 public class OrmConfig {
 
     // Свойства источника данных
