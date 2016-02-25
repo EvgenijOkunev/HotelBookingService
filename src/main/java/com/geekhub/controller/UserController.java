@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Locale;
 
 @Controller
-@RequestMapping(value = "users")
+@RequestMapping("/users")
 public class UserController {
 
     @Autowired
@@ -30,7 +30,7 @@ public class UserController {
      * @return the name of the JSP page
      */
     @RequestMapping(value = "/show-all", method = RequestMethod.GET)
-    public String showAllUsers(Model model, HttpServletResponse response) throws Exception {
+    public String showAllUsers(Model model) throws Exception {
 
       //  response.setContentType("text/html");
 
