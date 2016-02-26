@@ -15,7 +15,7 @@ import java.util.Properties;
 
 @Configuration
 @EnableTransactionManagement
-@ComponentScan
+@ComponentScan(basePackages = "com.geekhub")
 public class OrmConfig {
 
     // Свойства источника данных
@@ -67,9 +67,8 @@ public class OrmConfig {
     @SuppressWarnings("deprecation")
     public SessionFactory sessionFactory() {
         return new LocalSessionFactoryBuilder(dataSource())
-                .scanPackages("net.shafranov.spring.noxml.core.model")
+                .scanPackages("com.geekhub")
                 .addProperties(hibernateProperties())
-                // используем устаревший метод, так как Spring не оставляет нам выбора
                 .buildSessionFactory();
     }
 
