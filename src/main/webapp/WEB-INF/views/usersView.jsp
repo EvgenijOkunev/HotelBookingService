@@ -6,18 +6,20 @@
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>Insert title here</title>
+    <title>Users</title>
 </head>
 <body>
-<h1>Persons</h1>
+<h1>Users</h1>
 
 <c:url var="addUrl" value="/users/add"/>
-<table style="border: 1px solid; width: 500px; text-align:center">
+<table style="border: 1px solid; border-collapse: collapse; width: auto; text-align:center">
     <thead style="background:#fcf">
     <tr>
         <th>First Name</th>
         <th>Last Name</th>
         <th>Email</th>
+        <th>Password</th>
+        <th>Hotel Owner</th>
         <th colspan="3"></th>
     </tr>
     </thead>
@@ -29,6 +31,8 @@
             <td><c:out value="${user.firstName}"/></td>
             <td><c:out value="${user.lastName}"/></td>
             <td><c:out value="${user.email}"/></td>
+            <td><c:out value="${user.password}"/></td>
+            <td><c:out value="${user.hotelOwner}"/></td>
             <td><a href="${editUrl}">Edit</a></td>
             <td><a href="${deleteUrl}">Delete</a></td>
             <td><a href="${addUrl}">Add</a></td>

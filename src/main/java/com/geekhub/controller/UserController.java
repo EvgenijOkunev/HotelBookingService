@@ -9,16 +9,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ViewResolver;
 
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletResponse;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 
 @Controller
-@RequestMapping(value = "users")
+@RequestMapping("/users")
 public class UserController {
 
     @Autowired
@@ -30,9 +25,7 @@ public class UserController {
      * @return the name of the JSP page
      */
     @RequestMapping(value = "/show-all", method = RequestMethod.GET)
-    public String showAllUsers(Model model, HttpServletResponse response) throws Exception {
-
-      //  response.setContentType("text/html");
+    public String showAllUsers(Model model) throws Exception {
 
         List<User> users = userService.getAll();
         model.addAttribute("users", users);
@@ -50,7 +43,7 @@ public class UserController {
 
         model.addAttribute("userAttribute", new User());
 
-        return "addpage";
+        return "addUser";
     }
 
     /**
@@ -67,7 +60,7 @@ public class UserController {
 
         userService.saveUser(user);
 
-        return "addedpage";
+        return "addedUser";
     }
 
     /**
@@ -83,7 +76,7 @@ public class UserController {
 
         model.addAttribute("id", id);
 
-        return "deletedpage";
+        return "deletedUser";
     }
 
     /**
@@ -97,7 +90,7 @@ public class UserController {
         // Retrieve existing Person and add to model
         model.addAttribute("userAttribute", userService.getUserById(id));
 
-        return "editpage";
+        return "editUser";
     }
 
     /**
@@ -106,7 +99,7 @@ public class UserController {
      *
      * @return the name of the JSP page
      */
-    @RequestMapping(value = "/persons/edit", method = RequestMethod.POST)
+    @RequestMapping(value = "/edit", method = RequestMethod.POST)
     public String saveEdit(@ModelAttribute("userAttribute") User user,
                            @RequestParam(value = "id", required = true) Integer id,
                            Model model) {
@@ -123,7 +116,7 @@ public class UserController {
         // Add id reference to Model
         model.addAttribute("id", id);
 
-        return "editedpage";
+        return "editedUser";
     }
 
 }

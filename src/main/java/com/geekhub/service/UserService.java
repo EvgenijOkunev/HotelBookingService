@@ -5,7 +5,6 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
-import org.hibernate.internal.util.type.PrimitiveWrapperHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,13 +26,9 @@ public class UserService {
      */
     public List<User> getAll() {
         Session session = sessionFactory.openSession();
-        try {
             return (List<User>) session.createCriteria(User.class)
                     .addOrder(Order.asc("firstName"))
                     .list();
-        } finally {
-            session.close();
-        }
     }
 
     /**
@@ -44,12 +39,8 @@ public class UserService {
      */
     public User getUserById(int id) {
         Session session = sessionFactory.getCurrentSession();
-        try {
             return (User) session.createCriteria(User.class)
-                    .add(Restrictions.eq("id", id));
-        } finally {
-            session.close();
-        }
+                    .add(Restrictions.eq("id", id)).uniqueResult();
     }
 
     /**
@@ -59,12 +50,8 @@ public class UserService {
      */
     public User getUserByEmail(int email) {
         Session session = sessionFactory.getCurrentSession();
-        try {
             return (User) session.createCriteria(User.class)
                     .add(Restrictions.eq("email", email));
-        } finally {
-            session.close();
-        }
     }
 
     /**
@@ -74,11 +61,7 @@ public class UserService {
      */
     public void saveUser(User user) {
         Session session = sessionFactory.getCurrentSession();
-        try {
-            session.save(user);
-        } finally {
-            session.close();
-        }
+        session.save(user);
     }
 
     /**
@@ -88,11 +71,7 @@ public class UserService {
      */
     public void deleteUser(Integer id) {
         Session session = sessionFactory.getCurrentSession();
-        try {
             session.delete(session.get(User.class, id));
-        } finally {
-            session.close();
-        }
     }
 
     /**
