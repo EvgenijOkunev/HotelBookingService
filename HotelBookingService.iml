@@ -16,7 +16,7 @@
       <configuration>
         <fileset id="fileset" name="Spring Application Context" removed="false">
           <file>file://$MODULE_DIR$/src/main/java/com/geekhub/HotelBookingServiceApplication.java</file>
-          <file>file://$MODULE_DIR$/src/main/java/com/geekhub/config/WebMvcConfig.java</file>
+          <file>file://$MODULE_DIR$/src/main/java/com/geekhub/config/OrmConfig.java</file>
         </fileset>
       </configuration>
     </facet>

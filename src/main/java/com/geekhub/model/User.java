@@ -9,7 +9,7 @@ public class User {
     @Id
     @GeneratedValue
     @Column
-    private Integer id;
+    private Integer userId;
 
     @Column
     private String email;
@@ -26,12 +26,12 @@ public class User {
     @Column
     private Boolean hotelOwner;
 
-    public Integer getId() {
-        return id;
+    public Integer getUserId() {
+        return userId;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 
     public String getEmail() {

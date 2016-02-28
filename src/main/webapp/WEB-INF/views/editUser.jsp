@@ -10,31 +10,36 @@
 <body>
 
 <h1>Edit User</h1>
-<c:url var="saveUrl" value="/users/edit?id=${userAttribute.id}"/>
+<c:url var="saveUrl" value="/users/edit?userId=${userAttribute.userId}"/>
 <form:form modelAttribute="userAttribute" method="POST" action="${saveUrl}" onsubmit="return validate()">
     <table>
         <tr>
-            <td><form:label path="firstNameLabel">First Name:</form:label></td>
+            <td><label>First Name:</label></td>
             <td><form:input id="userFirstName" path="firstName" onkeypress="clearWarningText('firstNameMessage')"/></td>
             <td><span style="color:red" id="firstNameMessage"></span></td>
         </tr>
 
         <tr>
-            <td><form:label path="lastNameLabel">Last Name</form:label></td>
+            <td><label>Last Name</label></td>
             <td><form:input id="userLastName" path="lastName" onkeypress="clearWarningText('lastNameMessage')"/></td>
             <td><span style="color:red" id="lastNameMessage"></span></td>
         </tr>
 
         <tr>
-            <td><form:label path="emailLabel">Email</form:label></td>
+            <td><label>Email</label></td>
             <td><form:input id="userEmail" path="email" onkeypress="clearWarningText('emailMessage')"/></td>
             <td><span style="color:red" id="emailMessage"></span></td>
         </tr>
 
         <tr>
-            <td><form:label path="passwordLabel">Password</form:label></td>
+            <td><label>Password</label></td>
             <td><form:input id="userPassword" path="password" onkeypress="clearWarningText('passwordMessage')"/></td>
             <td><span style="color:red" id="passwordMessage"></span></td>
+        </tr>
+
+        <tr>
+            <td><label>Hotel owner</label></td>
+            <td><form:checkbox id="userPassword" path="hotelOwner"/></td>
         </tr>
     </table>
 

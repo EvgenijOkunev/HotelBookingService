@@ -34,13 +34,13 @@ public class UserService {
     /**
      * Retrieves a single user by id
      *
-     * @param id the id of existing user
+     * @param userId the id of existing user
      * @return an instance of user
      */
-    public User getUserById(int id) {
+    public User getUserById(int userId) {
         Session session = sessionFactory.getCurrentSession();
             return (User) session.createCriteria(User.class)
-                    .add(Restrictions.eq("id", id)).uniqueResult();
+                    .add(Restrictions.eq("userId", userId)).uniqueResult();
     }
 
     /**
@@ -67,11 +67,11 @@ public class UserService {
     /**
      * Deletes an existing user
      *
-     * @param id an id of the existing user
+     * @param userId an id of the existing user
      */
-    public void deleteUser(Integer id) {
+    public void deleteUser(Integer userId) {
         Session session = sessionFactory.getCurrentSession();
-            session.delete(session.get(User.class, id));
+            session.delete(session.get(User.class, userId));
     }
 
     /**
@@ -84,7 +84,7 @@ public class UserService {
         Session session = sessionFactory.getCurrentSession();
 
         // Retrieve existing user via id
-        User existingUser = (User) session.get(User.class, user.getId());
+        User existingUser = (User) session.get(User.class, user.getUserId());
 
         // Assign updated values to this person
         existingUser.setEmail(user.getEmail());

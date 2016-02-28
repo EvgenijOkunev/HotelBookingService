@@ -70,11 +70,11 @@ public class UserController {
      * @return the name of the JSP page
      */
     @RequestMapping(value = "/delete", method = RequestMethod.GET)
-    public String delete(@RequestParam(value = "id", required = true) Integer id, Model model) {
+    public String delete(@RequestParam(value = "userId", required = true) Integer userId, Model model) {
 
-        userService.deleteUser(id);
+        userService.deleteUser(userId);
 
-        model.addAttribute("id", id);
+        model.addAttribute("userId", userId);
 
         return "deletedUser";
     }
@@ -85,10 +85,10 @@ public class UserController {
      * @return the name of the JSP page
      */
     @RequestMapping(value = "/edit", method = RequestMethod.GET)
-    public String getEdit(@RequestParam(value = "id", required = true) Integer id, Model model) {
+    public String getEdit(@RequestParam(value = "userId", required = true) Integer userId, Model model) {
 
         // Retrieve existing Person and add to model
-        model.addAttribute("userAttribute", userService.getUserById(id));
+        model.addAttribute("userAttribute", userService.getUserById(userId));
 
         return "editUser";
     }
@@ -101,7 +101,7 @@ public class UserController {
      */
     @RequestMapping(value = "/edit", method = RequestMethod.POST)
     public String saveEdit(@ModelAttribute("userAttribute") User user,
-                           @RequestParam(value = "id", required = true) Integer id,
+                           @RequestParam(value = "userId", required = true) Integer userId,
                            Model model) {
 
         // The "userAttribute" model has been passed to the controller from the JSP
@@ -109,12 +109,12 @@ public class UserController {
 
         // We manually assign the id because we disabled it in the JSP page
         // When a field is disabled it will not be included in the ModelAttribute
-        user.setId(id);
+        user.setUserId(userId);
 
         userService.editUser(user);
 
         // Add id reference to Model
-        model.addAttribute("id", id);
+        model.addAttribute("userId", userId);
 
         return "editedUser";
     }

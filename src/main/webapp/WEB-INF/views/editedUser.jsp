@@ -9,7 +9,7 @@
 
 <h1>Users</h1>
 
-<p>You have edited a user with id ${id} at <%= new java.util.Date() %>
+<p>You have edited a user with id ${userId} at <%= new java.util.Date() %>
 </p>
 
 <c:url var="mainUrl" value="/users/show-all"/>

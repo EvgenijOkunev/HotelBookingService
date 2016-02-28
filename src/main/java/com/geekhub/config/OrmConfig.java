@@ -9,6 +9,8 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.hibernate4.HibernateTransactionManager;
 import org.springframework.orm.hibernate4.LocalSessionFactoryBuilder;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 import javax.sql.DataSource;
 import java.util.Properties;
@@ -16,7 +18,7 @@ import java.util.Properties;
 @Configuration
 @EnableTransactionManagement
 @ComponentScan(basePackages = "com.geekhub")
-public class OrmConfig {
+public class OrmConfig extends WebMvcConfigurerAdapter{
 
     // Свойства источника данных
     @Value("${jdbc.driverClassName}")
@@ -80,6 +82,11 @@ public class OrmConfig {
         HibernateTransactionManager htm = new HibernateTransactionManager();
         htm.setSessionFactory(sessionFactory);
         return htm;
+    }
+
+    @Override
+    public void addResourceHandlers(final ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
     }
 
 }

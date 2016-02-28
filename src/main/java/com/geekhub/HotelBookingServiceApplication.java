@@ -4,6 +4,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.web.SpringBootServletInitializer;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 @SpringBootApplication
 public class HotelBookingServiceApplication extends SpringBootServletInitializer {
@@ -16,5 +18,7 @@ public class HotelBookingServiceApplication extends SpringBootServletInitializer
     protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
         return application.sources(HotelBookingServiceApplication.class);
     }
+
+
 
 }
