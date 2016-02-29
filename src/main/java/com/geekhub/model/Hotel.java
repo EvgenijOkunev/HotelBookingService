@@ -25,6 +25,10 @@ public class Hotel {
     @JoinColumn(name = "cityId")
     private City city;
 
+    @ManyToOne
+    @JoinColumn(name = "ownerId")
+    private User owner;
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "hotel")
     private List<Room> rooms;
 
@@ -66,6 +70,14 @@ public class Hotel {
 
     public void setCity(City city) {
         this.city = city;
+    }
+
+    public User getOwner() {
+        return owner;
+    }
+
+    public void setOwner(User owner) {
+        this.owner = owner;
     }
 
     public List<Room> getRooms() {

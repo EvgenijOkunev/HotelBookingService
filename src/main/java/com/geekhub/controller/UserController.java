@@ -1,6 +1,7 @@
 package com.geekhub.controller;
 
 import com.geekhub.model.User;
+import com.geekhub.service.RoleService;
 import com.geekhub.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,6 +19,9 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private RoleService roleService;
 
     /**
      * Handles and retrieves all users and show it in a JSP page
@@ -58,6 +62,7 @@ public class UserController {
         // The "userAttribute" model has been passed to the controller from the JSP
         // We use the name "userAttribute" because the JSP uses that name
 
+        user.setRole(user.getHotelOwner() ? roleService.getRoleByName("Hotel owner") : roleService.getRoleByName("User"));
         userService.saveUser(user);
 
         return "addedUser";

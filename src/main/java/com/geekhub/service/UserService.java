@@ -25,10 +25,10 @@ public class UserService {
      * @return a list of users
      */
     public List<User> getAll() {
-        Session session = sessionFactory.openSession();
-            return (List<User>) session.createCriteria(User.class)
-                    .addOrder(Order.asc("firstName"))
-                    .list();
+        Session session = sessionFactory.getCurrentSession();
+        return (List<User>) session.createCriteria(User.class)
+                .addOrder(Order.asc("firstName"))
+                .list();
     }
 
     /**
@@ -39,8 +39,8 @@ public class UserService {
      */
     public User getUserById(int userId) {
         Session session = sessionFactory.getCurrentSession();
-            return (User) session.createCriteria(User.class)
-                    .add(Restrictions.eq("userId", userId)).uniqueResult();
+        return (User) session.createCriteria(User.class)
+                .add(Restrictions.eq("userId", userId)).uniqueResult();
     }
 
     /**
@@ -50,8 +50,8 @@ public class UserService {
      */
     public User getUserByEmail(int email) {
         Session session = sessionFactory.getCurrentSession();
-            return (User) session.createCriteria(User.class)
-                    .add(Restrictions.eq("email", email));
+        return (User) session.createCriteria(User.class)
+                .add(Restrictions.eq("email", email));
     }
 
     /**
@@ -71,7 +71,7 @@ public class UserService {
      */
     public void deleteUser(Integer userId) {
         Session session = sessionFactory.getCurrentSession();
-            session.delete(session.get(User.class, userId));
+        session.delete(session.get(User.class, userId));
     }
 
     /**

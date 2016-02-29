@@ -18,7 +18,7 @@ import java.util.Properties;
 @Configuration
 @EnableTransactionManagement
 @ComponentScan(basePackages = "com.geekhub")
-public class OrmConfig extends WebMvcConfigurerAdapter{
+public class OrmConfig extends WebMvcConfigurerAdapter {
 
     // Свойства источника данных
     @Value("${jdbc.driverClassName}")

@@ -1,6 +1,7 @@
 package com.geekhub.model;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "USERS")
@@ -25,6 +26,13 @@ public class User {
 
     @Column
     private Boolean hotelOwner;
+
+    @ManyToOne
+    @JoinColumn(name = "roleId")
+    private Role role;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "owner")
+    private List<Hotel> hotels;
 
     public Integer getUserId() {
         return userId;
@@ -74,4 +82,19 @@ public class User {
         this.hotelOwner = hotelOwner;
     }
 
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
+    public List<Hotel> getHotels() {
+        return hotels;
+    }
+
+    public void setHotels(List<Hotel> hotels) {
+        this.hotels = hotels;
+    }
 }
