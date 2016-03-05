@@ -40,7 +40,7 @@
 
         <tr>
             <td><label>Hotel owner</label></td>
-            <td><form:checkbox id="userPassword" path="hotelOwner"/></td>
+            <td><form:checkbox id="hotelOwner" path="hotelOwner"/></td>
         </tr>
     </table>
 

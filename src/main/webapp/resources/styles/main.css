@@ -1,0 +1,36 @@
+/* Стили бара для входа / регистрации */
+.topBar {
+    line-height: 24px;
+    background: #eee;
+    text-transform: uppercase;
+    z-index: 9999;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    font-family: calibri;
+    box-shadow: 1px 0 2px rgba(0, 0, 0, 0.2);
+    -webkit-animation: slideOut 0.5s ease-in-out 0.3s backwards;
+}
+
+.topBar a {
+    padding: 0 10px;
+    letter-spacing: 1px;
+    color: #333;
+    text-shadow: 0 1px 1px #fff;
+    display: block;
+    float: left;
+}
+
+.topBar a:hover {
+    background: #fff;
+}
+
+.topBar span.right {
+    float: right;
+}
+
+.topBar span.right a {
+    float: left;
+    display: block;
+}
