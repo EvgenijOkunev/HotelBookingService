@@ -2,6 +2,8 @@
 <html>
 <head>
     <link href="../../resources/styles/formStyles.css" rel="stylesheet" type="text/css"/>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+    <script type="text/javascript" src="../../resources/usersValidation.js"></script>
     <title>Login</title>
 </head>
 <body>
@@ -16,15 +18,16 @@
 
         <div class="content">
             <label>
-                <input name="username" type="text" class="input username" placeholder="Email" onfocus="this.value=''"/>
+                <input id = "email" name="email" type="text" class="input" placeholder="Email"/>
             </label>
             <label>
-                <input name="password" type="password" class="input password" placeholder="Пароль" onfocus="this.value=''"/>
+                <input id = "password" name="password" type="password" class="input" placeholder="Пароль"/>
             </label>
+            <div style="height: 22px"><span id="errorText"></span></div>
         </div>
 
         <div class="footer">
-            <input type="submit" name="submit" value="ВОЙТИ" class="button"/>
+            <input type="button" name="submit" value="ВОЙТИ" class="button" onclick="loginValidate()"/>
         </div>
 
     </form>

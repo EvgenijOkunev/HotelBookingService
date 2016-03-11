@@ -48,3 +48,29 @@ function validate() {
 function clearWarningText(elementID) {
     document.getElementById(elementID).innerHTML = "";
 }
+
+function loginValidate (){
+
+    var email = document.getElementById('email').value;
+    var password = document.getElementById('password').value;
+
+    //location.href = "/";
+
+    $.ajax({
+        type: 'POST',
+        url: '/users/userLoginProcessing',
+        data: {
+            email: email,
+            password: password
+        },
+        dataType: 'json',
+        async: true,
+        success: function () {
+            location.href = "/";
+        },
+        error: function() {
+            document.getElementById('errorText').innerHTML= 'Неправильный email и/или пароль';
+        }
+    });
+
+}

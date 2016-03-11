@@ -46,6 +46,6 @@
     <input type="submit" value="Save"/>
 </form:form>
 
-<script type="text/javascript" src="../../resources/userAttributesValidation.js"></script>
+<script type="text/javascript" src="../../resources/usersValidation.js"></script>
 </body>
 </html>

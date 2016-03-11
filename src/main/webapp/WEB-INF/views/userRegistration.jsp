@@ -11,7 +11,7 @@
 
         <div class="header">
             <h1>Регистрация</h1>
-            <span>Для входа на сайт введите ваши регистрационные данные</span>
+            <span>Для регистраци введите все необходимые данные</span>
         </div>
 
         <div class="content">
@@ -19,22 +19,22 @@
                 <input name="firstName" type="text" class="input" placeholder="Имя" onfocus="this.value=''"/>
             </label>
             <label>
-                <input name="lastName" type="text" class="not-first-input" placeholder="Фамилия"/>
+                <input name="lastName" type="text" class="input" placeholder="Фамилия"/>
             </label>
             <label>
-                <input name="email" type="text" class="not-first-input" placeholder="Электронная почта"/>
+                <input name="email" type="text" class="input" placeholder="Электронная почта"/>
             </label>
             <label>
-                <input name="password" type="password" class="not-first-input" placeholder="Пароль"/>
+                <input name="password" type="password" class="input" placeholder="Пароль"/>
             </label>
             <label>
                 <span>Владец Отеля</span>
-                <input name="hotelOwner" type="checkbox" class="not-first-input"/>
+                <input name="hotelOwner" type="checkbox" class="input"/>
             </label>
         </div>
 
         <div class="footer">
-            <input type="submit" name="submit" value="Регистрация" class="register"/>
+            <input type="button" name="submit" value="Регистрация" class="button"/>
         </div>
 
     </form>

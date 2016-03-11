@@ -48,10 +48,11 @@ public class UserService {
      *
      * @return an instance of user
      */
-    public User getUserByEmail(int email) {
+    public User getUserByEmailAndPassword(String email, String password) {
         Session session = sessionFactory.getCurrentSession();
         return (User) session.createCriteria(User.class)
-                .add(Restrictions.eq("email", email));
+                .add(Restrictions.eq("email", email))
+                .add(Restrictions.eq("password", password)).uniqueResult();
     }
 
     /**

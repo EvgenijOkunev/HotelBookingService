@@ -1,6 +1,6 @@
 /* Стили бара для входа / регистрации */
 .topBar {
-    line-height: 24px;
+    line-height: 20px;
     background: #eee;
     text-transform: uppercase;
     z-index: 9999;
@@ -14,8 +14,8 @@
 }
 
 .topBar a {
-    padding: 0 10px;
-    letter-spacing: 1px;
+    padding-right: 20px;
+    letter-spacing: 0;
     color: #333;
     text-shadow: 0 1px 1px #fff;
     display: block;
@@ -23,7 +23,7 @@
 }
 
 .topBar a:hover {
-    background: #fff;
+    /*background: #fff;*/
 }
 
 .topBar span.right {

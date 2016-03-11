@@ -113,6 +113,7 @@ CONTENT
 .login-form .content .input {
     width: 238px;
     padding: 15px 25px;
+    margin-bottom: 15px;
 
     font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
     font-weight: 400;
@@ -146,6 +147,12 @@ CONTENT
     box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.25);
     -moz-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.25);
     -webkit-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.25);
+}
+
+.login-form .content span {
+    height: 22px;
+    font-size: 11px;
+    color: red;
 }
 
 /* Animation */
