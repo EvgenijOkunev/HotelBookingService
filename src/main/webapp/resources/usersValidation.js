@@ -1,47 +1,28 @@
-function validate() {
+function checkFieldsContent(firstName, lastName, email, password) {
 
-    // Считаем значения из полей userFirstName, userLastName и userEmail в переменные
-    var firstName = document.getElementById('userFirstName').value;
-    var lastName = document.getElementById('userLastName').value;
-    var email = document.getElementById('userEmail').value;
-    var password = document.getElementById('userPassword').value;
+    var errorText = document.getElementById('errorText');
 
-    var thereWasSomeErrors = false;
-
-    // Если поле firstName пустое выведем сообщение и предотвратим отправку формы
-    if (firstName.length == 0) {
-        document.getElementById('firstNameMessage').innerHTML = '*данное поле обязательно для заполнения';
-        thereWasSomeErrors = true;
+    if (firstName.length == 0 || lastName.length == 0 || email.length == 0 || password.length == 0) {
+        errorText.innerHTML = 'Все поля обязательны для заполнения';
+        return false;
     }
 
-    // Если поле lastName пустое выведем сообщение и предотвратим отправку формы
-    if (lastName.length == 0) {
-        document.getElementById('lastNameMessage').innerHTML = '*данное поле обязательно для заполнения';
-        thereWasSomeErrors = true;
-    }
+    //else {
+    //    at = email.indexOf("@");
+    //    dot = email.indexOf(".");
+    //    //Если поле не содержит эти символы знач email введен не верно
+    //    if (at < 1 || dot < 1) {
+    //        document.getElementById('emailMessage').innerHTML = '*email введен не верно';
+    //        thereWasSomeErrors = true;
+    //    }
+    //}
 
-    // Если поле email пустое выведем сообщение и предотвратим отправку формы
-    if (email.length == 0) {
-        document.getElementById('emailMessage').innerHTML = '*данное поле обязательно для заполнения';
-        thereWasSomeErrors = true;
-    }
-    else {
-        at = email.indexOf("@");
-        dot = email.indexOf(".");
-        //Если поле не содержит эти символы знач email введен не верно
-        if (at < 1 || dot < 1) {
-            document.getElementById('emailMessage').innerHTML = '*email введен не верно';
-            thereWasSomeErrors = true;
-        }
-    }
-
-    // Если поле password пустое или содрежит менее 6 символов, то предотвратим отправку формы
     if (password.length < 6) {
-        document.getElementById('passwordMessage').innerHTML = (password.length == 0 ? '*данное поле обязательно для заполнения' : '*пароль должен состоять минимум из шести символов');
-        thereWasSomeErrors = true;
+        errorText.innerHTML = 'пароль должен состоять минимум из шести символов';
+        return false;
     }
 
-    return !thereWasSomeErrors;
+    return true;
 
 }
 
@@ -49,12 +30,10 @@ function clearWarningText(elementID) {
     document.getElementById(elementID).innerHTML = "";
 }
 
-function loginValidate (){
+function loginValidate() {
 
     var email = document.getElementById('email').value;
     var password = document.getElementById('password').value;
-
-    //location.href = "/";
 
     $.ajax({
         type: 'POST',
@@ -68,9 +47,54 @@ function loginValidate (){
         success: function () {
             location.href = "/";
         },
-        error: function() {
-            document.getElementById('errorText').innerHTML= 'Неправильный email и/или пароль';
+        error: function () {
+            document.getElementById('errorText').innerHTML = 'Неправильный email и/или пароль';
         }
     });
+
+}
+
+function registrationValidate() {
+
+    var firstName = document.getElementById('firstName').value;
+    var lastName = document.getElementById('lastName').value;
+    var email = document.getElementById('email').value;
+    var password = document.getElementById('password').value;
+    var hotelOwner = document.getElementById('hotelOwner').value;
+
+    if (checkFieldsContent(firstName, lastName, email, password)) {
+
+        $.ajax({
+            type: 'POST',
+            url: '/users/checkEmailUnique',
+            data: {
+                email: email
+            },
+            dataType: 'json',
+            async: true,
+            success: function () {
+                $.ajax({
+                    type: 'POST',
+                    url: '/users/userRegistrationProcessing',
+                    data: {
+                        firstName: firstName,
+                        lastName: lastName,
+                        email: email,
+                        password: password,
+                        hotelOwner: hotelOwner
+                    },
+                    dataType: 'json',
+                    async: true,
+                    success: function () {
+                        location.href = "/users/show-all";
+                    }
+                });
+            },
+            error: function () {
+                errorText.innerHTML = 'пользователь с таким email уже зарегистрирован';
+            }
+        });
+
+    }
 
 }

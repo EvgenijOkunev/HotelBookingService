@@ -2,6 +2,8 @@
 <html>
 <head>
     <link href="../../resources/styles/formStyles.css" rel="stylesheet" type="text/css"/>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+    <script type="text/javascript" src="../../resources/usersValidation.js"></script>
     <title>Registration</title>
 </head>
 <body>
@@ -16,25 +18,29 @@
 
         <div class="content">
             <label>
-                <input name="firstName" type="text" class="input" placeholder="Имя" onfocus="this.value=''"/>
+                <input id="firstName" name="firstName" type="text" class="input" placeholder="Имя"/>
             </label>
             <label>
-                <input name="lastName" type="text" class="input" placeholder="Фамилия"/>
+                <input id="lastName" name="lastName" type="text" class="input" placeholder="Фамилия"/>
             </label>
             <label>
-                <input name="email" type="text" class="input" placeholder="Электронная почта"/>
+                <input id="email" name="email" type="email" class="input" placeholder="Электронная почта"/>
             </label>
             <label>
-                <input name="password" type="password" class="input" placeholder="Пароль"/>
+                <input id="password" name="password" type="password" class="input" placeholder="Пароль"/>
             </label>
-            <label>
-                <span>Владец Отеля</span>
-                <input name="hotelOwner" type="checkbox" class="input"/>
-            </label>
+
+            <div style="float: right">
+                <label style="width: 50%; vertical-align: middle; font-size: 15px"> Владец отеля
+                    <input id="hotelOwner" name="hotelOwner" type="checkbox"
+                           style="width: 30px; vertical-align: middle"/>
+                </label>
+            </div>
+            <div style="clear: right; padding-top: 10px; height: 22px"><span id="errorText"></span></div>
         </div>
 
         <div class="footer">
-            <input type="button" name="submit" value="Регистрация" class="button"/>
+            <input type="button" name="registration" value="Регистрация" class="button" onclick="registrationValidate()"/>
         </div>
 
     </form>

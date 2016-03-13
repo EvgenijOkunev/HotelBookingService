@@ -27,7 +27,7 @@
         </span>
         <span class="right">
             <a href="<c:url value="/"/>">
-                <strong>${sessionScope.user.getFirstName()}</strong>
+                <strong>${sessionScope.user.getEmail()}</strong>
             </a>
         </span>
 

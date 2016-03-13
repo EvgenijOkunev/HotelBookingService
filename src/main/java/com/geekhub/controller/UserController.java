@@ -132,10 +132,35 @@ public class UserController {
         User user = userService.getUserByEmailAndPassword(email, password);
         if (user != null) {
             request.getSession().setAttribute("user", user);
-        }
-        else {
+        } else {
             response.sendError(500);
         }
+        return "";
+    }
+
+    @RequestMapping(value = "/checkEmailUnique", method = RequestMethod.POST)
+    @ResponseBody
+    public String checkEmailUnique(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String email = request.getParameter("email");
+        User user = userService.getUserByEmail(email);
+        if (user != null) {
+            response.sendError(500);
+        }
+        return "";
+    }
+
+    @RequestMapping(value = "/userRegistrationProcessing", method = RequestMethod.POST)
+    @ResponseBody
+    public String userRegistrationProcessing(HttpServletRequest request) throws IOException {
+        User user = new User();
+        user.setFirstName(request.getParameter("firstName"));
+        user.setLastName(request.getParameter("lastName"));
+        user.setEmail(request.getParameter("email"));
+        user.setPassword(request.getParameter("password"));
+        user.setHotelOwner(request.getParameter("hotelOwner").equals("true"));
+
+        userService.saveUser(user);
+
         return "";
     }
 

@@ -43,8 +43,20 @@ public class UserService {
                 .add(Restrictions.eq("userId", userId)).uniqueResult();
     }
 
+
     /**
      * Retrieves a single user by email/login
+     *
+     * @return an instance of user
+     */
+    public User getUserByEmail(String email) {
+        Session session = sessionFactory.getCurrentSession();
+        return (User) session.createCriteria(User.class)
+                .add(Restrictions.eq("email", email)).uniqueResult();
+    }
+
+    /**
+     * Retrieves a single user by email/login and password
      *
      * @return an instance of user
      */
