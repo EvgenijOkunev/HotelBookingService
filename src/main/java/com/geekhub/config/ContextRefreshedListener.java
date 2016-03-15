@@ -1,6 +1,7 @@
 package com.geekhub.config;
 
 import com.geekhub.model.Role;
+import com.geekhub.service.CityService;
 import com.geekhub.service.RoleService;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -13,18 +14,21 @@ import org.springframework.stereotype.Component;
 public class ContextRefreshedListener implements ApplicationListener<ContextRefreshedEvent> {
 
     @Autowired
-    private SessionFactory sessionFactory;
-
-    @Autowired
     private RoleService roleService;
+    @Autowired
+    private CityService cityService;
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
-        Session session = sessionFactory.openSession();
-        if (session.createCriteria(Role.class).list().size() == 0) {
+        if (roleService.getAll().size() == 0) {
             roleService.createRole("Administrator");
             roleService.createRole("Hotel owner");
             roleService.createRole("User");
+        }
+        if (cityService.getAll().size() == 0) {
+            cityService.createCity("Черкассы", "Родина Шевченко");
+            cityService.createCity("Киев", "Столица Украины");
+            cityService.createCity("Одесса", "Культурная столица Украины");
         }
     }
 

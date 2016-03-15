@@ -8,8 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @Transactional
+@SuppressWarnings("unchecked")
 public class RoleService {
 
     @Autowired
@@ -20,6 +23,11 @@ public class RoleService {
         Role role = new Role();
         role.setName(name);
         session.save(role);
+    }
+
+    public List<Role> getAll() {
+        return (List<Role>) sessionFactory.getCurrentSession()
+                .createCriteria(Role.class).list();
     }
 
     public Role getRoleByName(String name) {

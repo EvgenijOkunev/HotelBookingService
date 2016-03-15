@@ -1,0 +1,36 @@
+.data-form {
+    width: 300px;
+    margin: 0 0;
+}
+
+.data-form .content {
+    padding: 0 30px 25px 30px;
+    font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif, serif;
+}
+
+.data-form .content label {
+    color: #3f3f66;
+}
+
+.data-form .content select {
+    width: 238px;
+    color: #3f3f66;
+    border: 1px solid #6678b1;
+    background-color: transparent;
+}
+
+.data-form .content .input {
+    width: 238px;
+    padding: 2px 15px;
+    margin-bottom: 15px;
+
+    font-size: 14px;
+    color: #3f3f66;
+    background: #fff;
+    border: 2px solid #6678b1;
+
+}
+
+.data-form .content .input:hover {
+    background-color: rgba(35, 188, 243, 0.15);
+}

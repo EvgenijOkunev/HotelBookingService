@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <link href="../../resources/styles/formStyles.css" rel="stylesheet" type="text/css"/>
+    <link href="../../resources/styles/loginForm.css" rel="stylesheet" type="text/css"/>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
     <script type="text/javascript" src="../../resources/usersValidation.js"></script>
     <title>Login</title>

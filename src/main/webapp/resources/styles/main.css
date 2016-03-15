@@ -30,6 +30,10 @@
     float: right;
 }
 
+.topBar span.left {
+    float: left;
+}
+
 .topBar span.right a {
     float: left;
     display: block;

@@ -1,18 +1,4 @@
 /*******************
-SELECTION STYLING
-*******************/
-
-::selection {
-    color: #fff;
-    background: #f676b2; /* Safari */
-}
-
-::-moz-selection {
-    color: #fff;
-    background: #f676b2; /* Firefox */
-}
-
-/*******************
 BODY STYLING
 *******************/
 
