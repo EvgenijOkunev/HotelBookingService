@@ -1,7 +1,6 @@
 package com.geekhub.service;
 
 import com.geekhub.model.City;
-import com.geekhub.model.Role;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,5 +28,10 @@ public class CityService {
     public List<City> getAll() {
         return (List<City>) sessionFactory.getCurrentSession()
                 .createCriteria(City.class).list();
+    }
+
+    public City getCityById(Integer id) {
+        Session currentSession = sessionFactory.getCurrentSession();
+        return (City) currentSession.get(City.class, id);
     }
 }

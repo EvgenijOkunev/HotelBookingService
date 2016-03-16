@@ -12,17 +12,18 @@ public class Room {
     private Integer roomId;
 
     @Column
-    private Integer roomNumber;
-
-    @Column
     private Double pricePerNight;
 
     @Column
-    private Integer numberOfBeds;
+    private Integer numberOfGuests;
 
     @ManyToOne
     @JoinColumn(name = "hotelId")
     private Hotel hotel;
+
+    @ManyToOne
+    @JoinColumn(name = "roomTypeId")
+    private RoomType roomType;
 
     public Integer getRoomId() {
         return roomId;
@@ -30,14 +31,6 @@ public class Room {
 
     public void setRoomId(Integer roomId) {
         this.roomId = roomId;
-    }
-
-    public Integer getRoomNumber() {
-        return roomNumber;
-    }
-
-    public void setRoomNumber(Integer roomNumber) {
-        this.roomNumber = roomNumber;
     }
 
     public Double getPricePerNight() {
@@ -48,12 +41,12 @@ public class Room {
         this.pricePerNight = pricePerNight;
     }
 
-    public Integer getNumberOfBeds() {
-        return numberOfBeds;
+    public Integer getNumberOfGuests() {
+        return numberOfGuests;
     }
 
-    public void setNumberOfBeds(Integer numberOfBeds) {
-        this.numberOfBeds = numberOfBeds;
+    public void setNumberOfGuests(Integer numberOfGuests) {
+        this.numberOfGuests = numberOfGuests;
     }
 
     public Hotel getHotel() {
@@ -62,6 +55,14 @@ public class Room {
 
     public void setHotel(Hotel hotel) {
         this.hotel = hotel;
+    }
+
+    public RoomType getRoomType() {
+        return roomType;
+    }
+
+    public void setRoomType(RoomType roomType) {
+        this.roomType = roomType;
     }
 
 }

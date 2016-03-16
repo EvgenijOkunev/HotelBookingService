@@ -7,6 +7,9 @@
     <title>Hotels Management</title>
 </head>
 <body>
+
+<jsp:include page="topBar.jsp" />
+
 <h1 class="hor-minimalist-b-title">Hotels</h1>
 
 <c:url var="addUrl" value="/hotels/add"/>
@@ -44,5 +47,6 @@
 <c:if test="${empty hotels}">
     Вы еще не добавили ни одного отеля. <a href="${addUrl}">Можете сделать это прямо сейчас</a>
 </c:if>
+
 </body>
 </html>

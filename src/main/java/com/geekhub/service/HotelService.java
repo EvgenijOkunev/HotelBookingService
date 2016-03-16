@@ -1,6 +1,8 @@
 package com.geekhub.service;
 
+import com.geekhub.model.City;
 import com.geekhub.model.Hotel;
+import com.geekhub.model.Room;
 import com.geekhub.model.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -33,5 +35,17 @@ public class HotelService {
                 .add(Restrictions.eq("owner", owner))
                 .addOrder(Order.asc("name"))
                 .list();
+    }
+
+    public void createHotel(String name, String description, Integer stars, City city, User owner, List<Room> rooms) {
+        Session session = sessionFactory.getCurrentSession();
+        Hotel hotel = new Hotel();
+        hotel.setName(name);
+        hotel.setDescription(description);
+        hotel.setStars(stars);
+        hotel.setCity(city);
+        hotel.setOwner(owner);
+        hotel.setRooms(rooms);
+        session.save(hotel);
     }
 }

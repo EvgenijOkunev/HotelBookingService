@@ -3,6 +3,7 @@ package com.geekhub.config;
 import com.geekhub.model.Role;
 import com.geekhub.service.CityService;
 import com.geekhub.service.RoleService;
+import com.geekhub.service.RoomTypeService;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,8 @@ public class ContextRefreshedListener implements ApplicationListener<ContextRefr
     private RoleService roleService;
     @Autowired
     private CityService cityService;
+    @Autowired
+    private RoomTypeService roomTypeService;
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
@@ -29,6 +32,13 @@ public class ContextRefreshedListener implements ApplicationListener<ContextRefr
             cityService.createCity("Черкассы", "Родина Шевченко");
             cityService.createCity("Киев", "Столица Украины");
             cityService.createCity("Одесса", "Культурная столица Украины");
+        }
+        if (roomTypeService.getAll().size() == 0) {
+            roomTypeService.createRoomType("Apartments", "Аппартаменты");
+            roomTypeService.createRoomType("Lux", "Люкс");
+            roomTypeService.createRoomType("Business", "Бизнес");
+            roomTypeService.createRoomType("Standard", "Стандарт");
+            roomTypeService.createRoomType("Economy", "Эконом");
         }
     }
 

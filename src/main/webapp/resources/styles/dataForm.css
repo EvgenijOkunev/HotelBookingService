@@ -1,36 +1,61 @@
+#wrapper {
+    width: 550px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin-left: -275px;
+    margin-top: -350px;
+}
+
+.header {
+    font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif, serif;
+    font-size: 18px;
+    color: #3f3f66;
+    margin-bottom: 15px;
+}
+
 .data-form {
-    width: 300px;
-    margin: 0 0;
+    border: 1px solid #c3e5e8;
 }
 
 .data-form .content {
-    padding: 0 30px 25px 30px;
-    font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif, serif;
+    padding: 15px 30px 15px 30px;
 }
 
 .data-form .content label {
-    color: #3f3f66;
+    font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif, serif;
+    font-size: 14px;
+    color: #039;
 }
 
-.data-form .content select {
-    width: 238px;
-    color: #3f3f66;
-    border: 1px solid #6678b1;
-    background-color: transparent;
-}
-
-.data-form .content .input {
-    width: 238px;
+.data-form .content .input, select {
+    width: 100%;
     padding: 2px 15px;
     margin-bottom: 15px;
 
+    font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif, serif;
     font-size: 14px;
     color: #3f3f66;
     background: #fff;
-    border: 2px solid #6678b1;
+    border: 1px solid #6678b1;
 
 }
 
-.data-form .content .input:hover {
+.data-form .content .input:hover, select:hover {
     background-color: rgba(35, 188, 243, 0.15);
+}
+
+.data-form .content .input[type="button"] {
+    float: right;
+    padding: 5px 10px;
+    margin-top: 15px;
+    margin-bottom: 0;
+    margin-left: 15px;
+    width: 100px;
+
+    background: #6678b1;
+    border: 1px solid #6678b1;
+    border-radius: 5px;
+    cursor: pointer;
+    color: white;
 }
