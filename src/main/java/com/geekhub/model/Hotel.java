@@ -1,6 +1,12 @@
 package com.geekhub.model;
 
 import javax.persistence.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.sql.Blob;
+import java.sql.SQLException;
 import java.util.List;
 
 @Entity
@@ -15,8 +21,9 @@ public class Hotel {
     @Column
     private String name;
 
-    @Column
-    private String description;
+    @Lob
+    @Column(columnDefinition = "LONGBLOB")
+    private Blob description;
 
     @Column
     private Integer stars;
@@ -48,12 +55,24 @@ public class Hotel {
         this.name = name;
     }
 
-    public String getDescription() {
+    public Blob getDescription() {
         return description;
     }
 
-    public void setDescription(String description) {
+    public void setDescription(Blob description) {
         this.description = description;
+    }
+
+    public String getStringDescription() throws SQLException, IOException {
+        String s;
+        InputStream inStream = description.getBinaryStream();
+        InputStreamReader inStreamReader = new InputStreamReader(inStream);
+        BufferedReader reader = new BufferedReader(inStreamReader);
+        StringBuilder stringBuilder = new StringBuilder();
+        while ((s = reader.readLine()) != null) {
+            stringBuilder.append(s);
+        }
+        return stringBuilder.toString();
     }
 
     public Integer getStars() {

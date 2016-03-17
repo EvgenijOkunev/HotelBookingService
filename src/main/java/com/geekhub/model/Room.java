@@ -12,7 +12,7 @@ public class Room {
     private Integer roomId;
 
     @Column
-    private Double pricePerNight;
+    private Integer pricePerNight;
 
     @Column
     private Integer numberOfGuests;
@@ -33,11 +33,11 @@ public class Room {
         this.roomId = roomId;
     }
 
-    public Double getPricePerNight() {
+    public Integer getPricePerNight() {
         return pricePerNight;
     }
 
-    public void setPricePerNight(Double pricePerNight) {
+    public void setPricePerNight(Integer pricePerNight) {
         this.pricePerNight = pricePerNight;
     }
 

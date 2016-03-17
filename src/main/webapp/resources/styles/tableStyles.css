@@ -95,11 +95,29 @@
     color: #039;
     font-size: 25px;
     margin-left: 45px;
-    margin-top: 35px;
+    margin-top: 45px;
+    width: 200px;
+    height: 31px;
+    display: inline-block;
 }
 
 .hor-minimalist-b-link {
     color: #669;
+}
+
+.input-button {
+    float: right;
+    padding: 5px 10px;
+    margin-top: 50px;
+    margin-right: 45px;
+    margin-bottom: 0;
+    display: inline-block;
+
+    background: #6678b1;
+    border: 1px solid #6678b1;
+    border-radius: 5px;
+    cursor: pointer;
+    color: white;
 }
 
 .ver-minimalist {
@@ -375,3 +393,4 @@
     color: #669;
     border-right: 1px dashed #6cf;
 }
+

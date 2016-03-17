@@ -8,45 +8,49 @@
 </head>
 <body>
 
-<jsp:include page="topBar.jsp" />
+<jsp:include page="topBar.jsp"/>
 
-<h1 class="hor-minimalist-b-title">Hotels</h1>
+<div style="width: 90%">
 
-<c:url var="addUrl" value="/hotels/add"/>
+    <div>
+        <span class="hor-minimalist-b-title">Отели</span>
+        <input type="button" name="addHotel" value="Добавить отель" class="input-button"
+               onclick="window.location='/hotels/add'"/>
+    </div>
 
-<c:if test="${not empty hotels}">
-    <table class="hor-minimalist-b">
-        <thead>
-        <tr>
-            <th>Name</th>
-            <th>Description</th>
-            <th>Stars</th>
-            <th>City</th>
-            <th>Operations</th>
-        </tr>
-        </thead>
-        <tbody>
-        <c:forEach items="${hotels}" var="hotel">
-            <c:url var="editUrl" value="/hotels/edit?userId=${hotel.userId}"/>
-            <c:url var="deleteUrl" value="/hotels/delete?userId=${hotel.userId}"/>
+    <c:if test="${not empty hotels}">
+        <table class="hor-minimalist-b">
+            <thead>
             <tr>
-                <td><c:out value="${hotel.name}"/></td>
-                <td><c:out value="${hotel.description}"/></td>
-                <td><c:out value="${hotel.stars}"/></td>
-                <td><c:out value="${hotel.city}"/></td>
-                <td><a class="hor-minimalist-b-link" href="${addUrl}">Add</a> |
-                    <a class="hor-minimalist-b-link" href="${editUrl}">Edit</a> |
-                    <a class="hor-minimalist-b-link" href="${deleteUrl}">Delete</a>
-                </td>
+                <th>Название</th>
+                <th>Описание</th>
+                <th>Количество звезд</th>
+                <th>Город</th>
+                <th>Операции</th>
             </tr>
-        </c:forEach>
-        </tbody>
-    </table>
-</c:if>
+            </thead>
+            <tbody>
+            <c:forEach items="${hotels}" var="hotel">
+                <c:url var="editUrl" value="/hotels/edit?hotelId=${hotel.hotelId}"/>
+                <c:url var="deleteUrl" value="/hotels/delete?hotelId=${hotel.hotelId}"/>
+                <tr>
+                    <td><c:out value="${hotel.name}"/></td>
+                    <td style="text-align: justify"><c:out
+                            value="${hotel.getStringDescription()}"/></td>
+                    <td><c:out value="${hotel.stars}"/></td>
+                    <td style="min-width: 100px"><c:out value="${hotel.city.name}"/></td>
+                    <td>
+                        <a class="hor-minimalist-b-link" href="${editUrl}">Редактировать</a>
+                        <p></p>
+                        <a class="hor-minimalist-b-link" href="${deleteUrl}">Удалить</a>
+                    </td>
+                </tr>
+            </c:forEach>
+            </tbody>
+        </table>
+    </c:if>
 
-<c:if test="${empty hotels}">
-    Вы еще не добавили ни одного отеля. <a href="${addUrl}">Можете сделать это прямо сейчас</a>
-</c:if>
+</div>
 
 </body>
 </html>

@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Blob;
 import java.util.List;
 
 @Service
@@ -21,6 +22,10 @@ public class HotelService {
 
     @Autowired
     private SessionFactory sessionFactory;
+
+    public Hotel getHotelById(Integer id) {
+        return (Hotel) sessionFactory.getCurrentSession().get(Hotel.class, id);
+    }
 
     public List<Hotel> getAll() {
         Session session = sessionFactory.getCurrentSession();
@@ -37,7 +42,7 @@ public class HotelService {
                 .list();
     }
 
-    public void createHotel(String name, String description, Integer stars, City city, User owner, List<Room> rooms) {
+    public void createHotel(String name, Blob description, Integer stars, City city, User owner, List<Room> rooms) {
         Session session = sessionFactory.getCurrentSession();
         Hotel hotel = new Hotel();
         hotel.setName(name);
@@ -46,6 +51,8 @@ public class HotelService {
         hotel.setCity(city);
         hotel.setOwner(owner);
         hotel.setRooms(rooms);
+        rooms.forEach(room -> room.setHotel(hotel));
         session.save(hotel);
     }
+
 }
