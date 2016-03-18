@@ -157,7 +157,7 @@ public class UserController {
         user.setLastName(request.getParameter("lastName"));
         user.setEmail(request.getParameter("email"));
         user.setPassword(request.getParameter("password"));
-        user.setHotelOwner(request.getParameter("hotelOwner").equals("true"));
+        user.setHotelOwner(request.getParameter("hotelOwner").equals("on"));
 
         userService.saveUser(user);
 

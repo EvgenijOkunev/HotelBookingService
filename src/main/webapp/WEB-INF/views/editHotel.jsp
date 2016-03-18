@@ -88,7 +88,7 @@
             <div style="overflow: auto;">
                 <input type="button" name="Cancel" value="Отмена" class="input"
                        onclick="window.location='/hotels/management'"/>
-                <input type="button" name="addHotel" value="Сохранить" class="input" onclick="addNewHotel()"/>
+                <input type="button" name="addHotel" value="Сохранить" class="input" onclick="editHotel_js('${hotel.hotelId.toString()}')"/>
             </div>
 
         </div>

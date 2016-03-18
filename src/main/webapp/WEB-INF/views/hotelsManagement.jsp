@@ -4,6 +4,8 @@
 <html>
 <head>
     <link rel="stylesheet" href="../../resources/styles/tableStyles.css" type="text/css"/>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+    <script type="text/javascript" src="../../resources/hotelsManagement.js"></script>
     <title>Hotels Management</title>
 </head>
 <body>
@@ -41,8 +43,10 @@
                     <td style="min-width: 100px"><c:out value="${hotel.city.name}"/></td>
                     <td>
                         <a class="hor-minimalist-b-link" href="${editUrl}">Редактировать</a>
+
                         <p></p>
-                        <a class="hor-minimalist-b-link" href="${deleteUrl}">Удалить</a>
+                        <input id="${hotel.hotelId}" type="button" class="hor-minimalist-b-button" value="Удалить"
+                               onclick="deleteHotel_js(this);"/>
                     </td>
                 </tr>
             </c:forEach>
@@ -50,6 +54,17 @@
         </table>
     </c:if>
 
+</div>
+
+<div onclick="show('none')" id="wrap"></div>
+
+<div id="deleteConfirm">
+    <div><span id="deleteConfirmLabel">Вы действительно хотите удалить выбранный отель?</span></div>
+    <input type="button" name="Cancel" value="Отмена" class="input-button"
+           style="width: 100px; margin-top: 25px; margin-left: 48px; margin-right: 25px;"
+           onclick="show('none')"/>
+    <input id="deleteHotelButton" type="button" name="deleteHotel" value="Да, удалить" class="input-button"
+           style="width: 100px; margin-top: 25px; margin-left: 15px; margin-right: 0"/>
 </div>
 
 </body>

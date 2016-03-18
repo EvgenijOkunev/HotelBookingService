@@ -55,4 +55,20 @@ public class HotelService {
         session.save(hotel);
     }
 
+    public void updateHotel(Hotel hotel, String name, Blob description, Integer stars, City city, List<Room> rooms) {
+        Session session = sessionFactory.getCurrentSession();
+        hotel.setName(name);
+        hotel.setDescription(description);
+        hotel.setStars(stars);
+        hotel.setCity(city);
+        hotel.setRooms(rooms);
+        rooms.forEach(room -> room.setHotel(hotel));
+        session.update(hotel);
+    }
+
+    public void deleteHotel(Hotel hotel) {
+        Session session = sessionFactory.getCurrentSession();
+        session.delete(hotel);
+    }
+
 }

@@ -56,4 +56,12 @@ public class RoomService {
                 list();
     }
 
+    public void deleteHotelRooms(Hotel hotel) {
+        Session session = sessionFactory.getCurrentSession();
+        session.createCriteria(Room.class).
+                add(Restrictions.eq("hotel", hotel)).
+                list()
+                .forEach(session::delete);
+    }
+
 }

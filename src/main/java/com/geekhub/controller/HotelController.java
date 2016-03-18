@@ -19,10 +19,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.BufferedReader;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.sql.Blob;
 import java.util.ArrayList;
 import java.util.List;
@@ -44,11 +42,8 @@ public class HotelController {
 
     @RequestMapping(value = "/management", method = RequestMethod.GET)
     public String showAllUsers(Model model, HttpServletRequest request) throws Exception {
-
         List<Hotel> hotels = hotelService.getOwnersHotels((User) request.getSession().getAttribute("user"));
-
         model.addAttribute("hotels", hotels);
-
         return "hotelsManagement";
     }
 
@@ -63,26 +58,11 @@ public class HotelController {
     @ResponseBody
     public String addHotel(HttpServletRequest request) throws IOException {
         String name = request.getParameter("name");
-        byte[] descriptionBytes = request.getParameter("description").getBytes();
-        Session currentSession = sessionFactory.openSession();
-        Blob description = Hibernate.getLobCreator(currentSession).createBlob(descriptionBytes);
-        currentSession.close();
+        Blob description = stringToBlob(request.getParameter("description"));
         Integer stars = Integer.parseInt(request.getParameter("stars"));
         City city = cityService.getCityById(Integer.parseInt(request.getParameter("city")));
         User hotelOwner = (User) request.getSession().getAttribute("user");
-
-        List<Room> rooms = new ArrayList<>();
-        JSONArray roomsJSON = new JSONArray(request.getParameter("rooms"));
-        for (int i = 0; i < roomsJSON.length(); i++) {
-            JSONObject room = roomsJSON.getJSONObject(i);
-            int roomsQuantity = Integer.parseInt(room.getString("roomsQuantity"));
-            RoomType roomType = roomTypeService.getRoomTypeById(Integer.parseInt(room.getString("roomType")));
-            int numberOfGuests = Integer.parseInt(room.getString("numberOfGuests"));
-            Integer pricePerNight = Integer.parseInt(room.getString("pricePerNight"));
-            for (int j = 0; j < roomsQuantity; j++) {
-                rooms.add(roomService.createRoom(roomType, numberOfGuests, pricePerNight));
-            }
-        }
+        List<Room> rooms = roomsProcessing(request.getParameter("rooms"));
 
         hotelService.createHotel(name, description, stars, city, hotelOwner, rooms);
 
@@ -96,6 +76,54 @@ public class HotelController {
         model.addAttribute("cities", cityService.getAll());
         model.addAttribute("rooms", roomService.getInformationAboutHotelRooms(hotel, roomTypeService.getAll()));
         return "editHotel";
+    }
+
+    @RequestMapping(value = "/edit", method = RequestMethod.POST)
+    @ResponseBody
+    public String editHotel(@RequestParam(value = "hotelId", required = true) Integer hotelId, HttpServletRequest request) {
+        Hotel hotel = hotelService.getHotelById(hotelId);
+        String name = request.getParameter("name");
+        Blob description = stringToBlob(request.getParameter("description"));
+        Integer stars = Integer.parseInt(request.getParameter("stars"));
+        City city = cityService.getCityById(Integer.parseInt(request.getParameter("city")));
+        roomService.deleteHotelRooms(hotel);
+        List<Room> rooms = roomsProcessing(request.getParameter("rooms"));
+
+        hotelService.updateHotel(hotel, name, description, stars, city, rooms);
+
+        return "";
+    }
+
+    @RequestMapping(value = "/delete", method = RequestMethod.GET)
+    public void deleteHotel(@RequestParam(value = "hotelId", required = true) Integer hotelId, HttpServletResponse response) throws IOException {
+        Hotel hotel = hotelService.getHotelById(hotelId);
+        roomService.deleteHotelRooms(hotel);
+        hotelService.deleteHotel(hotel);
+        response.sendRedirect("/hotels/management");
+    }
+
+    private List<Room> roomsProcessing(String roomsParam) {
+        List<Room> rooms = new ArrayList<>();
+        JSONArray roomsJSON = new JSONArray(roomsParam);
+        for (int i = 0; i < roomsJSON.length(); i++) {
+            JSONObject room = roomsJSON.getJSONObject(i);
+            int roomsQuantity = Integer.parseInt(room.getString("roomsQuantity"));
+            RoomType roomType = roomTypeService.getRoomTypeById(Integer.parseInt(room.getString("roomType")));
+            int numberOfGuests = Integer.parseInt(room.getString("numberOfGuests"));
+            Integer pricePerNight = Integer.parseInt(room.getString("pricePerNight"));
+            for (int j = 0; j < roomsQuantity; j++) {
+                rooms.add(roomService.createRoom(roomType, numberOfGuests, pricePerNight));
+            }
+        }
+        return rooms;
+    }
+
+    private Blob stringToBlob(String parameter) {
+        byte[] descriptionBytes = parameter.getBytes();
+        Session currentSession = sessionFactory.openSession();
+        Blob description = Hibernate.getLobCreator(currentSession).createBlob(descriptionBytes);
+        currentSession.close();
+        return description;
     }
 
 }

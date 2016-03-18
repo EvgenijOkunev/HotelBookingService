@@ -1,5 +1,42 @@
 function addNewHotel() {
 
+    $.ajax({
+        type: 'POST',
+        url: '/hotels/add',
+        data: prepareHotelInformation(),
+        dataType: 'json',
+        async: true,
+        success: function () {
+            location.href = '/hotels/management';
+        }
+    });
+
+}
+
+function editHotel_js(hotelId) {
+
+    $.ajax({
+        type: 'POST',
+        url: '/hotels/edit?hotelId=' + hotelId.toString(),
+        data: prepareHotelInformation(),
+        dataType: 'json',
+        async: true,
+        success: function () {
+            location.href = '/hotels/management';
+        }
+    });
+
+}
+
+function deleteHotel_js(object) {
+    document.getElementById('deleteHotelButton').onclick = function () {
+        location.href = '/hotels/delete?hotelId=' + object.id;
+    };
+    show('block');
+}
+
+function prepareHotelInformation() {
+
     var name = document.getElementById('name').value;
     var description = document.getElementById('description').value;
     var stars = document.getElementById('stars').value;
@@ -18,21 +55,17 @@ function addNewHotel() {
         }
     }
 
-    $.ajax({
-        type: 'POST',
-        url: '/hotels/add',
-        data: {
-            name: name,
-            description: description,
-            stars: stars,
-            city: city,
-            rooms: JSON.stringify(rooms)
-        },
-        dataType: 'json',
-        async: true,
-        success: function () {
-            location.href = '/hotels/management';
-        }
-    });
+    return {
+        name: name,
+        description: description,
+        stars: stars,
+        city: city,
+        rooms: JSON.stringify(rooms)
+    };
 
+}
+
+function show(state) {
+    document.getElementById('deleteConfirm').style.display = state;
+    document.getElementById('wrap').style.display = state;
 }
