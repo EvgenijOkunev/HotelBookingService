@@ -1,6 +1,7 @@
 package com.geekhub.model;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "ROOMS")
@@ -24,6 +25,9 @@ public class Room {
     @ManyToOne
     @JoinColumn(name = "roomTypeId")
     private RoomType roomType;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "room")
+    private List<BookingRequest> bookingRequests;
 
     public Integer getRoomId() {
         return roomId;
@@ -63,6 +67,14 @@ public class Room {
 
     public void setRoomType(RoomType roomType) {
         this.roomType = roomType;
+    }
+
+    public List<BookingRequest> getBookingRequests() {
+        return bookingRequests;
+    }
+
+    public void setBookingRequests(List<BookingRequest> bookingRequests) {
+        this.bookingRequests = bookingRequests;
     }
 
 }

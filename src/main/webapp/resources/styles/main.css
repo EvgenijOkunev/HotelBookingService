@@ -38,3 +38,40 @@
     float: left;
     display: block;
 }
+
+.searchBar {
+    margin-top: 30px;
+    border: 1px solid #c3e5e8;
+    border-radius: 1px;
+    width: 900px;
+    padding: 10px;
+
+    font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif, serif;
+    color: #3f3f66;
+}
+
+.searchBar span {
+    margin-left: 15px;
+    margin-right: 5px;
+}
+
+.searchBar input[type="button"] {
+    padding: 5px 10px;
+    margin-left: 15px;
+    width: 100px;
+
+    background: #6678b1;
+    border: 1px solid #6678b1;
+    border-radius: 5px;
+    cursor: pointer;
+    color: white;
+}
+
+.searchBar input, select {
+    font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif, serif;
+    font-size: 14px;
+    color: #3f3f66;
+    background: #fff;
+    border: 1px solid #6678b1;
+    text-align: center;
+}

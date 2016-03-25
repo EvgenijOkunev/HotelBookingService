@@ -1,5 +1,6 @@
 package com.geekhub.service;
 
+import com.geekhub.model.BookingRequest;
 import com.geekhub.model.Hotel;
 import com.geekhub.model.Room;
 import com.geekhub.model.RoomType;
@@ -10,9 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 @Service
 @Transactional
@@ -58,10 +57,23 @@ public class RoomService {
 
     public void deleteHotelRooms(Hotel hotel) {
         Session session = sessionFactory.getCurrentSession();
-        session.createCriteria(Room.class).
-                add(Restrictions.eq("hotel", hotel)).
-                list()
+        session.createCriteria(Room.class)
+                .add(Restrictions.eq("hotel", hotel))
+                .list()
                 .forEach(session::delete);
+    }
+
+    public List<Room> getFreeRooms(List<BookingRequest> bookingRequests) {
+        Set<Integer> occupiedRoomsId = new HashSet<>();
+        bookingRequests.forEach(bookingRequest -> occupiedRoomsId.add(bookingRequest.getRoom().getRoomId()));
+        Session session = sessionFactory.getCurrentSession();
+        if (occupiedRoomsId.size() != 0) {
+            return (List<Room>) session.createCriteria(Room.class)
+                    .add(Restrictions.not(Restrictions.in("roomId", occupiedRoomsId)))
+                    .list();
+        } else {
+            return (List<Room>) session.createCriteria(Room.class).list();
+        }
     }
 
 }

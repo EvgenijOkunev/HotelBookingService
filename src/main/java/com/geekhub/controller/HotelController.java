@@ -1,10 +1,7 @@
 package com.geekhub.controller;
 
 import com.geekhub.model.*;
-import com.geekhub.service.CityService;
-import com.geekhub.service.HotelService;
-import com.geekhub.service.RoomService;
-import com.geekhub.service.RoomTypeService;
+import com.geekhub.service.*;
 import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -22,8 +19,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.Blob;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 @Controller
 @RequestMapping("/hotels")
@@ -37,6 +39,8 @@ public class HotelController {
     private RoomTypeService roomTypeService;
     @Autowired
     private RoomService roomService;
+    @Autowired
+    private BookingRequestService bookingRequestService;
     @Autowired
     private SessionFactory sessionFactory;
 
@@ -100,6 +104,23 @@ public class HotelController {
         roomService.deleteHotelRooms(hotel);
         hotelService.deleteHotel(hotel);
         response.sendRedirect("/hotels/management");
+    }
+
+    @RequestMapping(value = "/getSuitableHotels", method = RequestMethod.GET)
+    @ResponseBody
+    public String getSuitableHotels(@RequestParam(value = "arrivalDate", required = true) String arrivalDateParam,
+                                    @RequestParam(value = "departureDate", required = true) String departureDateParam,
+                                    @RequestParam(value = "city", required = true) String cityParam) throws ParseException {
+
+        DateFormat formatter = new SimpleDateFormat("E MMM dd yyyy HH:mm:ss z", Locale.ENGLISH);
+        Date arrivalDate = formatter.parse(arrivalDateParam);
+        Date departureDate = formatter.parse(departureDateParam);
+        City city = cityService.getCityById(Integer.parseInt(cityParam));
+
+        List<BookingRequest> bookingRequests = bookingRequestService.getBookingRequests(arrivalDate, departureDate);
+        List<Room> freeRooms = roomService.getFreeRooms(bookingRequests);
+
+        return hotelService.prepareSuitableHotelsInformation(freeRooms, city, roomTypeService.getAll());
     }
 
     private List<Room> roomsProcessing(String roomsParam) {
