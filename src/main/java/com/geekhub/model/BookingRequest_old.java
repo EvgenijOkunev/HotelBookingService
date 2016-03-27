@@ -5,7 +5,7 @@ import java.util.Date;
 
 @Entity
 @Table(name = "BOOKING_REQUEST")
-public class BookingRequest {
+public class BookingRequest_old {
 
     @Id
     @GeneratedValue
