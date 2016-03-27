@@ -101,5 +101,7 @@
     <orderEntry type="library" name="Maven: aopalliance:aopalliance:1.0" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-beans:4.2.4.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-expression:4.2.4.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.webjars:jquery-ui:1.9.2" level="project" />
+    <orderEntry type="library" name="Maven: org.webjars:jquery:1.8.2" level="project" />
   </component>
 </module>

@@ -7,6 +7,7 @@
     <title>Registration</title>
 </head>
 <body>
+<jsp:include page="topBar.jsp"/>
 <div id="wrapper">
 
     <form name="login-form" class="login-form" action="" method="post">

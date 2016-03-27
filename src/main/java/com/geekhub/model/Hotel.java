@@ -66,11 +66,12 @@ public class Hotel {
     public String getStringDescription() throws SQLException, IOException {
         String s;
         InputStream inStream = description.getBinaryStream();
-        InputStreamReader inStreamReader = new InputStreamReader(inStream);
+        InputStreamReader inStreamReader = new InputStreamReader(inStream, "UTF-8");
         BufferedReader reader = new BufferedReader(inStreamReader);
         StringBuilder stringBuilder = new StringBuilder();
         while ((s = reader.readLine()) != null) {
             stringBuilder.append(s);
+            stringBuilder.append("\n");
         }
         return stringBuilder.toString();
     }

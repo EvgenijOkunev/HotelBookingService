@@ -42,7 +42,9 @@
             </span>
         </c:if>
         <span class="left" style="padding-left: 30px">
-            <strong>${sessionScope.user.getEmail()}</strong>
+            <a href="<c:url value="/"/>">
+                <strong>На главную</strong>
+            </a>
         </span>
     </c:if>
 </div>

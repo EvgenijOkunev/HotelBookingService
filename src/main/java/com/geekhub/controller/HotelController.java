@@ -18,7 +18,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.sql.Blob;
+import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -84,7 +86,7 @@ public class HotelController {
 
     @RequestMapping(value = "/edit", method = RequestMethod.POST)
     @ResponseBody
-    public String editHotel(@RequestParam(value = "hotelId", required = true) Integer hotelId, HttpServletRequest request) {
+    public String editHotel(@RequestParam(value = "hotelId", required = true) Integer hotelId, HttpServletRequest request) throws UnsupportedEncodingException {
         Hotel hotel = hotelService.getHotelById(hotelId);
         String name = request.getParameter("name");
         Blob description = stringToBlob(request.getParameter("description"));
@@ -110,7 +112,7 @@ public class HotelController {
     @ResponseBody
     public String getSuitableHotels(@RequestParam(value = "arrivalDate", required = true) String arrivalDateParam,
                                     @RequestParam(value = "departureDate", required = true) String departureDateParam,
-                                    @RequestParam(value = "city", required = true) String cityParam) throws ParseException {
+                                    @RequestParam(value = "city", required = true) String cityParam) throws ParseException, IOException, SQLException {
 
         DateFormat formatter = new SimpleDateFormat("E MMM dd yyyy HH:mm:ss z", Locale.ENGLISH);
         Date arrivalDate = formatter.parse(arrivalDateParam);
@@ -139,8 +141,8 @@ public class HotelController {
         return rooms;
     }
 
-    private Blob stringToBlob(String parameter) {
-        byte[] descriptionBytes = parameter.getBytes();
+    private Blob stringToBlob(String parameter) throws UnsupportedEncodingException {
+        byte[] descriptionBytes = parameter.getBytes("UTF-8");
         Session currentSession = sessionFactory.openSession();
         Blob description = Hibernate.getLobCreator(currentSession).createBlob(descriptionBytes);
         currentSession.close();

@@ -11,7 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.IOException;
 import java.sql.Blob;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -71,11 +73,13 @@ public class HotelService {
         session.delete(hotel);
     }
 
-    public String prepareSuitableHotelsInformation(List<Room> freeRooms, City city, List<RoomType> roomTypes) {
+    public String prepareSuitableHotelsInformation(List<Room> freeRooms, City city, List<RoomType> roomTypes) throws IOException, SQLException {
+
+        Session session = sessionFactory.getCurrentSession();
 
         List<Room> freeRoomsInCity = freeRooms
                 .stream()
-                .filter(room -> room.getHotel().getCity().getCityId().equals(city.getCityId()))
+                .filter(room -> city == null || room.getHotel().getCity().getCityId().equals(city.getCityId()))
                 .collect(Collectors.toList());
 
         JSONArray hotelsInformation = new JSONArray();
@@ -91,15 +95,19 @@ public class HotelService {
             }
             if (hotelInformation == null) {
                 hotelInformation = new JSONObject();
-                hotelInformation.put("hotelName", hotel.getName());
                 hotelInformation.put("hotelId", hotel.getHotelId());
+                hotelInformation.put("hotelName", hotel.getName());
+                hotelInformation.put("hotelStars", hotel.getStars());
+                session.update(hotel);
+                hotelInformation.put("hotelRooms", hotel.getRooms().size());
+                hotelInformation.put("hotelDescription", hotel.getStringDescription());
                 hotelInformation.put("roomsQuantity", 0);
                 hotelsInformation.put(hotelInformation);
                 JSONArray roomsInformation = new JSONArray();
                 for (RoomType roomType : roomTypes) {
                     JSONObject roomTypeInformation = new JSONObject();
                     roomTypeInformation.put("roomTypeId", roomType.getRoomTypeId());
-                    roomTypeInformation.put("roomTypeName", roomType.getName());
+                    roomTypeInformation.put("roomTypeName", roomType.getDescription());
                     roomTypeInformation.put("quantity", 0);
                     roomTypeInformation.put("price", 0);
                     roomsInformation.put(roomTypeInformation);

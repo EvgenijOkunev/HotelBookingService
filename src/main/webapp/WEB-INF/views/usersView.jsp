@@ -10,6 +10,7 @@
     <title>Users</title>
 </head>
 <body>
+<jsp:include page="topBar.jsp"/>
 <h1 class="hor-minimalist-b-title">Users</h1>
 
 <c:url var="addUrl" value="/users/add"/>
@@ -37,8 +38,8 @@
                 <td><c:out value="${user.password}"/></td>
                 <td><c:if test="${user.hotelOwner}"> &#10004</c:if></td>
                 <td><a class="hor-minimalist-b-link" href="${addUrl}">Add</a> |
-                    <a  class="hor-minimalist-b-link" href="${editUrl}">Edit</a> |
-                    <a  class="hor-minimalist-b-link" href="${deleteUrl}">Delete</a>
+                    <a class="hor-minimalist-b-link" href="${editUrl}">Edit</a> |
+                    <a class="hor-minimalist-b-link" href="${deleteUrl}">Delete</a>
                 </td>
             </tr>
         </c:forEach>

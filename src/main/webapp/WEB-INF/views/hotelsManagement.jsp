@@ -20,6 +20,7 @@
                onclick="window.location='/hotels/add'"/>
     </div>
 
+    <%--@elvariable id="hotels" type="java.util.list"--%>
     <c:if test="${not empty hotels}">
         <table class="hor-minimalist-b">
             <thead>
@@ -37,7 +38,7 @@
                 <c:url var="deleteUrl" value="/hotels/delete?hotelId=${hotel.hotelId}"/>
                 <tr>
                     <td><c:out value="${hotel.name}"/></td>
-                    <td style="text-align: justify"><c:out
+                    <td style="text-align: justify; white-space: pre-line;"><c:out
                             value="${hotel.getStringDescription()}"/></td>
                     <td><c:out value="${hotel.stars}"/></td>
                     <td style="min-width: 100px"><c:out value="${hotel.city.name}"/></td>
