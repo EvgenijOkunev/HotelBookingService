@@ -4,7 +4,7 @@
     left: 50%;
     top: 50%;
     margin-left: -275px;
-    margin-top: -350px;
+    margin-top: -400px;
 }
 
 .header {
@@ -15,7 +15,9 @@
 }
 
 .data-form {
-    border: 1px solid #c3e5e8;
+    border: 1px solid #bec8d2;
+    border-radius: 5px;
+    background-color: #f2f4f8;
 }
 
 .data-form .content {
@@ -38,11 +40,6 @@
     color: #3f3f66;
     background: #fff;
     border: 1px solid #6678b1;
-
-}
-
-.data-form .content .input:hover, select:hover {
-    background-color: rgba(35, 188, 243, 0.15);
 }
 
 .data-form .content .input[type="button"] {

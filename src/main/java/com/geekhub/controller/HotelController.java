@@ -68,7 +68,7 @@ public class HotelController {
         Integer stars = Integer.parseInt(request.getParameter("stars"));
         City city = cityService.getCityById(Integer.parseInt(request.getParameter("city")));
         User hotelOwner = (User) request.getSession().getAttribute("user");
-        List<Room> rooms = roomsProcessing(request.getParameter("rooms"));
+        List<Room> rooms = roomsProcessing(request.getParameter("rooms"), null);
 
         hotelService.createHotel(name, description, stars, city, hotelOwner, rooms);
 
@@ -92,8 +92,8 @@ public class HotelController {
         Blob description = stringToBlob(request.getParameter("description"));
         Integer stars = Integer.parseInt(request.getParameter("stars"));
         City city = cityService.getCityById(Integer.parseInt(request.getParameter("city")));
-        roomService.deleteHotelRooms(hotel);
-        List<Room> rooms = roomsProcessing(request.getParameter("rooms"));
+        //roomService.deleteHotelRooms(hotel);
+        List<Room> rooms = roomsProcessing(request.getParameter("rooms"), hotel);
 
         hotelService.updateHotel(hotel, name, description, stars, city, rooms);
 
@@ -125,7 +125,7 @@ public class HotelController {
         return hotelService.prepareSuitableHotelsInformation(freeRooms, city, roomTypeService.getAll());
     }
 
-    private List<Room> roomsProcessing(String roomsParam) {
+    private List<Room> roomsProcessing(String roomsParam, Hotel hotel) {
         List<Room> rooms = new ArrayList<>();
         JSONArray roomsJSON = new JSONArray(roomsParam);
         for (int i = 0; i < roomsJSON.length(); i++) {
@@ -134,9 +134,15 @@ public class HotelController {
             RoomType roomType = roomTypeService.getRoomTypeById(Integer.parseInt(room.getString("roomType")));
             int numberOfGuests = Integer.parseInt(room.getString("numberOfGuests"));
             Integer pricePerNight = Integer.parseInt(room.getString("pricePerNight"));
-            for (int j = 0; j < roomsQuantity; j++) {
-                rooms.add(roomService.createRoom(roomType, numberOfGuests, pricePerNight));
+            List<Room> existingRooms = roomService.getHotelRoomsByType(hotel, roomType);
+            for (int j = 0; j < roomsQuantity - existingRooms.size(); j++) {
+                existingRooms.add(roomService.createRoom(roomType, numberOfGuests, pricePerNight));
             }
+            existingRooms.forEach(existingRoom -> {
+                existingRoom.setNumberOfGuests(numberOfGuests);
+                existingRoom.setPricePerNight(pricePerNight);
+            });
+            rooms.addAll(existingRooms);
         }
         return rooms;
     }

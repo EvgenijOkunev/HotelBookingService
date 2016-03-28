@@ -99,9 +99,22 @@ public class HotelService {
                 hotelInformation.put("hotelName", hotel.getName());
                 hotelInformation.put("hotelStars", hotel.getStars());
                 session.update(hotel);
-                hotelInformation.put("hotelRooms", hotel.getRooms().size());
+                List<Room> hotelRooms = hotel.getRooms();
+                hotelInformation.put("hotelRooms", hotelRooms.size());
                 hotelInformation.put("hotelDescription", hotel.getStringDescription());
                 hotelInformation.put("roomsQuantity", 0);
+                int cheapestRoom = hotelRooms
+                        .stream()
+                        .min((o1, o2) -> Integer.compare(o1.getPricePerNight(), o2.getPricePerNight()))
+                        .get()
+                        .getPricePerNight();
+                hotelInformation.put("cheapestRoom", cheapestRoom);
+                int mostExpansiveRoom = hotelRooms
+                        .stream()
+                        .max((o1, o2) -> Integer.compare(o1.getPricePerNight(), o2.getPricePerNight()))
+                        .get()
+                        .getPricePerNight();
+                hotelInformation.put("mostExpansiveRoom", mostExpansiveRoom);
                 hotelsInformation.put(hotelInformation);
                 JSONArray roomsInformation = new JSONArray();
                 for (RoomType roomType : roomTypes) {
@@ -126,7 +139,6 @@ public class HotelService {
             }
             roomTypeInformation.put("quantity", (int) roomTypeInformation.get("quantity") + 1);
             roomTypeInformation.put("price", room.getPricePerNight());
-          //  hotelInformation.put(room.getRoomType().getName(), roomTypeInformation);
         }
 
         return new JSONObject().put("hotelsInformation", hotelsInformation).toString();

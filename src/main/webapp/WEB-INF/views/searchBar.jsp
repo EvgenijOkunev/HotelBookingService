@@ -57,7 +57,7 @@
             <option value="${city.cityId}">${city.name}</option>
         </c:forEach>
     </select>
-    <input type="button" name="Search" value="Найти" class="input" onclick="searchSuitableHotels()"/>
+    <input type="button" name="Search" value="Найти отели" class="input" onclick="searchSuitableHotels()"/>
 </div>
 
 </html>

@@ -27,7 +27,7 @@
             </label>
 
             <label> Описание
-                <textarea id="description" name="description" class="input">${hotel.getStringDescription()}</textarea>
+                <textarea id="description" name="description" style="height: 150px" class="input">${hotel.getStringDescription()}</textarea>
             </label>
 
             <label> Количество звезд

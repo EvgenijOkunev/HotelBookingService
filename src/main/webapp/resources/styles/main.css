@@ -8,6 +8,7 @@
     left: 0;
     width: 100%;
     font-family: calibri, serif;
+    font-weight: normal;
     box-shadow: 1px 0 2px rgba(0, 0, 0, 0.2);
     -webkit-animation: slideOut 0.5s ease-in-out 0.3s backwards;
 }
@@ -35,11 +36,15 @@
 }
 
 .searchBar {
-    margin-top: 30px;
-    border: 1px solid #c3e5e8;
-    border-radius: 1px;
+    margin-top: 40px;
+    border: 1px solid #bec8d2;
+    border-radius: 3px;
+    background-color: #f2f4f8;
     width: 900px;
     padding: 10px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 
     font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif, serif;
     color: #3f3f66;
@@ -52,8 +57,8 @@
 
 .searchBar input[type="button"] {
     padding: 5px 10px;
-    margin-left: 15px;
-    width: 100px;
+    margin-left: 45px;
+    width: 120px;
 
     background: #6678b1;
     border: 1px solid #6678b1;
@@ -73,32 +78,39 @@
 
 .searchResult {
     margin-top: 20px;
-    border: 1px solid #6678b1;
-    width: 80%;
+    border: 1px solid #bec8d2;
+    border-radius: 3px;
+    width: 920px;
+    overflow: auto;
+    padding-bottom: 10px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 
     font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif, serif;
     font-size: 12px;
-    border-collapse: collapse;
+    color: #3f3f66;
 }
 
-.searchResult th {
-    border-bottom: 1px solid #6678b1;
-    border-right: 1px solid #6678b1;
-    color: #669;
-    padding: 6px 8px;
-    vertical-align: top;
-}
-
-.searchResult td {
-    border-bottom: 1px solid #6678b1;
-    border-right: 1px solid #6678b1;
-    color: #669;
-    padding: 6px 8px;
-    vertical-align: top;
+.searchResult:hover {
+    background-color: #f2f4f8;
 }
 
 .searchResult span {
     margin-left: 15px;
+}
+
+.searchResult input[type="button"] {
+    padding: 5px 10px;
+    margin-left: 45px;
+    margin-top: 15px;
+    width: 120px;
+
+    background: #6678b1;
+    border: 1px solid #6678b1;
+    border-radius: 5px;
+    cursor: pointer;
+    color: white;
 }
 
 .freeRoms {

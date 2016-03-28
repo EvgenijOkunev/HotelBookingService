@@ -47,7 +47,7 @@ public class RoomService {
         return roomsList;
     }
 
-    private List<Room> getHotelRoomsByType(Hotel hotel, RoomType roomType) {
+    public List<Room> getHotelRoomsByType(Hotel hotel, RoomType roomType) {
         Session session = sessionFactory.getCurrentSession();
         return session.createCriteria(Room.class).
                 add(Restrictions.eq("hotel", hotel)).
