@@ -1,20 +1,23 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <link href="../../resources/styles/loginForm.css" rel="stylesheet" type="text/css"/>
+    <link href="../../resources/styles/registrationForm.css" rel="stylesheet" type="text/css"/>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
     <script type="text/javascript" src="../../resources/usersValidation.js"></script>
+    <script type="text/javascript" src="../../resources/jquery.mask.js"></script>
     <title>Registration</title>
 </head>
 <body>
 <jsp:include page="topBar.jsp"/>
+
 <div id="wrapper">
 
     <form name="login-form" class="login-form" action="" method="post">
 
         <div class="header">
             <h1>Регистрация</h1>
-            <span>Для регистраци введите все необходимые данные</span>
+
+            <p>Для регистраци введите все необходимые данные</p>
         </div>
 
         <div class="content">
@@ -28,20 +31,27 @@
                 <input id="email" name="email" type="email" class="input" placeholder="Электронная почта"/>
             </label>
             <label>
+                <input id="phoneNumber" name="email" type="text" class="input" placeholder="Номер телефона"/>
+            </label>
+            <label>
                 <input id="password" name="password" type="password" class="input" placeholder="Пароль"/>
             </label>
+            <label>
+                <input id="passwordConfirm" name="password" type="password" class="input"
+                       placeholder="Подтвердите пароль"/>
+            </label>
 
-            <div style="float: right">
-                <label style="width: 50%; vertical-align: middle; font-size: 15px"> Владец отеля
-                    <input id="hotelOwner" name="hotelOwner" type="checkbox"
-                           style="width: 30px; vertical-align: middle"/>
+            <div style="float: right; margin-right: 1px">
+                <label id="hotelOwnerLabel"> Владец отеля
+                    <input id="hotelOwner" name="hotelOwner" type="checkbox"/>
                 </label>
             </div>
             <div style="clear: right; padding-top: 10px; height: 22px"><span id="errorText"></span></div>
         </div>
 
         <div class="footer">
-            <input type="button" name="registration" value="Регистрация" class="button" onclick="registrationValidate()"/>
+            <input type="button" name="registration" value="Регистрация" class="button"
+                   onclick="registrationValidate()"/>
         </div>
 
     </form>

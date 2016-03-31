@@ -14,13 +14,14 @@
 
         <div class="header">
             <h1>Авторизация</h1>
-            <span>Для входа на сайт введите ваши регистрационные данные</span>
+            <p>Для входа введите ваши регистрационные данные</p>
         </div>
 
         <div class="content">
             <label>
                 <input id = "email" name="email" type="text" class="input" placeholder="Email"/>
             </label>
+            <p></p>
             <label>
                 <input id = "password" name="password" type="password" class="input" placeholder="Пароль"/>
             </label>

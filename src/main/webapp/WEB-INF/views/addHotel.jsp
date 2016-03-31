@@ -26,7 +26,7 @@
             </label>
 
             <label> Описание
-                <textarea id="description" name="description" class="input"></textarea>
+                <textarea id="description" name="description" style="height: 150px" class="input"></textarea>
             </label>
 
             <label> Количество звезд

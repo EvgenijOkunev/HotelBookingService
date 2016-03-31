@@ -59,6 +59,7 @@ function registrationValidate() {
     var firstName = document.getElementById('firstName').value;
     var lastName = document.getElementById('lastName').value;
     var email = document.getElementById('email').value;
+    var phoneNumber = document.getElementById('phoneNumber').value;
     var password = document.getElementById('password').value;
     var hotelOwner = document.getElementById('hotelOwner').value;
 
@@ -98,3 +99,7 @@ function registrationValidate() {
     }
 
 }
+
+jQuery(function($){
+    $("#phoneNumber").mask("+99 (999) 999-99-99");
+});
