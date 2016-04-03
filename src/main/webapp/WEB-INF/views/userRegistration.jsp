@@ -12,7 +12,7 @@
 
 <div id="wrapper">
 
-    <form name="login-form" class="login-form" action="" method="post">
+    <form name="login-form" class="registration-form" action="" method="post">
 
         <div class="header">
             <h1>Регистрация</h1>
@@ -31,22 +31,23 @@
                 <input id="email" name="email" type="email" class="input" placeholder="Электронная почта"/>
             </label>
             <label>
-                <input id="phoneNumber" name="email" type="text" class="input" placeholder="Номер телефона"/>
+                <input id="phoneNumber" name="phoneNumber" type="text" class="input" placeholder="Номер телефона"/>
             </label>
             <label>
                 <input id="password" name="password" type="password" class="input" placeholder="Пароль"/>
             </label>
             <label>
-                <input id="passwordConfirm" name="password" type="password" class="input"
+                <input id="passwordConfirm" name="passwordConfirm" type="password" class="input"
                        placeholder="Подтвердите пароль"/>
             </label>
 
-            <div style="float: right; margin-right: 1px">
+            <div style="float: right">
                 <label id="hotelOwnerLabel"> Владец отеля
                     <input id="hotelOwner" name="hotelOwner" type="checkbox"/>
                 </label>
             </div>
-            <div style="clear: right; padding-top: 10px; height: 22px"><span id="errorText"></span></div>
+            <div style="clear: right; padding-top: 8px;  padding-bottom: 8px; height: 22px"><span id="errorText"></span>
+            </div>
         </div>
 
         <div class="footer">

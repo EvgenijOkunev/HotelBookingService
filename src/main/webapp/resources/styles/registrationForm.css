@@ -11,19 +11,16 @@ body {
 
 #wrapper {
     width: 350px;
-    height: 800px;
+    height: 580px;
     position: absolute;
     left: 50%;
+    top: 50%;
     margin-left: -175px;
-    margin-top: -280px;
+    margin-top: -290px;
 }
 
-.login-form {
+.registration-form {
     width: 350px;
-    margin: 0 auto;
-    position: relative;
-    z-index: 5;
-
     border: 1px solid #bec8d2;
     border-radius: 5px;
     background-color: #f2f4f8;
@@ -32,30 +29,29 @@ body {
     color: #3f3f66;
 }
 
-.login-form .header {
+.registration-form .header {
     padding: 20px 30px 30px 30px;
 }
 
-.login-form .header h1 {
+.registration-form .header h1 {
     font-size: 28px;
     text-align: center;
     margin-bottom: 10px;
 }
 
-.login-form .header p {
+.registration-form .header p {
     font-size: 15px;
     text-align: center;
 }
 
-.login-form .content {
+.registration-form .content {
     padding: 0 30px 15px 30px;
 }
 
-.login-form .content .input {
-    width: 270px;
+.registration-form .content .input {
+    width: 290px;
     padding: 5px 10px;
     margin-bottom: 15px;
-    margin-left: 10px;
 
     font-size: 16px;
     color: #3f3f66;
@@ -63,12 +59,12 @@ body {
     border: 1px solid #6678b1 ;
 }
 
-.login-form .content .input:hover {
+.registration-form .content .input:hover {
     border: 1px solid #9b302c;
     box-shadow: 0 0 0 1px #9b302c;
 }
 
-.login-form .content .input:focus {
+.registration-form .content .input:focus {
     border: 1px solid #9b302c;
     box-shadow: 0 0 0 1px #9b302c;
 }
@@ -80,21 +76,21 @@ body {
 }
 
 #hotelOwner {
-    width: 30px;
+    margin-left: 10px;
     vertical-align: middle;
 }
 
 #errorText {
     font-size: 14px;
-    color: #9b302c;
+    color: #ea3428;
 }
 
-.login-form .footer {
-    padding: 5px 40px 20px 15px;
+.registration-form .footer {
+    padding: 5px 30px 20px 15px;
     overflow: auto;
 }
 
-.login-form .footer .button {
+.registration-form .footer .button {
     float: right;
     padding: 5px 10px;
 
@@ -109,7 +105,7 @@ body {
     letter-spacing: 1px;
 }
 
-.login-form .footer .button:hover {
+.registration-form .footer .button:hover {
     background: #9b302c;
     border: 1px solid #9b302c;
 }

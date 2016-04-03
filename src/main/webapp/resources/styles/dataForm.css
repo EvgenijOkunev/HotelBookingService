@@ -29,7 +29,7 @@
     color: #039;
 }
 
-.data-form .content .input, select {
+.data-form .content .input {
     width: 100%;
     padding: 2px 15px;
     margin-bottom: 15px;
@@ -39,6 +39,30 @@
     color: #3f3f66;
     background: #fff;
     border: 1px solid #6678b1;
+}
+
+.data-form .content .input:hover {
+    border: 1px solid #9b302c;
+    box-shadow: 0 0 0 1px #9b302c;
+}
+
+.data-form .content select {
+    width: 100%;
+    padding: 2px 15px;
+    margin-bottom: 15px;
+
+    font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif, serif;
+    font-size: 14px;
+    color: #3f3f66;
+    text-align: center;
+
+    background: #fff;
+    border: 1px solid #6678b1;
+}
+
+.data-form .content select:hover {
+    border: 1px solid #9b302c;
+    box-shadow: 0 0 0 1px #9b302c;
 }
 
 .data-form .content .input[type="button"] {
@@ -54,4 +78,9 @@
     border-radius: 5px;
     cursor: pointer;
     color: white;
+}
+
+.data-form .content .input[type="button"]:hover {
+    background: #9b302c;
+    border: 1px solid #9b302c;
 }

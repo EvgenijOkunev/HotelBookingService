@@ -1,24 +1,29 @@
-function checkFieldsContent(firstName, lastName, email, password) {
+function checkFieldsContent(firstName, lastName, email, phoneNumber, password, passwordConfirm) {
 
     var errorText = document.getElementById('errorText');
 
-    if (firstName.length == 0 || lastName.length == 0 || email.length == 0 || password.length == 0) {
+    if (firstName.length == 0 || lastName.length == 0 || email.length == 0 ||
+        phoneNumber.length == 0 || password.length == 0 || passwordConfirm.length == 0) {
         errorText.innerHTML = 'Все поля обязательны для заполнения';
         return false;
     }
 
-    //else {
-    //    at = email.indexOf("@");
-    //    dot = email.indexOf(".");
-    //    //Если поле не содержит эти символы знач email введен не верно
-    //    if (at < 1 || dot < 1) {
-    //        document.getElementById('emailMessage').innerHTML = '*email введен не верно';
-    //        thereWasSomeErrors = true;
-    //    }
-    //}
+    if (email.indexOf("@") < 1 || email.indexOf(".") < 1) {
+        errorText.innerHTML = 'Email введен не верно';
+    }
+
+    if (phoneNumber.length < 19) {
+        errorText.innerHTML = 'Номер телефона введен неправильно';
+        return false;
+    }
 
     if (password.length < 6) {
-        errorText.innerHTML = 'пароль должен состоять минимум из шести символов';
+        errorText.innerHTML = 'Пароль должен состоять минимум из шести символов';
+        return false;
+    }
+
+    if (password != passwordConfirm) {
+        errorText.innerHTML = 'Пароли не совпадают';
         return false;
     }
 
@@ -54,6 +59,19 @@ function loginValidate() {
 
 }
 
+function userProfileValidate() {
+
+    var firstName = document.getElementById('firstName').value;
+    var lastName = document.getElementById('lastName').value;
+    var email = document.getElementById('email').value;
+    var phoneNumber = document.getElementById('phoneNumber').value;
+    var password = document.getElementById('password').value;
+    var passwordConfirm = document.getElementById('passwordConfirm').value;
+
+    return checkFieldsContent(firstName, lastName, email, phoneNumber, password, passwordConfirm);
+
+}
+
 function registrationValidate() {
 
     var firstName = document.getElementById('firstName').value;
@@ -61,9 +79,11 @@ function registrationValidate() {
     var email = document.getElementById('email').value;
     var phoneNumber = document.getElementById('phoneNumber').value;
     var password = document.getElementById('password').value;
+    var passwordConfirm = document.getElementById('passwordConfirm').value;
     var hotelOwner = document.getElementById('hotelOwner').value;
+    var errorText = document.getElementById('errorText');
 
-    if (checkFieldsContent(firstName, lastName, email, password)) {
+    if (checkFieldsContent(firstName, lastName, email, phoneNumber, password, passwordConfirm)) {
 
         $.ajax({
             type: 'POST',
@@ -81,25 +101,29 @@ function registrationValidate() {
                         firstName: firstName,
                         lastName: lastName,
                         email: email,
+                        phoneNumber: phoneNumber,
                         password: password,
                         hotelOwner: hotelOwner
                     },
                     dataType: 'json',
                     async: true,
                     success: function () {
-                        location.href = "/users/show-all";
+                        location.href = "/";
                     }
                 });
             },
             error: function () {
-                errorText.innerHTML = 'пользователь с таким email уже зарегистрирован';
+                errorText.innerHTML = 'Пользователь с таким email уже зарегистрирован';
             }
         });
 
     }
+    else {
+        return false;
+    }
 
 }
 
-jQuery(function($){
+jQuery(function ($) {
     $("#phoneNumber").mask("+99 (999) 999-99-99");
 });

@@ -37,7 +37,7 @@ public class UserService {
      * @param userId the id of existing user
      * @return an instance of user
      */
-    public User getUserById(int userId) {
+    public User getUser(int userId) {
         Session session = sessionFactory.getCurrentSession();
         return (User) session.createCriteria(User.class)
                 .add(Restrictions.eq("userId", userId)).uniqueResult();
@@ -49,7 +49,7 @@ public class UserService {
      *
      * @return an instance of user
      */
-    public User getUserByEmail(String email) {
+    public User getUser(String email) {
         Session session = sessionFactory.getCurrentSession();
         return (User) session.createCriteria(User.class)
                 .add(Restrictions.eq("email", email)).uniqueResult();
@@ -60,7 +60,7 @@ public class UserService {
      *
      * @return an instance of user
      */
-    public User getUserByEmailAndPassword(String email, String password) {
+    public User getUser(String email, String password) {
         Session session = sessionFactory.getCurrentSession();
         return (User) session.createCriteria(User.class)
                 .add(Restrictions.eq("email", email))
@@ -101,6 +101,7 @@ public class UserService {
 
         // Assign updated values to this person
         existingUser.setEmail(user.getEmail());
+        existingUser.setPhoneNumber(user.getPhoneNumber());
         existingUser.setPassword(user.getPassword());
         existingUser.setFirstName(user.getFirstName());
         existingUser.setLastName(user.getLastName());

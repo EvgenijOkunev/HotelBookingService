@@ -29,7 +29,7 @@
         </div>
 
         <div class="footer">
-            <input type="button" name="login" value="ВОЙТИ" class="button" onclick="loginValidate()"/>
+            <input type="button" name="login" value="Войти" class="button" onclick="loginValidate()"/>
         </div>
 
     </form>

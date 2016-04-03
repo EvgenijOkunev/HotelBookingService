@@ -67,13 +67,47 @@
     color: white;
 }
 
-.searchBar input, select {
+.searchBar input[type="button"]:hover {
+    background: #9b302c;
+    border: 1px solid #9b302c;
+}
+
+.searchBar input {
     font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif, serif;
     font-size: 14px;
     color: #3f3f66;
     background: #fff;
     border: 1px solid #6678b1;
     text-align: center;
+}
+
+.searchBar select {
+    font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif, serif;
+    font-size: 14px;
+    color: #3f3f66;
+    background: #fff;
+    border: 1px solid #6678b1;
+    text-align: center;
+}
+
+.searchBar input:hover {
+    border: 1px solid #9b302c;
+    box-shadow: 0 0 0 1px #9b302c;
+}
+
+.searchBar select:hover {
+    border: 1px solid #9b302c;
+    box-shadow: 0 0 0 1px #9b302c;
+}
+
+.searchBar input:focus {
+    border: 1px solid #9b302c;
+    box-shadow: 0 0 0 1px #9b302c;
+}
+
+.searchBar select:focus {
+    border: 1px solid #9b302c;
+    box-shadow: 0 0 0 1px #9b302c;
 }
 
 .searchResult {

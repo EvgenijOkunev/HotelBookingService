@@ -59,9 +59,6 @@ public class UserController {
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public String add(@ModelAttribute("userAttribute") User user) {
 
-        // The "userAttribute" model has been passed to the controller from the JSP
-        // We use the name "userAttribute" because the JSP uses that name
-
         user.setRole(user.getHotelOwner() ? roleService.getRoleByName("Hotel owner") : roleService.getRoleByName("User"));
         userService.saveUser(user);
 
@@ -78,7 +75,6 @@ public class UserController {
     public String delete(@RequestParam(value = "userId", required = true) Integer userId, Model model) {
 
         userService.deleteUser(userId);
-
         model.addAttribute("userId", userId);
 
         return "deletedUser";
@@ -89,39 +85,25 @@ public class UserController {
      *
      * @return the name of the JSP page
      */
-    @RequestMapping(value = "/edit", method = RequestMethod.GET)
-    public String getEdit(@RequestParam(value = "userId", required = true) Integer userId, Model model) {
+    @RequestMapping(value = "/editUserProfile", method = RequestMethod.GET)
+    public String getEdit(HttpServletRequest request, Model model) {
 
-        // Retrieve existing Person and add to model
-        model.addAttribute("userAttribute", userService.getUserById(userId));
+        User user = (User) request.getSession().getAttribute("user");
+        model.addAttribute("userAttribute", user);
 
-        return "editUser";
+        return "editUserProfile";
     }
 
     /**
      * Edits an existing person by delegating the processing to UserService.
-     * Displays a confirmation JSP page
-     *
-     * @return the name of the JSP page
      */
-    @RequestMapping(value = "/edit", method = RequestMethod.POST)
-    public String saveEdit(@ModelAttribute("userAttribute") User user,
-                           @RequestParam(value = "userId", required = true) Integer userId,
-                           Model model) {
-
-        // The "userAttribute" model has been passed to the controller from the JSP
-        // We use the name "userAttribute" because the JSP uses that name
-
-        // We manually assign the id because we disabled it in the JSP page
-        // When a field is disabled it will not be included in the ModelAttribute
-        user.setUserId(userId);
+    @RequestMapping(value = "/editUserProfile", method = RequestMethod.POST)
+    public void saveEdit(@ModelAttribute("userAttribute") User user, HttpServletRequest request, HttpServletResponse response) throws IOException {
 
         userService.editUser(user);
+        request.getSession().setAttribute("user", user);
 
-        // Add id reference to Model
-        model.addAttribute("userId", userId);
-
-        return "editedUser";
+        response.sendRedirect("/");
     }
 
     @RequestMapping(value = "/userLoginProcessing", method = RequestMethod.POST)
@@ -129,12 +111,13 @@ public class UserController {
     public String userLoginProcessing(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
-        User user = userService.getUserByEmailAndPassword(email, password);
+        User user = userService.getUser(email, password);
         if (user != null) {
             request.getSession().setAttribute("user", user);
         } else {
             response.sendError(500);
         }
+
         return "";
     }
 
@@ -142,10 +125,11 @@ public class UserController {
     @ResponseBody
     public String checkEmailUnique(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String email = request.getParameter("email");
-        User user = userService.getUserByEmail(email);
+        User user = userService.getUser(email);
         if (user != null) {
             response.sendError(500);
         }
+
         return "";
     }
 
@@ -156,6 +140,7 @@ public class UserController {
         user.setFirstName(request.getParameter("firstName"));
         user.setLastName(request.getParameter("lastName"));
         user.setEmail(request.getParameter("email"));
+        user.setPhoneNumber(request.getParameter("phoneNumber"));
         user.setPassword(request.getParameter("password"));
         user.setHotelOwner(request.getParameter("hotelOwner").equals("on"));
 
