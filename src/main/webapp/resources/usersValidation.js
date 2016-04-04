@@ -1,4 +1,4 @@
-function checkFieldsContent(firstName, lastName, email, phoneNumber, password, passwordConfirm) {
+function checkUserFieldsContent(firstName, lastName, email, phoneNumber, password, passwordConfirm) {
 
     var errorText = document.getElementById('errorText');
 
@@ -68,7 +68,7 @@ function userProfileValidate() {
     var password = document.getElementById('password').value;
     var passwordConfirm = document.getElementById('passwordConfirm').value;
 
-    return checkFieldsContent(firstName, lastName, email, phoneNumber, password, passwordConfirm);
+    return checkUserFieldsContent(firstName, lastName, email, phoneNumber, password, passwordConfirm);
 
 }
 
@@ -80,10 +80,10 @@ function registrationValidate() {
     var phoneNumber = document.getElementById('phoneNumber').value;
     var password = document.getElementById('password').value;
     var passwordConfirm = document.getElementById('passwordConfirm').value;
-    var hotelOwner = document.getElementById('hotelOwner').value;
+    var hotelOwner = document.getElementById('hotelOwner').checked;
     var errorText = document.getElementById('errorText');
 
-    if (checkFieldsContent(firstName, lastName, email, phoneNumber, password, passwordConfirm)) {
+    if (checkUserFieldsContent(firstName, lastName, email, phoneNumber, password, passwordConfirm)) {
 
         $.ajax({
             type: 'POST',
@@ -108,7 +108,7 @@ function registrationValidate() {
                     dataType: 'json',
                     async: true,
                     success: function () {
-                        location.href = "/";
+                        location.href = "/login";
                     }
                 });
             },

@@ -132,10 +132,11 @@ public class HotelController {
             JSONObject room = roomsJSON.getJSONObject(i);
             int roomsQuantity = Integer.parseInt(room.getString("roomsQuantity"));
             RoomType roomType = roomTypeService.getRoomTypeById(Integer.parseInt(room.getString("roomType")));
-            int numberOfGuests = Integer.parseInt(room.getString("numberOfGuests"));
-            Integer pricePerNight = Integer.parseInt(room.getString("pricePerNight"));
+            int numberOfGuests = Integer.parseInt(room.getString("numberOfGuests").equals("") ? "0" : room.getString("numberOfGuests"));
+            Integer pricePerNight = Integer.parseInt(room.getString("pricePerNight").equals("") ? "0" : room.getString("pricePerNight"));
             List<Room> existingRooms = roomService.getHotelRoomsByType(hotel, roomType);
-            for (int j = 0; j < roomsQuantity - existingRooms.size(); j++) {
+            int existingRoomsSize = existingRooms.size();
+            for (int j = 0; j < roomsQuantity - existingRoomsSize; j++) {
                 existingRooms.add(roomService.createRoom(roomType, numberOfGuests, pricePerNight));
             }
             existingRooms.forEach(existingRoom -> {

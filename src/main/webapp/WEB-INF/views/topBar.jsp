@@ -29,15 +29,15 @@
                 <strong>профиль</strong>
             </a>
         </span>
-        <c:if test="${not empty sessionScope.user.getHotelOwner()}">
+        <span class="right">
+            <a href="<c:url value="/booking/management"/>">
+                <strong>заявки на бронирование</strong>
+            </a>
+        </span>
+        <c:if test="${sessionScope.user.getHotelOwner()}">
             <span class="right">
                 <a href="<c:url value="/hotels/management"/>">
                     <strong>управление отелями</strong>
-                </a>
-            </span>
-            <span class="right">
-                <a href="<c:url value="/booking/management"/>">
-                    <strong>заявки на бронирование</strong>
                 </a>
             </span>
         </c:if>

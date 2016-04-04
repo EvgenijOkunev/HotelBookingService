@@ -63,14 +63,21 @@
                 <c:forEach items="${roomTypes}" var="roomType">
                     <tr id="${roomType.roomTypeId}">
                         <td><c:out value="${roomType.description}"/></td>
-                        <td><input type="text" name="roomsQuantity" pattern="\d*"/></td>
-                        <td><input type="text" name="numberOfGuests" pattern="\d*"/></td>
-                        <td><input type="text" name="pricePerNight" pattern="\d*"/></td>
+                        <td>
+                            <input type="text" name="roomsQuantity" pattern="\d*" value="" title=""/>
+                        </td>
+                        <td>
+                            <input type="text" name="numberOfGuests" pattern="\d*" value="" title=""/>
+                        </td>
+                        <td>
+                            <input type="text" name="pricePerNight" pattern="\d*" value="" title=""/>
+                        </td>
                     </tr>
                 </c:forEach>
                 </tbody>
             </table>
 
+            <div style="padding-top: 8px;  padding-bottom: 8px; height: 22px"><span id="errorText"></span></div>
 
             <div style="overflow: auto;">
                 <input type="button" name="Cancel" value="Отмена" class="input"

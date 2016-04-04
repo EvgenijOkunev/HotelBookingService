@@ -12,7 +12,8 @@
 
 <div id="wrapper">
 
-    <form name="login-form" class="registration-form" action="" method="post">
+    <form name="login-form" class="registration-form" action="" method="post"
+          onsubmit="registrationValidate(); return false">
 
         <div class="header">
             <h1>Регистрация</h1>
@@ -51,8 +52,7 @@
         </div>
 
         <div class="footer">
-            <input type="button" name="registration" value="Регистрация" class="button"
-                   onclick="registrationValidate()"/>
+            <input type="submit" name="registration" value="Регистрация" class="button"/>
         </div>
 
     </form>

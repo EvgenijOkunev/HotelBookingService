@@ -1,4 +1,7 @@
+var searchResults = [];
+
 function searchSuitableHotels() {
+
     var arrivalDate = $("#arrivalDate").datepicker("getDate");
     var departureDate = $("#departureDate").datepicker("getDate");
     var city = $("#city").val();
@@ -10,8 +13,12 @@ function searchSuitableHotels() {
         dataType: 'json',
         async: true,
         success: function (result) {
+
+            clearSearchResults();
+
             var mainBody = document.getElementById('mainBody');
             var hotelsInformation = result["hotelsInformation"];
+
             for (var i = 0; i < hotelsInformation.length; i++) {
 
                 var hotelInformationDIV = document.createElement("DIV");
@@ -79,10 +86,14 @@ function searchSuitableHotels() {
                 hotelPriceDiv.appendChild(hotelPrice);
 
                 var chooseRoom = document.createElement("INPUT");
+                chooseRoom.id = hotelsInformation[i].hotelId;
                 chooseRoom.type = 'button';
                 chooseRoom.name = 'chooseRoom';
                 chooseRoom.value= 'Выбрать номер';
                 chooseRoom.className = 'input';
+                chooseRoom.onclick = function () {
+                    chooseRoomProcessing(this.id, arrivalDate, departureDate);
+                };
                 hotelPriceDiv.appendChild(chooseRoom);
 
                 hotelInformationDIV.appendChild(hotelPriceDiv);
@@ -101,6 +112,7 @@ function searchSuitableHotels() {
                 hotelInformationDIV.appendChild(hotelDescriptionDiv);
 
                 mainBody.appendChild(hotelInformationDIV);
+                searchResults.push(hotelInformationDIV);
 
                 //var td2 = document.createElement("TD");
                 //
@@ -174,4 +186,22 @@ function searchSuitableHotels() {
         }
     });
 
+}
+
+function clearSearchResults() {
+
+    var mainBody = document.getElementById('mainBody');
+
+    for (var i = 0; i < searchResults.length; i++) {
+        mainBody.removeChild(searchResults[i]);
+    }
+
+    searchResults = [];
+
+}
+
+function chooseRoomProcessing(hotelId) {
+    var arrivalDate = $("#arrivalDate").datepicker("getDate");
+    var departureDate = $("#departureDate").datepicker("getDate");
+    alert(hotelId + ' ' + arrivalDate + ' ' + departureDate);
 }

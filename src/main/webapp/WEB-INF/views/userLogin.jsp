@@ -10,7 +10,7 @@
 <jsp:include page="topBar.jsp"/>
 <div id="wrapper">
 
-    <form name="login-form" class="login-form" action="" method="post">
+    <form name="login-form" class="login-form" action="" method="post" onsubmit="loginValidate(); return false">
 
         <div class="header">
             <h1>Авторизация</h1>
@@ -29,7 +29,7 @@
         </div>
 
         <div class="footer">
-            <input type="button" name="login" value="Войти" class="button" onclick="loginValidate()"/>
+            <input type="submit" name="login" value="Войти" class="button"/>
         </div>
 
     </form>

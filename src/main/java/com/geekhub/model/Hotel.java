@@ -73,7 +73,7 @@ public class Hotel {
             stringBuilder.append(s);
             stringBuilder.append("\n");
         }
-        return stringBuilder.toString();
+        return stringBuilder.substring(0, stringBuilder.length() - 1);
     }
 
     public Integer getStars() {

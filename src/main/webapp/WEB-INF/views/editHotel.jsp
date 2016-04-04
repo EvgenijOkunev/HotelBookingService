@@ -74,16 +74,17 @@
                     <tr id="${room.get("roomsTypeId")}">
                         <td><c:out value="${room.get(\"roomsTypeName\")}"/></td>
                         <td><input type="text" name="roomsQuantity" pattern="\d*"
-                                   value="${room.get("roomsQuantity")}"/></td>
+                                   value="${room.get("roomsQuantity")}" title=""/></td>
                         <td><input type="text" name="numberOfGuests" pattern="\d*"
-                                   value="${room.get("numberOfGuests")}"/></td>
+                                   value="${room.get("numberOfGuests")}" title=""/></td>
                         <td><input type="text" name="pricePerNight" pattern="\d*"
-                                   value="${room.get("pricePerNight")}"/></td>
+                                   value="${room.get("pricePerNight")}" title=""/></td>
                     </tr>
                 </c:forEach>
                 </tbody>
             </table>
 
+            <div style="padding-top: 8px;  padding-bottom: 8px; height: 22px"><span id="errorText"></span></div>
 
             <div style="overflow: auto;">
                 <input type="button" name="Cancel" value="Отмена" class="input"

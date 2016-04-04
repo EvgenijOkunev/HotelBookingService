@@ -84,3 +84,8 @@
     background: #9b302c;
     border: 1px solid #9b302c;
 }
+
+#errorText {
+    font-size: 14px;
+    color: #ea3428;
+}
