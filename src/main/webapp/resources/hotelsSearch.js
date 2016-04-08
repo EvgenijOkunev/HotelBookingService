@@ -24,34 +24,33 @@ function searchSuitableHotels() {
                 var hotelInformationDIV = document.createElement("DIV");
                 hotelInformationDIV.className = 'searchResult';
 
-                var hotelName = document.createElement("SPAN");
-                hotelName.innerHTML = 'Отель "' + hotelsInformation[i].hotelName + '"';
-                hotelName.style.fontSize = '20px';
                 var hotelNameDiv = document.createElement("DIV");
+                hotelNameDiv.style.marginLeft = '15px';
                 hotelNameDiv.style.width = '320px';
                 hotelNameDiv.style.display = 'inline-block';
-                hotelNameDiv.appendChild(hotelName);
+                hotelNameDiv.style.fontSize = '20px';
+                hotelNameDiv.style.color = '#9b302c';
+                hotelNameDiv.innerHTML = 'Отель "' + hotelsInformation[i].hotelName + '"';
                 hotelInformationDIV.appendChild(hotelNameDiv);
 
-                var hotelStars = document.createElement("SPAN");
-                hotelStars.innerHTML = 'Количество звезд: ' + hotelsInformation[i].hotelStars;
-                hotelStars.style.fontSize = '15px';
                 var hotelStarsDiv = document.createElement("DIV");
                 hotelStarsDiv.style.width = '190px';
                 hotelStarsDiv.style.display = 'inline-block';
-                hotelStarsDiv.appendChild(hotelStars);
+                hotelStarsDiv.style.marginTop = '4px';
+                hotelStarsDiv.style.verticalAlign = 'top';
+                hotelStarsDiv.style.fontSize = '15px';
+                hotelStarsDiv.innerHTML = 'Количество звезд: ' + hotelsInformation[i].hotelStars;
                 hotelInformationDIV.appendChild(hotelStarsDiv);
 
-                var hotelRooms = document.createElement("SPAN");
-                hotelRooms.innerHTML = 'Свободных номеров: ' + hotelsInformation[i].roomsQuantity;
-                hotelRooms.style.fontSize = '15px';
-                hotelRooms.style.display = 'inline-block';
-                hotelRooms.style.width = '200px';
-                hotelRooms.style.textAlign = 'right';
                 var hotelRoomsDiv = document.createElement("DIV");
                 hotelRoomsDiv.style.width = '200px';
                 hotelRoomsDiv.style.display = 'inline-block';
-                hotelRoomsDiv.appendChild(hotelRooms);
+                hotelRoomsDiv.style.marginTop = '4px';
+                hotelRoomsDiv.style.verticalAlign = 'top';
+                hotelRoomsDiv.style.fontSize = '15px';
+                hotelRoomsDiv.style.width = '200px';
+                hotelRoomsDiv.style.textAlign = 'right';
+                hotelRoomsDiv.innerHTML = 'Свободных номеров: ' + hotelsInformation[i].roomsQuantity;
                 hotelInformationDIV.appendChild(hotelRoomsDiv);
 
                 var hotelPriceDiv = document.createElement("DIV");
@@ -89,7 +88,7 @@ function searchSuitableHotels() {
                 chooseRoom.id = hotelsInformation[i].hotelId;
                 chooseRoom.type = 'button';
                 chooseRoom.name = 'chooseRoom';
-                chooseRoom.value= 'Выбрать номер';
+                chooseRoom.value = 'Выбрать номер';
                 chooseRoom.className = 'input';
                 chooseRoom.onclick = function () {
                     chooseRoomProcessing(this.id, arrivalDate, departureDate);
@@ -98,17 +97,16 @@ function searchSuitableHotels() {
 
                 hotelInformationDIV.appendChild(hotelPriceDiv);
 
-                var hotelDescription = document.createElement("SPAN");
-                hotelDescription.innerHTML = hotelsInformation[i].hotelDescription;
-                hotelDescription.style.fontSize = '13px';
-                hotelDescription.style.marginLeft = '0';
-                hotelDescription.style.whiteSpace = 'pre-line';
                 var hotelDescriptionDiv = document.createElement("DIV");
                 hotelDescriptionDiv.style.width = '710px';
-                hotelDescriptionDiv.style.marginTop = '15px';
-                hotelDescriptionDiv.style.paddingLeft = '15px';
+                hotelDescriptionDiv.style.marginTop = '8px';
+                hotelDescriptionDiv.style.paddingTop = '7px';
+                hotelDescriptionDiv.style.marginLeft = '15px';
+                hotelDescriptionDiv.style.borderTop = '1px solid #bec8d2';
                 hotelDescriptionDiv.style.textAlign = 'justify';
-                hotelDescriptionDiv.appendChild(hotelDescription);
+                hotelDescriptionDiv.style.fontSize = '13px';
+                hotelDescriptionDiv.style.whiteSpace = 'pre-line';
+                hotelDescriptionDiv.innerHTML = hotelsInformation[i].hotelDescription;
                 hotelInformationDIV.appendChild(hotelDescriptionDiv);
 
                 mainBody.appendChild(hotelInformationDIV);
@@ -203,5 +201,29 @@ function clearSearchResults() {
 function chooseRoomProcessing(hotelId) {
     var arrivalDate = $("#arrivalDate").datepicker("getDate");
     var departureDate = $("#departureDate").datepicker("getDate");
-    alert(hotelId + ' ' + arrivalDate + ' ' + departureDate);
+    location.href = '/hotels/getDetailedInformation?arrivalDate=' + arrivalDate
+        + '&departureDate=' + departureDate + '&hotelId=' + hotelId;
+}
+
+function checkDates(dateChanged) {
+
+    var arrivalDateElement = $("#arrivalDate");
+    var departureDateElement = $("#departureDate");
+    var arrivalDate = arrivalDateElement.datepicker("getDate");
+    var departureDate = departureDateElement.datepicker("getDate");
+    var dateTmp;
+
+    if (arrivalDate > departureDate) {
+        if (dateChanged == 'arrivalDate') {
+            dateTmp = arrivalDate;
+            dateTmp.setDate(dateTmp.getDate() + 1);
+            departureDateElement.datepicker('setDate', dateTmp);
+        }
+        else {
+            dateTmp = departureDate;
+            dateTmp.setDate(dateTmp.getDate() - 1);
+            arrivalDateElement.datepicker('setDate', dateTmp);
+        }
+    }
+
 }

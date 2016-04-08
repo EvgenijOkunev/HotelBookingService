@@ -5,7 +5,8 @@ import com.geekhub.service.*;
 import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.json.JSONArray;
+import org.joda.time.DateTime;
+import org.joda.time.Days;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,8 +25,8 @@ import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
@@ -68,7 +69,7 @@ public class HotelController {
         Integer stars = Integer.parseInt(request.getParameter("stars"));
         City city = cityService.getCityById(Integer.parseInt(request.getParameter("city")));
         User hotelOwner = (User) request.getSession().getAttribute("user");
-        List<Room> rooms = roomsProcessing(request.getParameter("rooms"), null);
+        List<Room> rooms = roomService.roomsProcessing(request.getParameter("rooms"), null);
 
         hotelService.createHotel(name, description, stars, city, hotelOwner, rooms);
 
@@ -92,8 +93,7 @@ public class HotelController {
         Blob description = stringToBlob(request.getParameter("description"));
         Integer stars = Integer.parseInt(request.getParameter("stars"));
         City city = cityService.getCityById(Integer.parseInt(request.getParameter("city")));
-        //roomService.deleteHotelRooms(hotel);
-        List<Room> rooms = roomsProcessing(request.getParameter("rooms"), hotel);
+        List<Room> rooms = roomService.roomsProcessing(request.getParameter("rooms"), hotel);
 
         hotelService.updateHotel(hotel, name, description, stars, city, rooms);
 
@@ -125,27 +125,54 @@ public class HotelController {
         return hotelService.prepareSuitableHotelsInformation(freeRooms, city, roomTypeService.getAll());
     }
 
-    private List<Room> roomsProcessing(String roomsParam, Hotel hotel) {
-        List<Room> rooms = new ArrayList<>();
-        JSONArray roomsJSON = new JSONArray(roomsParam);
-        for (int i = 0; i < roomsJSON.length(); i++) {
-            JSONObject room = roomsJSON.getJSONObject(i);
-            int roomsQuantity = Integer.parseInt(room.getString("roomsQuantity"));
-            RoomType roomType = roomTypeService.getRoomTypeById(Integer.parseInt(room.getString("roomType")));
-            int numberOfGuests = Integer.parseInt(room.getString("numberOfGuests").equals("") ? "0" : room.getString("numberOfGuests"));
-            Integer pricePerNight = Integer.parseInt(room.getString("pricePerNight").equals("") ? "0" : room.getString("pricePerNight"));
-            List<Room> existingRooms = roomService.getHotelRoomsByType(hotel, roomType);
-            int existingRoomsSize = existingRooms.size();
-            for (int j = 0; j < roomsQuantity - existingRoomsSize; j++) {
-                existingRooms.add(roomService.createRoom(roomType, numberOfGuests, pricePerNight));
-            }
-            existingRooms.forEach(existingRoom -> {
-                existingRoom.setNumberOfGuests(numberOfGuests);
-                existingRoom.setPricePerNight(pricePerNight);
-            });
-            rooms.addAll(existingRooms);
-        }
-        return rooms;
+    @RequestMapping(value = "/getDetailedInformation", method = RequestMethod.GET)
+    public String getDetailedInformation(@RequestParam(value = "arrivalDate", required = true) String arrivalDateParam,
+                                         @RequestParam(value = "departureDate", required = true) String departureDateParam,
+                                         @RequestParam(value = "hotelId", required = true) String hotelIdParam,
+                                         Model model) throws ParseException, IOException, SQLException {
+
+        DateFormat formatter = new SimpleDateFormat("E MMM dd yyyy HH:mm:ss z", Locale.ENGLISH);
+        DateFormat dateFormatForJS = new SimpleDateFormat("yyyy-MM-dd");
+        Date arrivalDate = formatter.parse(arrivalDateParam);
+        Date departureDate = formatter.parse(departureDateParam);
+        Hotel hotel = hotelService.getHotelById(Integer.parseInt(hotelIdParam));
+
+        List<BookingRequest> bookingRequests = bookingRequestService.getBookingRequests(arrivalDate, departureDate, roomService.getHotelRooms(hotel));
+        List<Room> freeRooms = roomService.getFreeRooms(bookingRequests, hotel);
+        List<HashMap<String, String>> groupedFreeRooms = roomService.groupRoomsByType(freeRooms);
+
+        model.addAttribute("hotel", hotel);
+        model.addAttribute("arrivalDate", arrivalDate);
+        model.addAttribute("departureDate", departureDate);
+        model.addAttribute("arrivalDateString", dateFormatForJS.format(arrivalDate));
+        model.addAttribute("departureDateString", dateFormatForJS.format(departureDate));
+        model.addAttribute("freeRooms", groupedFreeRooms);
+        model.addAttribute("freeRoomsQuantity", freeRooms.size());
+        model.addAttribute("nightsQuantity", Days.daysBetween(new DateTime(arrivalDate), new DateTime(departureDate)).getDays());
+
+        return "detailedHotelInformation";
+    }
+
+    @RequestMapping(value = "/getFreeRoomsInformation", method = RequestMethod.GET)
+    @ResponseBody
+    public String getFreeRoomsInformation(@RequestParam(value = "arrivalDate", required = true) String arrivalDateParam,
+                                          @RequestParam(value = "departureDate", required = true) String departureDateParam,
+                                          @RequestParam(value = "hotelId", required = true) String hotelIdParam) throws ParseException {
+
+        DateFormat formatter = new SimpleDateFormat("E MMM dd yyyy HH:mm:ss z", Locale.ENGLISH);
+        Date arrivalDate = formatter.parse(arrivalDateParam);
+        Date departureDate = formatter.parse(departureDateParam);
+        Hotel hotel = hotelService.getHotelById(Integer.parseInt(hotelIdParam));
+
+        List<BookingRequest> bookingRequests = bookingRequestService.getBookingRequests(arrivalDate, departureDate, roomService.getHotelRooms(hotel));
+        List<Room> freeRooms = roomService.getFreeRooms(bookingRequests, hotel);
+        List<HashMap<String, String>> groupedFreeRooms = roomService.groupRoomsByType(freeRooms);
+
+        JSONObject freeRoomsInformation = new JSONObject();
+        freeRoomsInformation.put("roomsInformation", groupedFreeRooms);
+        freeRoomsInformation.put("freeRoomsQuantity", freeRooms.size());
+
+        return freeRoomsInformation.toString();
     }
 
     private Blob stringToBlob(String parameter) throws UnsupportedEncodingException {

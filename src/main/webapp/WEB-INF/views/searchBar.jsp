@@ -19,7 +19,10 @@
             dayNames: ["Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота", "Воскресенье"],
             dayNamesMin: ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"],
             minDate: 0,
-            dateFormat: "dd.mm.yy"
+            dateFormat: "dd.mm.yy",
+            onClose: function() {
+                checkDates('arrivalDate');
+            }
         });
         arrivalDate.datepicker("setDate", "0");
 
@@ -37,7 +40,10 @@
             dayNames: ["Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота", "Воскресенье"],
             dayNamesMin: ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"],
             minDate: 1,
-            dateFormat: "dd.mm.yy"
+            dateFormat: "dd.mm.yy",
+            onClose: function() {
+                checkDates('departureDate');
+            }
         });
         departureDate.datepicker("setDate", "+1");
 

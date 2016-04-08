@@ -109,6 +109,7 @@
     margin-top: 20px;
     border: 1px solid #bec8d2;
     border-radius: 3px;
+    background-color: #f6f8fc;
     width: 920px;
     overflow: auto;
     padding-bottom: 10px;
@@ -122,7 +123,7 @@
 }
 
 .searchResult:hover {
-    background-color: #f2f4f8;
+    background-color: #edeff3;
 }
 
 .searchResult span {
@@ -147,6 +148,69 @@
     border: 1px solid #9b302c;
 }
 
+.searchResult-hotelInformation {
+    margin-top: 20px;
+    border: 1px solid #bec8d2;
+    border-radius: 3px;
+    background-color: #f6f8fc;
+    width: 920px;
+    overflow: auto;
+    padding-bottom: 10px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+
+    font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif, serif;
+    font-size: 12px;
+    color: #3f3f66;
+}
+
+.searchResult-hotelName {
+    width: 320px;
+    margin-left: 10px;
+    display: inline-block;
+    font-size: 20px;
+    color: #9b302c;
+}
+
+.searchResult-hotelStars {
+    width: 160px;
+    display: inline-block;
+    margin-top: 4px;
+    vertical-align: top;
+    font-size: 15px;
+}
+
+.searchResult-hotelCity {
+    width: 200px;
+    display: inline-block;
+    margin-top: 4px;
+    vertical-align: top;
+    font-size: 15px;
+    text-align: center;
+}
+
+.searchResult-hotelFreeRooms {
+    width: 200px;
+    display: inline-block;
+    margin-top: 4px;
+    vertical-align: top;
+    font-size: 15px;
+    text-align: right;
+}
+
+.searchResult-hotelDescription {
+    width: 890px;
+    margin-top: 5px;
+    padding-top: 5px;
+    margin-left: 13px;
+    margin-right: 10px;
+    border-top: 1px solid #bec8d2;
+    text-align: justify;
+    font-size: 13px;
+    white-space: pre-line;
+}
+
 .freeRoms {
     margin-top: 20px;
     width: 80%;
@@ -169,4 +233,82 @@
     color: #669;
     padding: 6px 8px;
     vertical-align: top;
+}
+
+#wrap {
+    display: none;
+    opacity: 0.8;
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    padding: 16px;
+    background-color: rgba(1, 1, 1, 0.725);
+    z-index: 100;
+    overflow: auto;
+}
+
+#bookingRequestConfirm {
+    width: 400px;
+    height: 400px;
+    margin: auto;
+    display: none;
+    background: #f2f4f8;
+    z-index: 200;
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    padding: 16px;
+    font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif, serif;
+    color: #3f3f66
+}
+
+.bookingRequestLabel {
+    border-bottom: 1px solid #3f3f66;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+}
+
+.bookingRequestDetails {
+    margin-bottom: 5px;
+    font-size: 14px;
+}
+
+#bookingRequestConfirm label {
+    width: 100px;
+    font-size: 14px;
+}
+
+#bookingRequestConfirm input[type = "text"] {
+    width: 300px;
+    padding: 3px 5px;
+    margin-bottom: 10px;
+    margin-left: 10px;
+
+    font-size: 14px;
+    color: #3f3f66;
+    background: #fff;
+    border: 1px solid #6678b1;
+}
+
+#bookingRequestConfirm input[type = "text"]:hover {
+    border: 1px solid #9b302c;
+    box-shadow: 0 0 0 1px #9b302c;
+}
+
+#bookingRequestConfirm input[type = "text"]:focus {
+    border: 1px solid #9b302c;
+    box-shadow: 0 0 0 1px #9b302c;
+}
+
+#errorText {
+    font-size: 14px;
+    color: #ea3428;
+    margin-top: 5px;
+    border-top: 1px solid #3f3f66;
+    padding-top: 10px;
+    height: 20px;
 }

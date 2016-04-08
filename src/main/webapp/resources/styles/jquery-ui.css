@@ -900,7 +900,7 @@ body .ui-tooltip {
 .ui-state-active,
 .ui-widget-content .ui-state-active,
 .ui-widget-header .ui-state-active {
-    border: 1px solid #aaaaaa;
+    border: 2px solid #9b302c;
     font-weight: normal;
     color: #3f3f66;
 }
@@ -916,7 +916,7 @@ body .ui-tooltip {
 .ui-state-highlight,
 .ui-widget-content .ui-state-highlight,
 .ui-widget-header .ui-state-highlight {
-    border: 2px solid #e6db52;
+   /* border: 2px solid #e6db52;*/
     color: #363636;
 }
 .ui-state-highlight a,

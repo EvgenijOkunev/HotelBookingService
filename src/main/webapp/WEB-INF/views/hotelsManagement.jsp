@@ -37,16 +37,16 @@
                 <c:url var="editUrl" value="/hotels/edit?hotelId=${hotel.hotelId}"/>
                 <c:url var="deleteUrl" value="/hotels/delete?hotelId=${hotel.hotelId}"/>
                 <tr>
-                    <td><c:out value="${hotel.name}"/></td>
+                    <td><c:out value="${hotel.getName()}"/></td>
                     <td style="text-align: justify; white-space: pre-line;"><c:out
                             value="${hotel.getStringDescription()}"/></td>
-                    <td><c:out value="${hotel.stars}"/></td>
-                    <td style="min-width: 100px"><c:out value="${hotel.city.name}"/></td>
+                    <td><c:out value="${hotel.getStars()}"/></td>
+                    <td style="min-width: 100px"><c:out value="${hotel.getCity().getName()}"/></td>
                     <td>
                         <a class="hor-minimalist-b-link" href="${editUrl}">Редактировать</a>
 
                         <p></p>
-                        <input id="${hotel.hotelId}" type="button" class="hor-minimalist-b-button" value="Удалить"
+                        <input id="${hotel.getHotelId()}" type="button" class="hor-minimalist-b-button" value="Удалить"
                                onclick="deleteHotel_js(this);"/>
                     </td>
                 </tr>
@@ -60,7 +60,7 @@
 <div onclick="show('none')" id="wrap"></div>
 
 <div id="deleteConfirm">
-    <div><span id="deleteConfirmLabel">Вы действительно хотите удалить выбранный отель?</span></div>
+    <div id="deleteConfirmLabel">Вы действительно хотите удалить выбранный отель?</div>
     <input type="button" name="Cancel" value="Отмена" class="input-button"
            style="width: 100px; margin-top: 25px; margin-left: 48px; margin-right: 25px;"
            onclick="show('none')"/>
