@@ -199,7 +199,7 @@ function show(state) {
 function bookingRequestConfirmation(object) {
 
     document.getElementById('requestConfirmButton').onclick = function () {
-        location.href = '/bookingRequest/confirm?hotelId=' + object.id;
+        processBookingRequest(object.id);
     };
 
     var arrivalDate = $("#arrivalDate").datepicker("getDate");
@@ -215,6 +215,28 @@ function bookingRequestConfirmation(object) {
     document.getElementById('requestConfirmValue').innerHTML = document.getElementById('bookingRequestValue').innerHTML;
 
     show('block');
+}
+
+function processBookingRequest(hotelId) {
+
+    $.ajax({
+        type: 'POST',
+        url: '/processBookingRequest',
+        data: {
+            hotelId: hotelId,
+            arrivalDate: $("#arrivalDate").datepicker("getDate"),
+            departureDate: $("#departureDate").datepicker("getDate"),
+            userName: document.getElementById('userName').value,
+            userEmail: document.getElementById('userEmail').value,
+            userPhoneNumber: document.getElementById('userPhoneNumber').value
+        },
+        dataType: 'json',
+        async: true,
+        success: function () {
+
+        }
+    });
+
 }
 
 jQuery(function ($) {

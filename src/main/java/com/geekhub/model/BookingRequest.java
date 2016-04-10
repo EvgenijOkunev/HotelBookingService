@@ -13,6 +13,9 @@ public class BookingRequest {
     private Integer bookingRequestId;
 
     @Column
+    private Integer bookingRequestNumber;
+
+    @Column
     private Date arrivalDate;
 
     @Column
@@ -25,6 +28,10 @@ public class BookingRequest {
     @Column
     private String guestName;
 
+    @ManyToOne
+    @JoinColumn(name = "userId")
+    private User guest;
+
     @Column
     private String guestEmail;
 
@@ -34,12 +41,23 @@ public class BookingRequest {
     @Column
     private Boolean accepted;
 
+    @Column
+    private Boolean rejected;
+
     public Integer getBookingRequestId() {
         return bookingRequestId;
     }
 
     public void setBookingRequestId(Integer bookingRequestId) {
         this.bookingRequestId = bookingRequestId;
+    }
+
+    public Integer getBookingRequestNumber() {
+        return bookingRequestNumber;
+    }
+
+    public void setBookingRequestNumber(Integer bookingRequestNumber) {
+        this.bookingRequestNumber = bookingRequestNumber;
     }
 
     public Date getArrivalDate() {
@@ -64,6 +82,14 @@ public class BookingRequest {
 
     public void setRoom(Room room) {
         this.room = room;
+    }
+
+    public User getGuest() {
+        return guest;
+    }
+
+    public void setGuest(User guest) {
+        this.guest = guest;
     }
 
     public String getGuestName() {
@@ -96,6 +122,14 @@ public class BookingRequest {
 
     public void setAccepted(Boolean accepted) {
         this.accepted = accepted;
+    }
+
+    public Boolean getRejected() {
+        return rejected;
+    }
+
+    public void setRejected(Boolean rejected) {
+        this.rejected = rejected;
     }
 
 }

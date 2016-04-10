@@ -37,6 +37,9 @@ public class User {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "owner")
     private List<Hotel> hotels;
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "guest")
+    private List<BookingRequest> bookingRequests;
+
     public Integer getUserId() {
         return userId;
     }
@@ -107,5 +110,13 @@ public class User {
 
     public void setHotels(List<Hotel> hotels) {
         this.hotels = hotels;
+    }
+
+    public List<BookingRequest> getBookingRequests() {
+        return bookingRequests;
+    }
+
+    public void setBookingRequests(List<BookingRequest> bookingRequests) {
+        this.bookingRequests = bookingRequests;
     }
 }

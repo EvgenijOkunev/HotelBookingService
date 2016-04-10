@@ -24,6 +24,7 @@ public class BookingRequestService {
                 .createCriteria(BookingRequest.class)
                 .add(Restrictions.ge("departureDate", arrivalDate))
                 .add(Restrictions.le("arrivalDate", departureDate))
+                .add(Restrictions.eq("rejected", false))
                 .list();
     }
 
@@ -33,6 +34,7 @@ public class BookingRequestService {
                 .add(Restrictions.ge("departureDate", arrivalDate))
                 .add(Restrictions.le("arrivalDate", departureDate))
                 .add(Restrictions.in("room", rooms))
+                .add(Restrictions.eq("rejected", false))
                 .list();
     }
 }
