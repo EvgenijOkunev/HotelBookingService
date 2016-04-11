@@ -77,7 +77,7 @@
                 </tbody>
             </table>
 
-            <div style="padding-top: 8px;  padding-bottom: 8px; height: 22px"><span id="errorText"></span></div>
+            <div style="padding-top: 8px;  padding-bottom: 8px; height: 22px"><span id="errorTextHotelManagement"></span></div>
 
             <div style="overflow: auto;">
                 <input type="button" name="Cancel" value="Отмена" class="input"

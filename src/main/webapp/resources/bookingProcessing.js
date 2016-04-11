@@ -24,9 +24,6 @@ function processBookingRequestParameters() {
     if (arrivalDate == null || departureDate == null) {
         return;
     }
-    if (arrivalDate > departureDate) {
-
-    }
 
     var nightsQty = getDaysQty(arrivalDate, departureDate);
     var roomsQty = 0;
@@ -169,7 +166,7 @@ function checkDates(dateChanged) {
     var departureDate = departureDateElement.datepicker("getDate");
     var dateTmp;
 
-    if (arrivalDate > departureDate) {
+    if (arrivalDate >= departureDate) {
         if (dateChanged == 'arrivalDate') {
             dateTmp = arrivalDate;
             dateTmp.setDate(dateTmp.getDate() + 1);
@@ -210,32 +207,87 @@ function bookingRequestConfirmation(object) {
         day: 'numeric'
     };
 
+    var requestConfirmRooms = document.getElementById('requestConfirmRooms');
+    requestConfirmRooms.innerHTML = document.getElementById('bookingRequestRooms').innerHTML;
     document.getElementById('requestConfirmPeriod').innerHTML = 'Период: ' + arrivalDate.toLocaleString("ru", options) + ' - ' + departureDate.toLocaleString("ru", options);
-    document.getElementById('requestConfirmRooms').innerHTML = document.getElementById('bookingRequestRooms').innerHTML;
     document.getElementById('requestConfirmValue').innerHTML = document.getElementById('bookingRequestValue').innerHTML;
+    document.getElementById('errorTextRequestConfirm').innerHTML = '';
+
+    if (requestConfirmRooms.innerHTML == 'Номеров: 0') {
+        requestConfirmRooms.style.color = '#ea3428';
+    }
+    else {
+        requestConfirmRooms.style.color = '#3f3f66';
+    }
 
     show('block');
 }
 
 function processBookingRequest(hotelId) {
 
-    $.ajax({
-        type: 'POST',
-        url: '/processBookingRequest',
-        data: {
-            hotelId: hotelId,
-            arrivalDate: $("#arrivalDate").datepicker("getDate"),
-            departureDate: $("#departureDate").datepicker("getDate"),
-            userName: document.getElementById('userName').value,
-            userEmail: document.getElementById('userEmail').value,
-            userPhoneNumber: document.getElementById('userPhoneNumber').value
-        },
-        dataType: 'json',
-        async: true,
-        success: function () {
+    if (checkRequestFieldsContent()) {
+        $.ajax({
+            type: 'POST',
+            url: '/processBookingRequest',
+            data: prepareBookingRequestParameters(hotelId),
+            dataType: 'json',
+            async: true,
+            success: function () {
+                show('none');
+                processBookingRequestParameters();
+            },
+            error: function () {
+                document.getElementById('errorTextRequestConfirm').innerHTML = 'Извините, но на данный момент нет необходимого количества свободных номеров';
+            }
+        });
+    }
 
+}
+
+function prepareBookingRequestParameters(hotelId) {
+
+    var rooms = [];
+    var elements = $(":input[id^='bookingQuantity']").get();
+    for (var i = 0; i < elements.length; i++) {
+        if (parseInt(elements[i].value) > 0) {
+            rooms.push({
+                roomTypeId: $(elements[i]).closest('tr')[0].id,
+                roomsQuantity: elements[i].value
+            });
         }
-    });
+    }
+
+    return {
+        hotelId: hotelId,
+        arrivalDate: $("#arrivalDate").datepicker("getDate"),
+        departureDate: $("#departureDate").datepicker("getDate"),
+        userName: document.getElementById('userName').value,
+        userEmail: document.getElementById('userEmail').value,
+        userPhoneNumber: document.getElementById('userPhoneNumber').value,
+        rooms: JSON.stringify(rooms)
+    }
+
+}
+
+function checkRequestFieldsContent() {
+
+    var userName = document.getElementById('userName').value;
+    var userEmail = document.getElementById('userEmail').value;
+    var userPhoneNumber = document.getElementById('userPhoneNumber').value;
+    var requestConfirmRooms = document.getElementById('requestConfirmRooms');
+    var errorText = document.getElementById('errorTextRequestConfirm');
+
+    if (userName.length == 0 || userEmail.length == 0 || userPhoneNumber.length == 0) {
+        errorText.innerHTML = 'Для оформления заявки необходимо заполнить все поля';
+        return false;
+    }
+
+    if (requestConfirmRooms.innerHTML == 'Номеров: 0') {
+        errorText.innerHTML = 'Для оформления заявки необходимо забронировать хотя бы один номер';
+        return false;
+    }
+
+    return true;
 
 }
 

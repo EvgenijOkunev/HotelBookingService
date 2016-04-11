@@ -251,7 +251,7 @@
 
 #bookingRequestConfirm {
     width: 400px;
-    height: 400px;
+    height: 420px;
     margin: auto;
     display: none;
     background: #f2f4f8;
@@ -304,11 +304,12 @@
     box-shadow: 0 0 0 1px #9b302c;
 }
 
-#errorText {
+#errorTextRequestConfirm {
     font-size: 14px;
     color: #ea3428;
     margin-top: 5px;
+    margin-bottom: 10px;
     border-top: 1px solid #3f3f66;
     padding-top: 10px;
-    height: 20px;
+    height: 28px;
 }

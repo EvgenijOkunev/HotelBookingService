@@ -103,7 +103,7 @@
                 </thead>
                 <tbody>
                 <c:forEach items="${freeRooms}" var="freeRoom">
-                    <tr>
+                    <tr id="${freeRoom.get('roomTypeId')}">
                         <td><c:out value="${freeRoom.get('roomTypeName')}"/></td>
                         <td><c:out value="${freeRoom.get('numberOfGuests')}"/></td>
                         <td><c:out value="${freeRoom.get('roomQuantity')}"/></td>
@@ -159,7 +159,7 @@
     <div class="bookingRequestDetails" style="width: 60px; display: inline-block">Телефон</div>
     <input id="userPhoneNumber" type="text" title="" value="${sessionScope.user.getPhoneNumber()}"/>
 
-    <div id="errorText"> error text</div>
+    <div id="errorTextRequestConfirm"></div>
 
     <input id="requestConfirmButton" type="button" name="requestConfirm" value="Подтвердить заявку" class="input-button"
            style="width: 150px; margin-top: 15px; margin-right: 10px"/>

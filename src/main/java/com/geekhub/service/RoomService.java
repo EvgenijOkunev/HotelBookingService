@@ -103,6 +103,24 @@ public class RoomService {
         }
     }
 
+    public List<Room> getFreeRooms(List<BookingRequest> bookingRequests, Hotel hotel, RoomType roomType) {
+        Set<Integer> occupiedRoomsId = new HashSet<>();
+        bookingRequests.forEach(bookingRequest -> occupiedRoomsId.add(bookingRequest.getRoom().getRoomId()));
+        Session session = sessionFactory.getCurrentSession();
+        if (occupiedRoomsId.size() != 0) {
+            return (List<Room>) session.createCriteria(Room.class)
+                    .add(Restrictions.eq("hotel", hotel))
+                    .add(Restrictions.eq("roomType", roomType))
+                    .add(Restrictions.not(Restrictions.in("roomId", occupiedRoomsId)))
+                    .list();
+        } else {
+            return (List<Room>) session.createCriteria(Room.class)
+                    .add(Restrictions.eq("hotel", hotel))
+                    .add(Restrictions.eq("roomType", roomType))
+                    .list();
+        }
+    }
+
     public List<HashMap<String, String>> groupRoomsByType(List<Room> rooms) {
         List<HashMap<String, String>> groupedRooms = new ArrayList<>();
 

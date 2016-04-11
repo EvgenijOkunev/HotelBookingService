@@ -1,6 +1,6 @@
 function checkUserFieldsContent(firstName, lastName, email, phoneNumber, password, passwordConfirm) {
 
-    var errorText = document.getElementById('errorText');
+    var errorText = document.getElementById('errorTextUserManagement');
 
     if (firstName.length == 0 || lastName.length == 0 || email.length == 0 ||
         phoneNumber.length == 0 || password.length == 0 || passwordConfirm.length == 0) {
@@ -53,7 +53,7 @@ function loginValidate() {
             location.href = "/";
         },
         error: function () {
-            document.getElementById('errorText').innerHTML = 'Неправильный email и/или пароль';
+            document.getElementById('errorTextUserManagement').innerHTML = 'Неправильный email и/или пароль';
         }
     });
 
@@ -81,7 +81,7 @@ function registrationValidate() {
     var password = document.getElementById('password').value;
     var passwordConfirm = document.getElementById('passwordConfirm').value;
     var hotelOwner = document.getElementById('hotelOwner').checked;
-    var errorText = document.getElementById('errorText');
+    var errorText = document.getElementById('errorTextUserManagement');
 
     if (checkUserFieldsContent(firstName, lastName, email, phoneNumber, password, passwordConfirm)) {
 

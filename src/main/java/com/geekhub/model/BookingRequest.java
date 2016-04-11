@@ -25,18 +25,18 @@ public class BookingRequest {
     @JoinColumn(name = "roomId")
     private Room room;
 
-    @Column
-    private String guestName;
-
     @ManyToOne
     @JoinColumn(name = "userId")
     private User guest;
 
     @Column
+    private String guestName;
+
+    @Column
     private String guestEmail;
 
     @Column
-    private String guestPhone;
+    private String guestPhoneNumber;
 
     @Column
     private Boolean accepted;
@@ -108,12 +108,12 @@ public class BookingRequest {
         this.guestEmail = guestEmail;
     }
 
-    public String getGuestPhone() {
-        return guestPhone;
+    public String getGuestPhoneNumber() {
+        return guestPhoneNumber;
     }
 
-    public void setGuestPhone(String guestPhone) {
-        this.guestPhone = guestPhone;
+    public void setGuestPhoneNumber(String guestPhoneNumber) {
+        this.guestPhoneNumber = guestPhoneNumber;
     }
 
     public Boolean getAccepted() {

@@ -112,74 +112,6 @@ function searchSuitableHotels() {
                 mainBody.appendChild(hotelInformationDIV);
                 searchResults.push(hotelInformationDIV);
 
-                //var td2 = document.createElement("TD");
-                //
-                //var freeRooms = document.createElement("SPAN");
-                //freeRooms.innerHTML = 'Детальная информация о свободных номерах: ';
-                //freeRooms.style.fontSize = '15px';
-                //var freeRoomsDiv = document.createElement("DIV");
-                //freeRoomsDiv.style.width = '400px';
-                //freeRoomsDiv.style.marginTop = '5px';
-                //freeRoomsDiv.appendChild(freeRooms);
-                //td2.appendChild(freeRoomsDiv);
-                //
-                //var rooms = hotelsInformation[i].rooms;
-                //
-                //if (rooms.length > 0) {
-                //    var roomsTable = document.createElement("TABLE");
-                //    roomsTable.style.width = 'auto';
-                //    roomsTable.style.marginTop = '10px';
-                //    roomsTable.style.marginLeft = '20px';
-                //    roomsTable.className = 'freeRoms';
-                //
-                //    var roomsTableHead = document.createElement("THEAD");
-                //    roomsTable.appendChild(roomsTableHead);
-                //
-                //    var roomsTableRow = document.createElement("TR");
-                //    roomsTableHead.appendChild(roomsTableRow);
-                //
-                //    var roomsTableHeader = document.createElement("TH");
-                //    roomsTableHeader.innerHTML = 'Тип номера';
-                //    roomsTableRow.appendChild(roomsTableHeader);
-                //
-                //    roomsTableHeader = document.createElement("TH");
-                //    roomsTableHeader.innerHTML = 'Количество';
-                //    roomsTableRow.appendChild(roomsTableHeader);
-                //
-                //    roomsTableHeader = document.createElement("TH");
-                //    roomsTableHeader.innerHTML = 'Цена';
-                //    roomsTableRow.appendChild(roomsTableHeader);
-                //
-                //
-                //    var roomsTableBody = document.createElement("TBODY");
-                //    roomsTable.appendChild(roomsTableBody);
-                //
-                //    for (var j = 0; j < rooms.length; j++) {
-                //        if (rooms[j].quantity > 0) {
-                //            roomsTableRow = document.createElement("TR");
-                //            roomsTableBody.appendChild(roomsTableRow);
-                //
-                //            var roomsTableData = document.createElement("TD");
-                //            roomsTableData.style.width = '80px';
-                //            roomsTableData.innerHTML = rooms[j].roomTypeName;
-                //            roomsTableRow.appendChild(roomsTableData);
-                //
-                //            roomsTableData = document.createElement("TD");
-                //            roomsTableData.style.width = '50px';
-                //            roomsTableData.innerHTML = rooms[j].quantity;
-                //            roomsTableRow.appendChild(roomsTableData);
-                //
-                //            roomsTableData = document.createElement("TD");
-                //            roomsTableData.style.width = '50px';
-                //            roomsTableData.innerHTML = rooms[j].price;
-                //            roomsTableRow.appendChild(roomsTableData);
-                //        }
-                //    }
-                //
-                //    td2.appendChild(roomsTable);
-                //}
-                //
-                //row.appendChild(td2);
             }
         }
     });
@@ -213,7 +145,7 @@ function checkDates(dateChanged) {
     var departureDate = departureDateElement.datepicker("getDate");
     var dateTmp;
 
-    if (arrivalDate > departureDate) {
+    if (arrivalDate >= departureDate) {
         if (dateChanged == 'arrivalDate') {
             dateTmp = arrivalDate;
             dateTmp.setDate(dateTmp.getDate() + 1);

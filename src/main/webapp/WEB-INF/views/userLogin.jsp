@@ -4,6 +4,7 @@
     <link href="../../resources/styles/loginForm.css" rel="stylesheet" type="text/css"/>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
     <script type="text/javascript" src="../../resources/usersValidation.js"></script>
+    <script type="text/javascript" src="../../resources/jquery.mask.js"></script>
     <title>Login</title>
 </head>
 <body>
@@ -25,7 +26,7 @@
             <label>
                 <input id = "password" name="password" type="password" class="input" placeholder="Пароль"/>
             </label>
-            <div style="height: 22px"><span id="errorText"></span></div>
+            <div style="height: 22px"><span id="errorTextUserManagement"></span></div>
         </div>
 
         <div class="footer">

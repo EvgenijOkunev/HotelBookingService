@@ -50,6 +50,7 @@
     });
 </script>
 
+<body onload="searchSuitableHotels()">
 <div class="searchBar">
     <span>Дата заезда:</span>
     <input type="text" id="arrivalDate" style="width: 100px" title="">
@@ -65,5 +66,6 @@
     </select>
     <input type="button" name="Search" value="Найти отели" class="input" onclick="searchSuitableHotels()"/>
 </div>
+</body>
 
 </html>

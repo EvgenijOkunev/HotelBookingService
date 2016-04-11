@@ -50,7 +50,7 @@
                     <form:checkbox id="hotelOwner" path="hotelOwner"/>
                 </label>
             </div>
-            <div style="clear: right; padding-top: 8px;  padding-bottom: 8px; height: 22px"><span id="errorText"></span>
+            <div style="clear: right; padding-top: 8px;  padding-bottom: 8px; height: 22px"><span id="errorTextUserManagement"></span>
             </div>
         </div>
 

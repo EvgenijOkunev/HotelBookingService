@@ -71,7 +71,7 @@ function prepareHotelInformation(childNodeIndex) {
 
 function checkHotelFieldsContent() {
 
-    var errorText = document.getElementById('errorText');
+    var errorText = document.getElementById('errorTextHotelManagement');
 
     var name = document.getElementById('name').value;
     var description = document.getElementById('description').value;
