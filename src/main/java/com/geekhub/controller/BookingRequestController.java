@@ -8,8 +8,10 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
@@ -18,10 +20,7 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 public class BookingRequestController {
@@ -53,12 +52,28 @@ public class BookingRequestController {
 
         try {
             bookingRequestService.prepareBookingRequest(hotel, arrivalDate, departureDate, guest, guestName, guestEmail, guestPhoneNumber, rooms);
-        }
-        catch (RuntimeException e) {
+        } catch (RuntimeException e) {
             response.sendError(500);
         }
 
         return "";
+    }
+
+    @RequestMapping(value = "/bookingRequestList", method = RequestMethod.GET)
+    public String getBookingRequestList(HttpServletRequest request, Model model) {
+        User user = (User) request.getSession().getAttribute("user");
+        if (user != null && user.getHotelOwner()) {
+            List<Hotel> hotels = hotelService.getOwnersHotels(user);
+            model.addAttribute("bookingRequestList", bookingRequestService.prepareBookingRequestList(hotels));
+            return "bookingRequestList";
+        }
+        return "errorPage";
+    }
+
+    @RequestMapping(value = "/bookingRequestManagement", method = RequestMethod.GET)
+    public String bookingRequestManagement(@RequestParam(value = "number", required = true) Integer bookingRequestNumber, Model model) {
+        model.addAttribute("bookingRequestInformation", bookingRequestService.getBookingRequestInformation(bookingRequestNumber));
+        return "bookingRequestManagement";
     }
 
 }

@@ -74,6 +74,7 @@ function getFreeRoomsInformation(hotelId) {
                 for (var i = 0; i < roomsInformation.length; i++) {
 
                     var roomsTableRow = document.createElement("TR");
+                    roomsTableRow.id = roomsInformation[i].roomTypeId;
                     roomsTableBody.appendChild(roomsTableRow);
 
                     var roomsTableData = document.createElement("TD");

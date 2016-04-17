@@ -30,7 +30,7 @@
             </a>
         </span>
         <span class="right">
-            <a href="<c:url value="/booking/management"/>">
+            <a href="<c:url value="/bookingRequestList"/>">
                 <strong>заявки на бронирование</strong>
             </a>
         </span>
