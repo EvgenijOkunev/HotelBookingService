@@ -59,21 +59,50 @@ public class BookingRequestController {
         return "";
     }
 
-    @RequestMapping(value = "/bookingRequestList", method = RequestMethod.GET)
-    public String getBookingRequestList(HttpServletRequest request, Model model) {
+    @RequestMapping(value = "/hotelBookingRequestList", method = RequestMethod.GET)
+    public String getHotelBookingRequestList(HttpServletRequest request, Model model) {
         User user = (User) request.getSession().getAttribute("user");
         if (user != null && user.getHotelOwner()) {
             List<Hotel> hotels = hotelService.getOwnersHotels(user);
-            model.addAttribute("bookingRequestList", bookingRequestService.prepareBookingRequestList(hotels));
+            model.addAttribute("bookingRequestList", bookingRequestService.prepareBookingRequestList(hotels, null));
+            model.addAttribute("allowManagement", true);
             return "bookingRequestList";
         }
         return "errorPage";
     }
 
-    @RequestMapping(value = "/bookingRequestManagement", method = RequestMethod.GET)
-    public String bookingRequestManagement(@RequestParam(value = "number", required = true) Integer bookingRequestNumber, Model model) {
+    @RequestMapping(value = "/userBookingRequestList", method = RequestMethod.GET)
+    public String getUserBookingRequestList(HttpServletRequest request, Model model) {
+        User user = (User) request.getSession().getAttribute("user");
+        if (user != null) {
+            List<Hotel> hotels = hotelService.getAll();
+            model.addAttribute("bookingRequestList", bookingRequestService.prepareBookingRequestList(hotels, user));
+            model.addAttribute("allowManagement", false);
+            return "bookingRequestList";
+        }
+        return "errorPage";
+    }
+
+    @RequestMapping(value = "/hotelBookingRequestManagement", method = RequestMethod.GET)
+    public String hotelBookingRequestManagement(@RequestParam(value = "number", required = true) Integer bookingRequestNumber, Model model) {
         model.addAttribute("bookingRequestInformation", bookingRequestService.getBookingRequestInformation(bookingRequestNumber));
+        model.addAttribute("allowManagement", true);
         return "bookingRequestManagement";
+    }
+
+    @RequestMapping(value = "/userBookingRequestManagement", method = RequestMethod.GET)
+    public String userBookingRequestManagement(@RequestParam(value = "number", required = true) Integer bookingRequestNumber, Model model) {
+        model.addAttribute("bookingRequestInformation", bookingRequestService.getBookingRequestInformation(bookingRequestNumber));
+        model.addAttribute("allowManagement", false);
+        return "bookingRequestManagement";
+    }
+
+    @RequestMapping(value = "/updateRequestStatus", method = RequestMethod.GET)
+    public void updateRequestStatus(@RequestParam(value = "number", required = true) Integer bookingRequestNumber,
+                                    @RequestParam(value = "accepted", required = true) Boolean accepted,
+                                    HttpServletResponse response) throws IOException {
+        bookingRequestService.updateRequestStatus(bookingRequestNumber, accepted);
+        response.sendRedirect("/hotelBookingRequestList");
     }
 
 }

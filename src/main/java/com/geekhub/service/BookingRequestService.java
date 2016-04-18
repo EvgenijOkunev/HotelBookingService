@@ -4,6 +4,7 @@ import com.geekhub.model.BookingRequest;
 import com.geekhub.model.Hotel;
 import com.geekhub.model.Room;
 import com.geekhub.model.User;
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Projections;
@@ -55,21 +56,32 @@ public class BookingRequestService {
                 .list();
     }
 
-    private List<Map<String, String>> getBookingRequests(Hotel hotel) {
+    public List<BookingRequest> getBookingRequests(User user) {
+        return sessionFactory.getCurrentSession()
+                .createCriteria(BookingRequest.class)
+                .add(Restrictions.eq("guest", user))
+                .list();
+    }
+
+    private List<Map<String, String>> getBookingRequests(Hotel hotel, User user) {
 
         List<Map<String, String>> result = new ArrayList<>();
         List<Room> hotelRooms = roomService.getHotelRooms(hotel);
 
         Session currentSession = sessionFactory.getCurrentSession();
-        List<Object[]> bookingRequests = (List<Object[]>) currentSession.createCriteria(BookingRequest.class)
+        Criteria criteria = currentSession.createCriteria(BookingRequest.class)
                 .add(Restrictions.in("room", hotelRooms))
                 .setProjection(Projections.projectionList()
                         .add(Projections.groupProperty("bookingRequestNumber"))
                         .add(Projections.max("arrivalDate"))
                         .add(Projections.max("departureDate"))
                         .add(Projections.max("accepted"))
-                        .add(Projections.max("rejected"))
-                ).list();
+                        .add(Projections.max("rejected")));
+        if (user != null) {
+            criteria.add(Restrictions.eq("guest", user));
+        }
+        List<Object[]> bookingRequests = (List<Object[]>) criteria.list();
+
 
         DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
 
@@ -129,12 +141,12 @@ public class BookingRequestService {
 
     }
 
-    public List<Map<String, Object>> prepareBookingRequestList(List<Hotel> hotels) {
+    public List<Map<String, Object>> prepareBookingRequestList(List<Hotel> hotels, User user) {
         List<Map<String, Object>> bookingRequestList = new ArrayList<>();
         for (Hotel hotel : hotels) {
             Map<String, Object> hotelRequests = new HashMap<>();
             hotelRequests.put("hotel", hotel);
-            hotelRequests.put("bookingRequestsInfo", getBookingRequests(hotel));
+            hotelRequests.put("bookingRequestsInfo", getBookingRequests(hotel, user));
             bookingRequestList.add(hotelRequests);
         }
         return bookingRequestList;
@@ -226,6 +238,16 @@ public class BookingRequestService {
     private Long getNightsQuantity(Date date1, Date date2) {
         long diff = date2.getTime() - date1.getTime();
         return TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
+    }
+
+    public void updateRequestStatus(Integer bookingRequestNumber, Boolean accepted) {
+        List<BookingRequest> bookingRequests = getBookingRequests(bookingRequestNumber);
+        Session currentSession = sessionFactory.getCurrentSession();
+        bookingRequests.forEach(bookingRequest -> {
+            bookingRequest.setAccepted(accepted);
+            bookingRequest.setRejected(!accepted);
+            currentSession.update(bookingRequest);
+        });
     }
 
 }

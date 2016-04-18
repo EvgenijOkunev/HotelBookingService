@@ -6,47 +6,31 @@
 </head>
 <body>
 <div class="topBar">
-    <c:if test="${empty sessionScope.user}">
-        <span class="right">
-            <a href="<c:url value="/registration"/>">
-                <strong>зарегистрироваться</strong>
-            </a>
-        </span>
-        <span class="right">
-            <a href="<c:url value="/login"/>">
-                <strong>войти</strong>
-            </a>
-        </span>
-    </c:if>
-    <c:if test="${not empty sessionScope.user}">
-        <span class="right">
-            <a href="<c:url value="/logout"/>">
-                <strong>выйти</strong>
-            </a>
-        </span>
-        <span class="right">
-            <a href="<c:url value="/users/editUserProfile"/>">
-                <strong>профиль</strong>
-            </a>
-        </span>
-        <span class="right">
-            <a href="<c:url value="/bookingRequestList"/>">
-                <strong>заявки на бронирование</strong>
-            </a>
-        </span>
-        <c:if test="${sessionScope.user.getHotelOwner()}">
-            <span class="right">
-                <a href="<c:url value="/hotels/management"/>">
-                    <strong>управление отелями</strong>
-                </a>
-            </span>
+    <ul class="menu">
+        <c:if test="${empty sessionScope.user}">
+            <li style="margin-right: 200px"><a href="/registration">Зарегистрироваться</a></li>
+            <li style="margin-right: 30px"><a href="/login">Войти</a></li>
         </c:if>
-    </c:if>
-    <span class="left" style="padding-left: 30px">
-        <a href="<c:url value="/"/>">
-            <strong>На главную</strong>
-        </a>
-    </span>
+        <c:if test="${not empty sessionScope.user}">
+            <li style="margin-right: 200px"><a>${sessionScope.user.getFirstName()}</a>
+                <ul class="submenu">
+                    <li><a href="/users/editUserProfile">Профиль</a></li>
+                    <li><a href="/userBookingRequestList">Заявки на бронирование</a></li>
+                    <li><a href="/logout">Выйти</a></li>
+                </ul>
+            </li>
+        </c:if>
+        <c:if test="${sessionScope.user.getHotelOwner()}">
+            <li style="margin-right: 50px"><a>Мои отели</a>
+                <ul class="submenu">
+                    <li><a href="/hotels/management">Управление отелями</a></li>
+                    <li><a href="/hotelBookingRequestList">Заявки на бронирование</a></li>
+                    <li><a href=#>Свободные номера</a></li>
+                </ul>
+            </li>
+        </c:if>
+        <li style="float: left; margin-left: 100px"><a href="/">На главную</a></li>
+    </ul>
 </div>
 </body>
 </html>

@@ -68,7 +68,7 @@
 
 <jsp:include page="topBar.jsp"/>
 
-<div class="searchResult-hotelInformation" style="margin-top: 40px">
+<div class="searchResult-hotelInformation" style="margin-top: 60px">
     <div class="searchResult-hotelName">Отель "${hotel.getName()}"</div>
     <div class="searchResult-hotelStars">Количество звезд: ${hotel.getStars()}</div>
     <div class="searchResult-hotelCity">Город: ${hotel.getCity().getName()}</div>
@@ -76,7 +76,7 @@
     <div class="searchResult-hotelDescription">${hotel.getStringDescription()}</div>
 </div>
 
-<div class="searchBar">
+<div class="searchBar" style="margin-top: 20px">
     <span style="color: #9b302c;">Бронирование</span>
     <span>дата заезда:</span>
     <input type="text" id="arrivalDate" style="width: 100px" title="">
