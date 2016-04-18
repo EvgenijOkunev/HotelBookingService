@@ -235,7 +235,7 @@ function processBookingRequest(hotelId) {
             async: true,
             success: function () {
                 show('none');
-                processBookingRequestParameters();
+                location.href = '/userBookingRequestList';
             },
             error: function () {
                 document.getElementById('errorTextRequestConfirm').innerHTML = 'Извините, но на данный момент нет необходимого количества свободных номеров';
