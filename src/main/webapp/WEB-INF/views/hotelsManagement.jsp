@@ -35,6 +35,7 @@
             <tbody>
             <c:forEach items="${hotels}" var="hotel">
                 <c:url var="editUrl" value="/hotels/edit?hotelId=${hotel.hotelId}"/>
+                <c:url var="photoUrl" value="/photos/edit?hotelId=${hotel.hotelId}"/>
                 <c:url var="deleteUrl" value="/hotels/delete?hotelId=${hotel.hotelId}"/>
                 <tr>
                     <td><c:out value="${hotel.getName()}"/></td>
@@ -44,6 +45,9 @@
                     <td style="min-width: 100px"><c:out value="${hotel.getCity().getName()}"/></td>
                     <td>
                         <a class="hor-minimalist-b-link" href="${editUrl}">Редактировать</a>
+
+                        <p></p>
+                        <a class="hor-minimalist-b-link" href="${photoUrl}">Фотографии</a>
 
                         <p></p>
                         <input id="${hotel.getHotelId()}" type="button" class="hor-minimalist-b-button" value="Удалить"

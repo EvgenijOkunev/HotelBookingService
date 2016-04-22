@@ -473,3 +473,217 @@ ul.menu > li:hover > ul.submenu {
     background: #9b302c;
     border: 1px solid #9b302c;
 }
+
+.photosEdit-main-div {
+    margin-top: 40px;
+    padding-left: 15px;
+    padding-right: 15px;
+    border: 1px solid #bec8d2;
+    border-radius: 3px;
+    background-color: #f6f8fc;
+    width: 85%;
+    overflow: auto;
+    padding-bottom: 15px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+
+    font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif, serif;
+    color: #3f3f66;
+}
+
+.photosEdit-uploaded-photos {
+    margin-top: 15px;
+    width: 100%;
+    display: inline-block;
+}
+
+.photosEdit-label {
+    margin-bottom: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    width: 82%;
+    display: inline-block;
+    font-size: 20px;
+    color: #9b302c;
+}
+
+.photosEdit-border-bottom {
+    border-bottom: 1px solid #bec8d2;
+}
+
+.photosEdit-add_button {
+    padding: 5px 10px;
+    margin-top: 15px;
+    width: auto;
+
+    background: #6678b1;
+    border: 1px solid #6678b1;
+    border-radius: 5px;
+    cursor: pointer;
+    color: white;
+    font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif, serif;
+}
+
+.photosEdit-add_button:hover {
+    background: #9b302c;
+    border: 1px solid #9b302c;
+}
+
+.photosEdit-img-container {
+    display: inline-block;
+    vertical-align: middle;
+    max-width: 300px;
+    border: 1px solid #9b302c;
+    margin-right: 20px;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.hotel-photo {
+    vertical-align: middle;
+    display: inline-block;
+    max-height: 100%; /* <-- Set maximum height to 100% of its parent */
+    max-width: 100%; /* <-- Set maximum width to 100% of its parent */
+}
+
+.hotel-photo:hover {
+    box-shadow: 0 0 0 2px #9b302c;
+}
+
+.hotel-photo-delete {
+    cursor: pointer;
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    width: 24px;
+    height: 24px;
+    visibility: hidden;
+}
+
+.hotel-photo-delete:hover {
+    visibility: visible;
+}
+
+.photosEdit-img-container:hover > .fancybox > .hotel-photo {
+    box-shadow: 0 0 0 2px #9b302c;
+}
+
+.photosEdit-img-container:hover > .hotel-photo-delete {
+    visibility: visible;
+}
+
+.file_upload {
+    display: block;
+    position: relative;
+    overflow: hidden;
+    font-size: 14px;
+    height: 2em;
+    line-height: 2em;
+    margin-bottom: 5px;
+    font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif, serif;
+    color: #3f3f66
+}
+
+.file_upload .button, .file_upload > mark {
+    display: block;
+    cursor: pointer;
+    font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif, serif;
+    color: #3f3f66
+}
+
+.file_upload .button {
+    float: right;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    width: 6em;
+    height: 100%;
+    text-align: center
+}
+
+.file_upload > mark {
+    background: transparent;
+    padding-left: 1em
+}
+
+@media only screen and ( max-width: 500px ) {
+
+    .file_upload > mark {
+        display: none
+    }
+
+    .file_upload .button {
+        width: 100%
+    }
+}
+
+.file_upload input[type=file] {
+    position: absolute;
+    top: 0;
+    opacity: 0
+}
+
+.file_upload {
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.1s linear
+}
+
+.file_upload.focus {
+    box-shadow: 0 0 5px rgba(0, 30, 255, 0.4)
+}
+
+.file_upload .button {
+    background: #6678b1;
+    border: 1px solid #6678b1;
+    border-radius: 2px;
+    color: #fff;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis
+}
+
+.file_upload:hover .button {
+    background: #9b302c;
+    border: 1px solid #9b302c;
+}
+
+.file_upload:active .button {
+    background: #9b302c;
+    border: 1px solid #9b302c;
+}
+
+#uploadPhotos-div {
+    width: 600px;
+    height: 50%;
+    margin: auto;
+    display: none;
+    background: #f2f4f8;
+    z-index: 200;
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    padding: 16px;
+    font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif, serif;
+    color: #3f3f66;
+    overflow: scroll;
+}
+
+#viewPhotos-div {
+    max-height: 60%;
+    max-width: 60%;
+    margin: auto;
+    display: none;
+    background: #f2f4f8;
+    z-index: 200;
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    padding: 16px;
+}
+

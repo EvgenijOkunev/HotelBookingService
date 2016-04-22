@@ -53,17 +53,17 @@ public class RoomService {
 
     public List<Room> getHotelRooms(Hotel hotel) {
         Session session = sessionFactory.getCurrentSession();
-        return session.createCriteria(Room.class).
-                add(Restrictions.eq("hotel", hotel)).
-                list();
+        return session.createCriteria(Room.class)
+                .add(Restrictions.eq("hotel", hotel))
+                .list();
     }
 
     public List<Room> getHotelRooms(Hotel hotel, RoomType roomType) {
         Session session = sessionFactory.getCurrentSession();
-        return session.createCriteria(Room.class).
-                add(Restrictions.eq("hotel", hotel)).
-                add(Restrictions.eq("roomType", roomType)).
-                list();
+        return session.createCriteria(Room.class)
+                .add(Restrictions.eq("hotel", hotel))
+                .add(Restrictions.eq("roomType", roomType))
+                .list();
     }
 
     public void deleteHotelRooms(Hotel hotel) {

@@ -39,6 +39,9 @@ public class Hotel {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "hotel")
     private List<Room> rooms;
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "hotel")
+    private List<Photo> photos;
+
     public Integer getHotelId() {
         return hotelId;
     }
@@ -106,6 +109,14 @@ public class Hotel {
 
     public void setRooms(List<Room> rooms) {
         this.rooms = rooms;
+    }
+
+    public List<Photo> getPhotos() {
+        return photos;
+    }
+
+    public void setPhotos(List<Photo> photos) {
+        this.photos = photos;
     }
 
 }
