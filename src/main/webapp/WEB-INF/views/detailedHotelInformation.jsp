@@ -1,17 +1,23 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
 <%--@elvariable id="freeRooms" type="java.util.List"--%>
 <%--@elvariable id="hotel" type="com.geekhub.model.Hotel"--%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%--@elvariable id="arrivalDateString" type="java.lang.String"--%>
+<%--@elvariable id="departureDateString" type="java.lang.String"--%>
+<%--@elvariable id="mainPhoto" type="java.lang.String"--%>
 
 <html>
 <head>
     <link rel="stylesheet" href="../../resources/styles/main.css" type="text/css"/>
     <link rel="stylesheet" href="../../resources/styles/tableStyles.css" type="text/css"/>
     <link rel="stylesheet" href="../../resources/styles/jquery-ui.css">
+    <link rel="stylesheet" href="../../resources/styles/jquery.fancybox.css" type="text/css"/>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
-    <script src="../../resources/datepicker.js"></script>
-    <script src="../../resources/bookingProcessing.js"></script>
     <script type="text/javascript" src="../../resources/jquery.mask.js"></script>
+    <script src="../../resources/datepicker.js"></script>
+    <script type="text/javascript" src="../../resources/jquery.fancybox.pack.js"></script>
+    <script src="../../resources/bookingProcessing.js"></script>
     <title>Detailed information</title>
 </head>
 
@@ -64,6 +70,12 @@
     });
 </script>
 
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".fancybox").fancybox();
+    });
+</script>
+
 <body>
 
 <jsp:include page="topBar.jsp"/>
@@ -73,6 +85,12 @@
     <div class="searchResult-hotelStars">Количество звезд: ${hotel.getStars()}</div>
     <div class="searchResult-hotelCity">Город: ${hotel.getCity().getName()}</div>
     <div id="hotelFreeRooms" class="searchResult-hotelFreeRooms">Свободных номеров: ${freeRoomsQuantity}</div>
+    <div class="underline"></div>
+    <div class="searchResult-main-photo-div">
+        <a href="${mainPhoto}" class="fancybox">
+            <img src="${mainPhoto}" style="max-width: 100%">
+        </a>
+    </div>
     <div class="searchResult-hotelDescription">${hotel.getStringDescription()}</div>
 </div>
 

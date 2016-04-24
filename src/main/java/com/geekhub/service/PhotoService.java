@@ -27,11 +27,21 @@ public class PhotoService {
 
     public void createPhoto(String fileName, Hotel hotel, Boolean mainPhoto) {
         Session session = sessionFactory.getCurrentSession();
+
+        if (mainPhoto) {
+            Photo currentMainPhoto = getMainPhoto(hotel);
+            if (currentMainPhoto != null) {
+                currentMainPhoto.setMainPhoto(false);
+                session.update(currentMainPhoto);
+            }
+        }
+
         Photo photo = new Photo();
         photo.setFileName(fileName);
         photo.setHotel(hotel);
         photo.setMainPhoto(mainPhoto);
         session.save(photo);
+
     }
 
     public void deletePhoto(Integer photoId) {
@@ -44,7 +54,16 @@ public class PhotoService {
         Session session = sessionFactory.getCurrentSession();
         return session.createCriteria(Photo.class)
                 .add(Restrictions.eq("hotel", hotel))
+                .add(Restrictions.eq("mainPhoto", false))
                 .list();
+    }
+
+    public Photo getMainPhoto(Hotel hotel) {
+        Session session = sessionFactory.getCurrentSession();
+        return (Photo) session.createCriteria(Photo.class)
+                .add(Restrictions.eq("hotel", hotel))
+                .add(Restrictions.eq("mainPhoto", true))
+                .uniqueResult();
     }
 
     public List<String> upload(Collection<Part> parts, String savePath) throws IOException {

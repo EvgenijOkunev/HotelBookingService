@@ -249,15 +249,32 @@ ul.menu > li:hover > ul.submenu {
 }
 
 .searchResult-hotelDescription {
-    width: 890px;
+    width: 675px;
     margin-top: 5px;
     padding-top: 5px;
     margin-left: 13px;
     margin-right: 10px;
-    border-top: 1px solid #bec8d2;
     text-align: justify;
     font-size: 13px;
     white-space: pre-line;
+    display: inline-block;
+}
+
+.searchResult-main-photo-div {
+    width: 200px;
+    float: left;
+    margin-top: 16px;
+    margin-left: 10px;
+    display: inline-block;
+    flex-grow: 0;
+    flex-shrink: 0;
+}
+
+.underline {
+    margin-left: 13px;
+    margin-right: 17px;
+    margin-top: 5px;
+    border-bottom: 1px solid #bec8d2;
 }
 
 .freeRoms {
@@ -483,7 +500,7 @@ ul.menu > li:hover > ul.submenu {
     background-color: #f6f8fc;
     width: 85%;
     overflow: auto;
-    padding-bottom: 15px;
+
     display: block;
     margin-left: auto;
     margin-right: auto;
@@ -506,6 +523,15 @@ ul.menu > li:hover > ul.submenu {
     display: inline-block;
     font-size: 20px;
     color: #9b302c;
+}
+
+.photosEdit-type-label {
+    margin-bottom: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    width: 80%;
+    display: inline-block;
+    font-size: 16px;
 }
 
 .photosEdit-border-bottom {
@@ -656,7 +682,7 @@ ul.menu > li:hover > ul.submenu {
 
 #uploadPhotos-div {
     width: 600px;
-    height: 50%;
+    max-height: 60%;
     margin: auto;
     display: none;
     background: #f2f4f8;
@@ -669,7 +695,24 @@ ul.menu > li:hover > ul.submenu {
     padding: 16px;
     font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif, serif;
     color: #3f3f66;
-    overflow: scroll;
+    overflow: auto;
+}
+
+#uploadMainPhoto-div {
+    width: 600px;
+    height: 200px;
+    margin: auto;
+    display: none;
+    background: #f2f4f8;
+    z-index: 200;
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    padding: 16px;
+    font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif, serif;
+    color: #3f3f66;
 }
 
 #viewPhotos-div {

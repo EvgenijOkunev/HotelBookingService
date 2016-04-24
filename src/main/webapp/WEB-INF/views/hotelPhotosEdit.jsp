@@ -11,14 +11,23 @@
     <script type="text/javascript" src="../../resources/jquery.fancybox.pack.js"></script>
 </head>
 <body>
+<jsp:include page="topBar.jsp"/>
+<div style="margin-top: 60px"></div>
 
 <%--@elvariable id="hotel" type="com.geekhub.model.Hotel"--%>
 <%--@elvariable id="photos" type="java.util.List"--%>
 <%--@elvariable id="uploadFilesPath" type="java.lang.String"--%>
+<%--@elvariable id="mainPhoto" type="com.geekhub.model.Photo"--%>
 
 <script type="text/javascript">
     $(document).ready(function () {
-        $(".fancybox").fancybox();
+        $(".fancybox").fancybox({
+            helpers: {
+                overlay: {
+                    locked: false
+                }
+            }
+        });
     });
 </script>
 
@@ -28,14 +37,48 @@
         Фотографии отеля ${hotel.getName()}
     </div>
 
+    <div class="photosEdit-border-bottom"></div>
+
+    <c:set var="dir" value="../../uploadFiles/"/>
+
+    <div class="photosEdit-type-label">
+        Главная фотография. Отображается при поиске отелей.
+    </div>
+
+    <c:if test="${empty mainPhoto}">
+        <c:set var="buttonValue" value="Добавить фотографию"/>
+    </c:if>
+    <c:if test="${not empty mainPhoto}">
+        <c:set var="buttonValue" value="Заменить фотографию"/>
+    </c:if>
+
     <div style="display: inline-block">
-        <input type="button" id="${hotel.getHotelId()}" value="Добавить фотографии" class="photosEdit-add_button"
-               onclick="uploadPhotos(this);"/>
+        <input type="button" id="${hotel.getHotelId()}" value="${buttonValue}" class="photosEdit-add_button"
+               onclick="uploadMainPhoto(this);"/>
+    </div>
+
+    <div class="photosEdit-uploaded-photos">
+        <c:if test="${not empty mainPhoto}">
+            <div class="photosEdit-img-container">
+                <a href="${dir.concat(mainPhoto.getFileName())}" class="fancybox">
+                    <img src="${dir.concat(mainPhoto.getFileName())}" class="hotel-photo" style="position: relative">
+                </a>
+                <img src="../../resources/images/blackCross.png" title="Удалить фотографию"
+                     class="hotel-photo-delete" onclick="deletePhoto(this, ${mainPhoto.getPhotoId()})">
+            </div>
+        </c:if>
     </div>
 
     <div class="photosEdit-border-bottom"></div>
 
-    <c:set var="dir" value="../../uploadFiles/"/>
+    <div class="photosEdit-type-label">
+        Дополнительные фотографии. Отображаются при детальном просмотре отеля.
+    </div>
+
+    <div style="display: inline-block">
+        <input type="button" id="${hotel.getHotelId()}" value="Добавить фотографии" class="photosEdit-add_button"
+               onclick="uploadPhotos(this);"/>
+    </div>
 
     <div class="photosEdit-uploaded-photos">
         <c:forEach items="${photos}" var="photo">
@@ -49,7 +92,6 @@
         </c:forEach>
     </div>
 
-
 </div>
 
 <div onclick="show('none')" id="wrap"></div>
@@ -62,6 +104,19 @@
             <div style="display: inline-block; float: right">
                 <img src="../../resources/images/w18h181338911473cross.png" style="cursor: pointer"
                      onclick="showUploadPhotos('none')">
+            </div>
+        </div>
+    </form>
+</div>
+
+<div id="uploadMainPhoto-div">
+    <form id="uploadMainPhoto-form" method="post" action="/photos/upload?hotelId=${hotel.getHotelId()}&mainPhoto=true"
+          enctype="multipart/form-data">
+        <div>
+            <div class="photosEdit-label" style="padding-top: 0">Выберите фотографию для загрузки</div>
+            <div style="display: inline-block; float: right">
+                <img src="../../resources/images/w18h181338911473cross.png" style="cursor: pointer"
+                     onclick="showUploadMainPhoto('none')">
             </div>
         </div>
     </form>

@@ -31,6 +31,7 @@
 
 .data-form .content .input {
     width: 100%;
+    max-width: 100%;
     padding: 2px 15px;
     margin-bottom: 15px;
 
@@ -58,6 +59,9 @@
 
     background: #fff;
     border: 1px solid #6678b1;
+
+    text-align-last: center;
+
 }
 
 .data-form .content select:hover {

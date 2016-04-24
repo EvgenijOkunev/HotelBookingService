@@ -24,13 +24,19 @@ function searchSuitableHotels() {
                 var hotelInformationDIV = document.createElement("DIV");
                 hotelInformationDIV.className = 'searchResult';
 
+                var hotelLink = document.createElement('A');
+                hotelLink.href = '/hotels/getDetailedInformation?arrivalDate=' + arrivalDate
+                    + '&departureDate=' + departureDate + '&hotelId=' + hotelsInformation[i].hotelId;
+                hotelLink.innerHTML = 'Отель "' + hotelsInformation[i].hotelName + '"';
+                hotelLink.style.fontSize = '20px';
+                hotelLink.style.color = '#9b302c';
+                hotelLink.style.textDecoration = 'none';
+
                 var hotelNameDiv = document.createElement("DIV");
                 hotelNameDiv.style.marginLeft = '15px';
                 hotelNameDiv.style.width = '320px';
                 hotelNameDiv.style.display = 'inline-block';
-                hotelNameDiv.style.fontSize = '20px';
-                hotelNameDiv.style.color = '#9b302c';
-                hotelNameDiv.innerHTML = 'Отель "' + hotelsInformation[i].hotelName + '"';
+                hotelNameDiv.appendChild(hotelLink);
                 hotelInformationDIV.appendChild(hotelNameDiv);
 
                 var hotelStarsDiv = document.createElement("DIV");
@@ -97,12 +103,42 @@ function searchSuitableHotels() {
 
                 hotelInformationDIV.appendChild(hotelPriceDiv);
 
+                var underline = document.createElement("DIV");
+                underline.style.width = '710px';
+                underline.style.marginLeft = '15px';
+                underline.style.borderBottom = '1px solid #bec8d2';
+                hotelInformationDIV.appendChild(underline);
+
+                var hotelPhotoDiv = document.createElement("DIV");
+                hotelPhotoDiv.style.width = '200px';
+                hotelPhotoDiv.style.minHeight = 'auto';
+                hotelPhotoDiv.style.float = 'left';
+                hotelPhotoDiv.style.marginTop = '20px';
+                hotelPhotoDiv.style.marginLeft = '10px';
+                hotelPhotoDiv.style.display = 'inline-block';
+                hotelPhotoDiv.style.flexGrow = '0';
+                hotelPhotoDiv.style.flexShrink = '0';
+                hotelInformationDIV.appendChild(hotelPhotoDiv);
+
+                var hotelPhotoLink = document.createElement('A');
+                hotelPhotoLink.href = '/hotels/getDetailedInformation?arrivalDate=' + arrivalDate
+                    + '&departureDate=' + departureDate + '&hotelId=' + hotelsInformation[i].hotelId;
+                hotelPhotoDiv.appendChild(hotelPhotoLink);
+
+                var hotelPhotoImage = document.createElement('IMG');
+                hotelPhotoImage.src = hotelsInformation[i].hotelMainPhoto;
+                hotelPhotoImage.style.backgroundImage = hotelsInformation[i].hotelMainPhoto;
+                hotelPhotoImage.style.backgroundSize = 'cover';
+                hotelPhotoImage.style.backgroundPosition = 'center center';
+                hotelPhotoImage.style.maxWidth = '100%';
+                hotelPhotoLink.appendChild(hotelPhotoImage);
+
                 var hotelDescriptionDiv = document.createElement("DIV");
-                hotelDescriptionDiv.style.width = '710px';
+                hotelDescriptionDiv.style.display = 'inline-block';
+                hotelDescriptionDiv.style.width = '500px';
                 hotelDescriptionDiv.style.marginTop = '8px';
                 hotelDescriptionDiv.style.paddingTop = '7px';
                 hotelDescriptionDiv.style.marginLeft = '15px';
-                hotelDescriptionDiv.style.borderTop = '1px solid #bec8d2';
                 hotelDescriptionDiv.style.textAlign = 'justify';
                 hotelDescriptionDiv.style.fontSize = '13px';
                 hotelDescriptionDiv.style.whiteSpace = 'pre-line';

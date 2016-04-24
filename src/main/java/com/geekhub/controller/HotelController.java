@@ -35,6 +35,8 @@ import java.util.Locale;
 public class HotelController {
 
     @Autowired
+    PhotoService photoService;
+    @Autowired
     private HotelService hotelService;
     @Autowired
     private CityService cityService;
@@ -140,8 +142,11 @@ public class HotelController {
         List<BookingRequest> bookingRequests = bookingRequestService.getBookingRequests(arrivalDate, departureDate, roomService.getHotelRooms(hotel));
         List<Room> freeRooms = roomService.getFreeRooms(bookingRequests, hotel);
         List<HashMap<String, String>> groupedFreeRooms = roomService.groupRoomsByType(freeRooms);
+        Photo mainPhoto = photoService.getMainPhoto(hotel);
+        String mainPhotoPath = mainPhoto == null ? "../../../resources/images/no_photo_icon.PNG" : "../../uploadFiles/" + mainPhoto.getFileName();
 
         model.addAttribute("hotel", hotel);
+        model.addAttribute("mainPhoto", mainPhotoPath);
         model.addAttribute("arrivalDate", arrivalDate);
         model.addAttribute("departureDate", departureDate);
         model.addAttribute("arrivalDateString", dateFormatForJS.format(arrivalDate));

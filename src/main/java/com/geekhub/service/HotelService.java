@@ -23,6 +23,8 @@ import java.util.stream.Collectors;
 public class HotelService {
 
     @Autowired
+    PhotoService photoService;
+    @Autowired
     private SessionFactory sessionFactory;
 
     public Hotel getHotelById(Integer id) {
@@ -102,6 +104,9 @@ public class HotelService {
                 List<Room> hotelRooms = hotel.getRooms();
                 hotelInformation.put("hotelRooms", hotelRooms.size());
                 hotelInformation.put("hotelDescription", hotel.getStringDescription());
+                Photo mainPhoto = photoService.getMainPhoto(hotel);
+                hotelInformation.put("hotelMainPhoto", mainPhoto == null ? "../../../resources/images/no_photo_icon.PNG"
+                        : "../../uploadFiles/" + mainPhoto.getFileName());
                 hotelInformation.put("roomsQuantity", 0);
                 int cheapestRoom = hotelRooms
                         .stream()

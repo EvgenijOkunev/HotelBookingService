@@ -41,13 +41,14 @@ public class PhotoController {
         List<String> uploadedFilesNames = photoService.upload(parts, savePath);
         Hotel hotel = hotelService.getHotelById(hotelId);
         uploadedFilesNames.forEach(fileName -> photoService.createPhoto(fileName, hotel, mainPhoto));
-        response.sendRedirect("/photos/edit?hotelId=" + hotelId);
+//        response.sendRedirect("/photos/edit?hotelId=" + hotelId);
     }
 
     @RequestMapping(value = "/edit", method = RequestMethod.GET)
     public String hotelPhotosEdit(@RequestParam(value = "hotelId", required = true) Integer hotelId, Model model) {
         Hotel hotel = hotelService.getHotelById(hotelId);
         model.addAttribute("hotel", hotel);
+        model.addAttribute("mainPhoto", photoService.getMainPhoto(hotel));
         model.addAttribute("photos", photoService.getPhotos(hotel));
         return "hotelPhotosEdit";
     }

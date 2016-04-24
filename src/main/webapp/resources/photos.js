@@ -4,8 +4,14 @@ $(window).resize(function () {
 });
 
 function show(state) {
+    showUploadMainPhoto(state);
     showUploadPhotos(state);
     showPhotosView(state);
+}
+
+function showUploadMainPhoto(state) {
+    document.getElementById('uploadMainPhoto-div').style.display = state;
+    document.getElementById('wrap').style.display = state;
 }
 
 function showUploadPhotos(state) {
@@ -18,15 +24,27 @@ function showPhotosView(state) {
     document.getElementById('wrap').style.display = state;
 }
 
-function uploadPhotos(object) {
+function uploadMainPhoto() {
     deleteAllFileUploadBlock();
-    addFileUploadBlock();
+    addFileUploadBlock(true);
+    showUploadMainPhoto('block');
+}
+
+function uploadPhotos() {
+    deleteAllFileUploadBlock();
+    addFileUploadBlock(false);
     showUploadPhotos('block');
 }
 
-function addFileUploadBlock() {
+function addFileUploadBlock(mainPhoto) {
 
-    var form = document.getElementById('uploadPhotos-form');
+    var form;
+    if (mainPhoto) {
+        form = document.getElementById('uploadMainPhoto-form');
+    }
+    else {
+        form = document.getElementById('uploadPhotos-form');
+    }
 
     var label = document.createElement('LABEL');
     label.className = 'file_upload';
@@ -62,19 +80,22 @@ function addFileUploadBlock() {
         if (!file_name.length)
             return;
 
+        var tmp_file_name = lbl[0].innerHTML;
         if (lbl.is(":visible")) {
             lbl.text(file_name);
             btn.text("Выбрать");
         } else
             btn.text(file_name);
-        addFileUploadBlock();
+        if (!mainPhoto && (tmp_file_name == 'Фотография не выбрана')) {
+            addFileUploadBlock(false);
+        }
     }).change();
 
     var submit = document.getElementById('submitButton');
     if (submit != null) {
         submit.parentNode.removeChild(submit);
     }
-    appendSubmitButton(form);
+    appendSubmitButton(form, mainPhoto);
 
 }
 
@@ -85,20 +106,19 @@ function deleteAllFileUploadBlock() {
     }
 }
 
-function appendSubmitButton(form) {
+function appendSubmitButton(form, mainPhoto) {
 
     var submit = document.createElement('INPUT');
 
     submit.type = 'button';
     submit.id = 'submitButton';
-    submit.value = 'Загрузить фотографии';
+    submit.value = mainPhoto ? 'Загрузить фотографию' : 'Загрузить фотографии';
     submit.className = 'photosEdit-add_button';
     submit.style.float = 'right';
+    submit.style.marginTop = '15px';
+    submit.style.marginBottom = '15px';
 
     form.appendChild(submit);
-    submit.style.position = 'absolute';
-    submit.style.bottom = '15px';
-    submit.style.right = '15px';
 
     submit.onclick = function () {
 
@@ -126,9 +146,7 @@ function appendSubmitButton(form) {
 
 function deletePhoto(object, photoId) {
 
-    var photo = object;
-    var photoDelete = $(photo).closest('img')[0];
-    var photoDiv = $(photo).closest('div')[0];
+    var photoDiv = $(object).closest('div')[0];
 
     $.ajax({
         type: 'GET',
