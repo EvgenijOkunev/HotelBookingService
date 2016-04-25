@@ -32,11 +32,17 @@ public class BookingRequestController {
 
     @RequestMapping(value = "processBookingRequest", method = RequestMethod.POST)
     @ResponseBody
-    public String processBookingRequest(HttpServletRequest request, HttpServletResponse response) throws ParseException, IOException {
+    public String processBookingRequest(HttpServletRequest request, HttpServletResponse response) throws IOException {
         Hotel hotel = hotelService.getHotelById(Integer.parseInt(request.getParameter("hotelId")));
         DateFormat formatter = new SimpleDateFormat("E MMM dd yyyy HH:mm:ss z", Locale.ENGLISH);
-        Date arrivalDate = formatter.parse(request.getParameter("arrivalDate").replace("+", " "));
-        Date departureDate = formatter.parse(request.getParameter("departureDate").replace("+", " "));
+        Date arrivalDate = null;
+        Date departureDate = null;
+        try {
+            arrivalDate = formatter.parse(request.getParameter("arrivalDate").replace("+", " "));
+            departureDate = formatter.parse(request.getParameter("departureDate").replace("+", " "));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         User guest = (User) request.getSession().getAttribute("user");
         String guestName = request.getParameter("userName");
         String guestEmail = request.getParameter("userEmail");
@@ -56,11 +62,11 @@ public class BookingRequestController {
             response.sendError(500);
         }
 
-        return "";
+        return "{\"msg\":\"success\"}";
     }
 
     @RequestMapping(value = "/hotelBookingRequestList", method = RequestMethod.GET)
-    public String getHotelBookingRequestList(HttpServletRequest request, Model model) {
+    public String getHotelBookingRequestList(HttpServletRequest request, HttpServletResponse response, Model model) throws IOException {
         User user = (User) request.getSession().getAttribute("user");
         if (user != null && user.getHotelOwner()) {
             List<Hotel> hotels = hotelService.getOwnersHotels(user);
@@ -68,11 +74,12 @@ public class BookingRequestController {
             model.addAttribute("allowManagement", true);
             return "bookingRequestList";
         }
-        return "errorPage";
+        response.sendRedirect("/");
+        return null;
     }
 
     @RequestMapping(value = "/userBookingRequestList", method = RequestMethod.GET)
-    public String getUserBookingRequestList(HttpServletRequest request, Model model) {
+    public String getUserBookingRequestList(HttpServletRequest request, HttpServletResponse response, Model model) throws IOException {
         User user = (User) request.getSession().getAttribute("user");
         if (user != null) {
             List<Hotel> hotels = hotelService.getAll();
@@ -80,7 +87,8 @@ public class BookingRequestController {
             model.addAttribute("allowManagement", false);
             return "bookingRequestList";
         }
-        return "errorPage";
+        response.sendRedirect("/");
+        return null;
     }
 
     @RequestMapping(value = "/hotelBookingRequestManagement", method = RequestMethod.GET)

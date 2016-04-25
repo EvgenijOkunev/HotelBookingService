@@ -2,10 +2,10 @@
 <html>
 <head>
     <link href="../../resources/styles/registrationForm.css" rel="stylesheet" type="text/css"/>
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+    <script type="text/javascript" src="../../resources/jquery.js"></script>
     <script type="text/javascript" src="../../resources/usersValidation.js"></script>
     <script type="text/javascript" src="../../resources/jquery.mask.js"></script>
-    <title>Registration</title>
+    <title>Регистрация</title>
 </head>
 <body>
 <jsp:include page="topBar.jsp"/>

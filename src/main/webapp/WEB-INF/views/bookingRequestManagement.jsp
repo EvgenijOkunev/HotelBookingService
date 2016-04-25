@@ -3,7 +3,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>RequestManagement</title>
+    <c:set var='bookingRequestNumber' value="${bookingRequestInformation.get('bookingRequestNumber')}"/>
+    <title>Заявка № ${bookingRequestNumber}</title>
     <link rel="stylesheet" href="../../resources/styles/main.css">
 </head>
 <body>
@@ -12,7 +13,6 @@
 
 <div class="requestManagement">
 
-    <c:set var='bookingRequestNumber' value="${bookingRequestInformation.get('bookingRequestNumber')}"/>
     <div class="requestManagement-number">
         Заявка на бронирование № ${bookingRequestNumber}
         на сумму ${bookingRequestInformation.get('requestValue')}

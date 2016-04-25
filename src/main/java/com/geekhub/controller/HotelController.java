@@ -25,10 +25,7 @@ import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 
 @Controller
 @RequestMapping("/hotels")
@@ -50,24 +47,39 @@ public class HotelController {
     private SessionFactory sessionFactory;
 
     @RequestMapping(value = "/management", method = RequestMethod.GET)
-    public String showAllUsers(Model model, HttpServletRequest request) throws Exception {
-        List<Hotel> hotels = hotelService.getOwnersHotels((User) request.getSession().getAttribute("user"));
-        model.addAttribute("hotels", hotels);
-        return "hotelsManagement";
+    public String showAllUsers(Model model, HttpServletRequest request, HttpServletResponse response) throws IOException {
+        User user = (User) request.getSession().getAttribute("user");
+        if (user != null && user.getHotelOwner()) {
+            List<Hotel> hotels = hotelService.getOwnersHotels(user);
+            model.addAttribute("hotels", hotels);
+            return "hotelsManagement";
+        }
+        response.sendRedirect("/");
+        return null;
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.GET)
-    public String getAddHotel(Model model) {
-        model.addAttribute("cities", cityService.getAll());
-        model.addAttribute("roomTypes", roomTypeService.getAll());
-        return "addHotel";
+    public String getAddHotel(Model model, HttpServletRequest request, HttpServletResponse response) throws IOException {
+        User user = (User) request.getSession().getAttribute("user");
+        if (user != null && user.getHotelOwner()) {
+            model.addAttribute("cities", cityService.getAll());
+            model.addAttribute("roomTypes", roomTypeService.getAll());
+            return "addHotel";
+        }
+        response.sendRedirect("/");
+        return null;
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     @ResponseBody
-    public String addHotel(HttpServletRequest request) throws IOException {
+    public String addHotel(HttpServletRequest request) {
         String name = request.getParameter("name");
-        Blob description = stringToBlob(request.getParameter("description"));
+        Blob description = null;
+        try {
+            description = stringToBlob(request.getParameter("description"));
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
         Integer stars = Integer.parseInt(request.getParameter("stars"));
         City city = cityService.getCityById(Integer.parseInt(request.getParameter("city")));
         User hotelOwner = (User) request.getSession().getAttribute("user");
@@ -75,38 +87,53 @@ public class HotelController {
 
         hotelService.createHotel(name, description, stars, city, hotelOwner, rooms);
 
-        return "";
+        return "{\"msg\":\"success\"}";
     }
 
     @RequestMapping(value = "/edit", method = RequestMethod.GET)
-    public String getEditHotel(@RequestParam(value = "hotelId", required = true) Integer hotelId, Model model) {
+    public String getEditHotel(@RequestParam(value = "hotelId", required = true) Integer hotelId,
+                               Model model, HttpServletRequest request, HttpServletResponse response) throws IOException {
+        User user = (User) request.getSession().getAttribute("user");
         Hotel hotel = hotelService.getHotelById(hotelId);
-        model.addAttribute("hotel", hotel);
-        model.addAttribute("cities", cityService.getAll());
-        model.addAttribute("rooms", roomService.getInformationAboutHotelRooms(hotel, roomTypeService.getAll()));
-        return "editHotel";
+        if (user != null && hotel.getOwner().getUserId().equals(user.getUserId())) {
+            model.addAttribute("hotel", hotel);
+            model.addAttribute("cities", cityService.getAll());
+            model.addAttribute("rooms", roomService.getInformationAboutHotelRooms(hotel, roomTypeService.getAll()));
+            return "editHotel";
+        }
+        response.sendRedirect("/");
+        return null;
     }
 
     @RequestMapping(value = "/edit", method = RequestMethod.POST)
     @ResponseBody
-    public String editHotel(@RequestParam(value = "hotelId", required = true) Integer hotelId, HttpServletRequest request) throws UnsupportedEncodingException {
+    public String editHotel(@RequestParam(value = "hotelId", required = true) Integer hotelId,
+                            HttpServletRequest request) {
         Hotel hotel = hotelService.getHotelById(hotelId);
         String name = request.getParameter("name");
-        Blob description = stringToBlob(request.getParameter("description"));
+        Blob description = null;
+        try {
+            description = stringToBlob(request.getParameter("description"));
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
         Integer stars = Integer.parseInt(request.getParameter("stars"));
         City city = cityService.getCityById(Integer.parseInt(request.getParameter("city")));
         List<Room> rooms = roomService.roomsProcessing(request.getParameter("rooms"), hotel);
 
         hotelService.updateHotel(hotel, name, description, stars, city, rooms);
 
-        return "";
+        return "{\"msg\":\"success\"}";
     }
 
     @RequestMapping(value = "/delete", method = RequestMethod.GET)
-    public void deleteHotel(@RequestParam(value = "hotelId", required = true) Integer hotelId, HttpServletResponse response) throws IOException {
+    public void deleteHotel(@RequestParam(value = "hotelId", required = true) Integer hotelId, HttpServletRequest request, HttpServletResponse response) throws IOException {
+        User user = (User) request.getSession().getAttribute("user");
         Hotel hotel = hotelService.getHotelById(hotelId);
-        roomService.deleteHotelRooms(hotel);
-        hotelService.deleteHotel(hotel);
+        if (hotel.getOwner().equals(user)) {
+            roomService.deleteHotelRooms(hotel);
+            hotelService.deleteHotel(hotel);
+        }
         response.sendRedirect("/hotels/management");
     }
 
@@ -114,29 +141,47 @@ public class HotelController {
     @ResponseBody
     public String getSuitableHotels(@RequestParam(value = "arrivalDate", required = true) String arrivalDateParam,
                                     @RequestParam(value = "departureDate", required = true) String departureDateParam,
-                                    @RequestParam(value = "city", required = true) String cityParam) throws ParseException, IOException, SQLException {
+                                    @RequestParam(value = "city", required = true) String cityParam) {
 
         DateFormat formatter = new SimpleDateFormat("E MMM dd yyyy HH:mm:ss z", Locale.ENGLISH);
-        Date arrivalDate = formatter.parse(arrivalDateParam);
-        Date departureDate = formatter.parse(departureDateParam);
+        Date arrivalDate = null;
+        Date departureDate = null;
+        try {
+            arrivalDate = formatter.parse(arrivalDateParam);
+            departureDate = formatter.parse(departureDateParam);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         City city = cityService.getCityById(Integer.parseInt(cityParam));
 
         List<BookingRequest> bookingRequests = bookingRequestService.getBookingRequests(arrivalDate, departureDate);
         List<Room> freeRooms = roomService.getFreeRooms(bookingRequests);
 
-        return hotelService.prepareSuitableHotelsInformation(freeRooms, city, roomTypeService.getAll());
+        try {
+            return hotelService.prepareSuitableHotelsInformation(freeRooms, city, roomTypeService.getAll());
+        } catch (SQLException | IOException e) {
+            e.printStackTrace();
+        }
+
+        return "{\"msg\":\"success\"}";
     }
 
     @RequestMapping(value = "/getDetailedInformation", method = RequestMethod.GET)
     public String getDetailedInformation(@RequestParam(value = "arrivalDate", required = true) String arrivalDateParam,
                                          @RequestParam(value = "departureDate", required = true) String departureDateParam,
                                          @RequestParam(value = "hotelId", required = true) String hotelIdParam,
-                                         Model model) throws ParseException, IOException, SQLException {
+                                         Model model, HttpServletResponse response) throws IOException {
 
         DateFormat formatter = new SimpleDateFormat("E MMM dd yyyy HH:mm:ss z", Locale.ENGLISH);
         DateFormat dateFormatForJS = new SimpleDateFormat("yyyy-MM-dd");
-        Date arrivalDate = formatter.parse(arrivalDateParam);
-        Date departureDate = formatter.parse(departureDateParam);
+        Date arrivalDate = null;
+        Date departureDate = null;
+        try {
+            arrivalDate = formatter.parse(arrivalDateParam);
+            departureDate = formatter.parse(departureDateParam);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         Hotel hotel = hotelService.getHotelById(Integer.parseInt(hotelIdParam));
 
         List<BookingRequest> bookingRequests = bookingRequestService.getBookingRequests(arrivalDate, departureDate, roomService.getHotelRooms(hotel));
@@ -144,9 +189,13 @@ public class HotelController {
         List<HashMap<String, String>> groupedFreeRooms = roomService.groupRoomsByType(freeRooms);
         Photo mainPhoto = photoService.getMainPhoto(hotel);
         String mainPhotoPath = mainPhoto == null ? "../../../resources/images/no_photo_icon.PNG" : "../../uploadFiles/" + mainPhoto.getFileName();
+        List<Photo> photos = photoService.getPhotos(hotel);
+        List<String> photosPaths = new ArrayList<>();
+        photos.forEach(photo -> photosPaths.add("../../uploadFiles/" + photo.getFileName()));
 
         model.addAttribute("hotel", hotel);
         model.addAttribute("mainPhoto", mainPhotoPath);
+        model.addAttribute("photos", photosPaths);
         model.addAttribute("arrivalDate", arrivalDate);
         model.addAttribute("departureDate", departureDate);
         model.addAttribute("arrivalDateString", dateFormatForJS.format(arrivalDate));
@@ -162,11 +211,17 @@ public class HotelController {
     @ResponseBody
     public String getFreeRoomsInformation(@RequestParam(value = "arrivalDate", required = true) String arrivalDateParam,
                                           @RequestParam(value = "departureDate", required = true) String departureDateParam,
-                                          @RequestParam(value = "hotelId", required = true) String hotelIdParam) throws ParseException {
+                                          @RequestParam(value = "hotelId", required = true) String hotelIdParam) {
 
         DateFormat formatter = new SimpleDateFormat("E MMM dd yyyy HH:mm:ss z", Locale.ENGLISH);
-        Date arrivalDate = formatter.parse(arrivalDateParam);
-        Date departureDate = formatter.parse(departureDateParam);
+        Date arrivalDate = null;
+        Date departureDate = null;
+        try {
+            arrivalDate = formatter.parse(arrivalDateParam);
+            departureDate = formatter.parse(departureDateParam);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         Hotel hotel = hotelService.getHotelById(Integer.parseInt(hotelIdParam));
 
         List<BookingRequest> bookingRequests = bookingRequestService.getBookingRequests(arrivalDate, departureDate, roomService.getHotelRooms(hotel));

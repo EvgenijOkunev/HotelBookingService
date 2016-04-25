@@ -4,9 +4,9 @@
 <html>
 <head>
     <link rel="stylesheet" href="../../resources/styles/tableStyles.css" type="text/css"/>
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+    <script type="text/javascript" src="../../resources/jquery.js"></script>
     <script type="text/javascript" src="../../resources/hotelsManagement.js"></script>
-    <title>Hotels Management</title>
+    <title>Список отелей</title>
 </head>
 <body>
 

@@ -25,7 +25,6 @@
                 <ul class="submenu">
                     <li><a href="/hotels/management">Управление отелями</a></li>
                     <li><a href="/hotelBookingRequestList">Заявки на бронирование</a></li>
-                    <li><a href=#>Свободные номера</a></li>
                 </ul>
             </li>
         </c:if>

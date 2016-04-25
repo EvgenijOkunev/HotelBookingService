@@ -6,6 +6,7 @@
 <%--@elvariable id="arrivalDateString" type="java.lang.String"--%>
 <%--@elvariable id="departureDateString" type="java.lang.String"--%>
 <%--@elvariable id="mainPhoto" type="java.lang.String"--%>
+<%--@elvariable id="photos" type="java.util.List"--%>
 
 <html>
 <head>
@@ -13,12 +14,12 @@
     <link rel="stylesheet" href="../../resources/styles/tableStyles.css" type="text/css"/>
     <link rel="stylesheet" href="../../resources/styles/jquery-ui.css">
     <link rel="stylesheet" href="../../resources/styles/jquery.fancybox.css" type="text/css"/>
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+    <script type="text/javascript" src="../../resources/jquery.js"></script>
     <script type="text/javascript" src="../../resources/jquery.mask.js"></script>
     <script src="../../resources/datepicker.js"></script>
     <script type="text/javascript" src="../../resources/jquery.fancybox.pack.js"></script>
     <script src="../../resources/bookingProcessing.js"></script>
-    <title>Detailed information</title>
+    <title>Отель "${hotel.getName()}"</title>
 </head>
 
 <script>
@@ -92,6 +93,18 @@
         </a>
     </div>
     <div class="searchResult-hotelDescription">${hotel.getStringDescription()}</div>
+    <c:if test="${photos.size() > 0}">
+        <div class="underline" style="clear:both"></div>
+        <div class="photosEdit-uploaded-photos">
+            <c:forEach items="${photos}" var="photo">
+                <div class="photosPreview-img-container">
+                    <a href="${photo}" class="fancybox" rel="group">
+                        <img src="${photo}" class="hotel-photo" style="position: relative">
+                    </a>
+                </div>
+            </c:forEach>
+        </div>
+    </c:if>
 </div>
 
 <div class="searchBar" style="margin-top: 20px">

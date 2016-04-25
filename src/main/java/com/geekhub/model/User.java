@@ -30,10 +30,6 @@ public class User {
     @Column
     private Boolean hotelOwner;
 
-    @ManyToOne
-    @JoinColumn(name = "roleId")
-    private Role role;
-
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "owner")
     private List<Hotel> hotels;
 
@@ -96,14 +92,6 @@ public class User {
         this.hotelOwner = hotelOwner;
     }
 
-    public Role getRole() {
-        return role;
-    }
-
-    public void setRole(Role role) {
-        this.role = role;
-    }
-
     public List<Hotel> getHotels() {
         return hotels;
     }
@@ -119,4 +107,5 @@ public class User {
     public void setBookingRequests(List<BookingRequest> bookingRequests) {
         this.bookingRequests = bookingRequests;
     }
+
 }

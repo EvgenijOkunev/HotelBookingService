@@ -1,6 +1,7 @@
 package com.geekhub.controller;
 
 import com.geekhub.model.Hotel;
+import com.geekhub.model.User;
 import com.geekhub.service.HotelService;
 import com.geekhub.service.PhotoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,29 +36,34 @@ public class PhotoController {
     @RequestMapping(value = "/upload", method = RequestMethod.POST)
     public void uploadPhotos(@RequestParam(value = "hotelId", required = true) Integer hotelId,
                              @RequestParam(value = "mainPhoto", required = true) Boolean mainPhoto,
-                             HttpServletRequest request,  HttpServletResponse response) throws ServletException, IOException {
+                             HttpServletRequest request) throws ServletException, IOException {
         String savePath = request.getServletContext().getRealPath("") + SAVE_DIR;
         Collection<Part> parts = request.getParts();
         List<String> uploadedFilesNames = photoService.upload(parts, savePath);
         Hotel hotel = hotelService.getHotelById(hotelId);
         uploadedFilesNames.forEach(fileName -> photoService.createPhoto(fileName, hotel, mainPhoto));
-//        response.sendRedirect("/photos/edit?hotelId=" + hotelId);
     }
 
     @RequestMapping(value = "/edit", method = RequestMethod.GET)
-    public String hotelPhotosEdit(@RequestParam(value = "hotelId", required = true) Integer hotelId, Model model) {
+    public String hotelPhotosEdit(@RequestParam(value = "hotelId", required = true) Integer hotelId,
+                                  Model model, HttpServletRequest request, HttpServletResponse response) throws IOException {
+        User user = (User) request.getSession().getAttribute("user");
         Hotel hotel = hotelService.getHotelById(hotelId);
-        model.addAttribute("hotel", hotel);
-        model.addAttribute("mainPhoto", photoService.getMainPhoto(hotel));
-        model.addAttribute("photos", photoService.getPhotos(hotel));
-        return "hotelPhotosEdit";
+        if (user != null && hotel.getOwner().getUserId().equals(user.getUserId())) {
+            model.addAttribute("hotel", hotel);
+            model.addAttribute("mainPhoto", photoService.getMainPhoto(hotel));
+            model.addAttribute("photos", photoService.getPhotos(hotel));
+            return "hotelPhotosEdit";
+        }
+        response.sendRedirect("/");
+        return null;
     }
 
     @RequestMapping(value = "/delete", method = RequestMethod.GET)
     @ResponseBody
     public String hotelPhotosDelete(@RequestParam(value = "photoId", required = true) Integer photoId) {
         photoService.deletePhoto(photoId);
-        return "";
+        return "{\"msg\":\"success\"}";
     }
 
 }

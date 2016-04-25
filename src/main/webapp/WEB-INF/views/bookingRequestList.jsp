@@ -2,7 +2,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>BookingRequestList</title>
+    <title>Заявки на бронирование</title>
     <link rel="stylesheet" href="../../resources/styles/main.css">
 </head>
 <body>

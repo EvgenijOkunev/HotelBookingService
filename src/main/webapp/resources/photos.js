@@ -1,4 +1,3 @@
-
 $(window).resize(function () {
     $(".file_upload input").triggerHandler("change");
 });
@@ -62,7 +61,9 @@ function addFileUploadBlock(mainPhoto) {
     var input = document.createElement('INPUT');
     label.appendChild(input);
     input.type = 'file';
-    input.accept='image/*';
+    input.name = 'filesToUpload[]';
+    input.multiple = true;
+    input.accept = 'image/*';
 
     var file_api = ( window.File && window.FileReader && window.FileList && window.Blob ) ? true : false;
     $(input).change(function () {

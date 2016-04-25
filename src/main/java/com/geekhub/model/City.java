@@ -15,9 +15,6 @@ public class City {
     @Column
     private String name;
 
-    @Column
-    private String description;
-
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "city")
     private List<Hotel> hotels;
 
@@ -35,14 +32,6 @@ public class City {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 
     public List<Hotel> getHotels() {

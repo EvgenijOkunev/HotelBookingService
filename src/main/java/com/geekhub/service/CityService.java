@@ -17,11 +17,10 @@ public class CityService {
     @Autowired
     private SessionFactory sessionFactory;
 
-    public void createCity(String name, String description) {
+    public void createCity(String name) {
         Session session = sessionFactory.getCurrentSession();
         City city = new City();
         city.setName(name);
-        city.setDescription(description);
         session.save(city);
     }
 
@@ -34,4 +33,5 @@ public class CityService {
         Session currentSession = sessionFactory.getCurrentSession();
         return (City) currentSession.get(City.class, id);
     }
+
 }

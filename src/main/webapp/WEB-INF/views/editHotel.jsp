@@ -4,9 +4,9 @@
 <head>
     <link rel="stylesheet" href="../../resources/styles/dataForm.css" type="text/css"/>
     <link rel="stylesheet" href="../../resources/styles/tableStyles.css" type="text/css"/>
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+    <script type="text/javascript" src="../../resources/jquery.js"></script>
     <script type="text/javascript" src="../../resources/hotelsManagement.js"></script>
-    <title>Edit Hotel</title>
+    <title>Редактирование отеля</title>
 </head>
 <body>
 <jsp:include page="topBar.jsp"/>
@@ -27,7 +27,8 @@
             </label>
 
             <label> Описание
-                <textarea id="description" name="description" style="height: 150px" class="input">${hotel.getStringDescription()}</textarea>
+                <textarea id="description" name="description" style="height: 150px"
+                          class="input">${hotel.getStringDescription()}</textarea>
             </label>
 
             <label> Количество звезд
@@ -84,12 +85,14 @@
                 </tbody>
             </table>
 
-            <div style="padding-top: 8px;  padding-bottom: 8px; height: 22px"><span id="errorTextHotelManagement"></span></div>
+            <div style="padding-top: 8px;  padding-bottom: 8px; height: 22px"><span
+                    id="errorTextHotelManagement"></span></div>
 
             <div style="overflow: auto;">
                 <input type="button" name="Cancel" value="Отмена" class="input"
                        onclick="window.location='/hotels/management'"/>
-                <input type="button" name="addHotel" value="Сохранить" class="input" onclick="editHotel_js('${hotel.hotelId.toString()}')"/>
+                <input type="button" name="addHotel" value="Сохранить" class="input"
+                       onclick="editHotel_js('${hotel.hotelId.toString()}')"/>
             </div>
 
         </div>

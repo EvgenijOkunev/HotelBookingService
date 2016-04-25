@@ -3,10 +3,10 @@
 <%@ page pageEncoding="UTF-8" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>Фотографии отеля ${hotel.getName()}</title>
     <link rel="stylesheet" href="../../resources/styles/jquery.fancybox.css" type="text/css"/>
     <link rel="stylesheet" href="../../resources/styles/main.css" type="text/css"/>
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+    <script type="text/javascript" src="../../resources/jquery.js"></script>
     <script type="text/javascript" src="../../resources/photos.js"></script>
     <script type="text/javascript" src="../../resources/jquery.fancybox.pack.js"></script>
 </head>
@@ -21,13 +21,7 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
-        $(".fancybox").fancybox({
-            helpers: {
-                overlay: {
-                    locked: false
-                }
-            }
-        });
+        $(".fancybox").fancybox();
     });
 </script>
 

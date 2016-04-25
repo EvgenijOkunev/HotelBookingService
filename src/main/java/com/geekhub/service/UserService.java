@@ -32,19 +32,6 @@ public class UserService {
     }
 
     /**
-     * Retrieves a single user by id
-     *
-     * @param userId the id of existing user
-     * @return an instance of user
-     */
-    public User getUser(int userId) {
-        Session session = sessionFactory.getCurrentSession();
-        return (User) session.createCriteria(User.class)
-                .add(Restrictions.eq("userId", userId)).uniqueResult();
-    }
-
-
-    /**
      * Retrieves a single user by email/login
      *
      * @return an instance of user
@@ -70,21 +57,18 @@ public class UserService {
     /**
      * Saves a new user
      *
-     * @param user an instance of a new user
+     * @param firstName an instance of a new user
      */
-    public void saveUser(User user) {
+    public void saveUser(String firstName, String lastName, String email, String phoneNumber, String password, boolean hotelOwner) {
         Session session = sessionFactory.getCurrentSession();
+        User user = new User();
+        user.setFirstName(firstName);
+        user.setLastName(lastName);
+        user.setEmail(email);
+        user.setPhoneNumber(phoneNumber);
+        user.setPassword(password);
+        user.setHotelOwner(hotelOwner);
         session.save(user);
-    }
-
-    /**
-     * Deletes an existing user
-     *
-     * @param userId an id of the existing user
-     */
-    public void deleteUser(Integer userId) {
-        Session session = sessionFactory.getCurrentSession();
-        session.delete(session.get(User.class, userId));
     }
 
     /**

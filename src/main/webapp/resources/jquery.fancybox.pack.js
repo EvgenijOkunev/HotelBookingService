@@ -629,6 +629,7 @@
         onUpdate: function () {
             this.fixed || this.update()
         },
+
         afterClose: function (a) {
             this.overlay && !b.coming && this.overlay.fadeOut(a.speedOut, f.proxy(this.close, this))
         }

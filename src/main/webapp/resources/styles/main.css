@@ -265,13 +265,13 @@ ul.menu > li:hover > ul.submenu {
     float: left;
     margin-top: 16px;
     margin-left: 10px;
-    display: inline-block;
+    margin-bottom: 10px;
     flex-grow: 0;
     flex-shrink: 0;
 }
 
 .underline {
-    margin-left: 13px;
+    margin-left: 10px;
     margin-right: 17px;
     margin-top: 5px;
     border-bottom: 1px solid #bec8d2;
@@ -511,8 +511,8 @@ ul.menu > li:hover > ul.submenu {
 
 .photosEdit-uploaded-photos {
     margin-top: 15px;
-    width: 100%;
-    display: inline-block;
+    margin-left: 10px;
+    max-width: 100%;
 }
 
 .photosEdit-label {
@@ -560,6 +560,16 @@ ul.menu > li:hover > ul.submenu {
     display: inline-block;
     vertical-align: middle;
     max-width: 300px;
+    border: 1px solid #9b302c;
+    margin-right: 20px;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.photosPreview-img-container {
+    display: inline-block;
+    vertical-align: middle;
+    max-width: 100px;
     border: 1px solid #9b302c;
     margin-right: 20px;
     margin-bottom: 20px;

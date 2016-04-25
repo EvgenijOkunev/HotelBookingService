@@ -5,10 +5,10 @@
 <html>
 <head>
     <link href="../../resources/styles/registrationForm.css" rel="stylesheet" type="text/css"/>
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+    <script type="text/javascript" src="../../resources/jquery.js"></script>
     <script type="text/javascript" src="../../resources/usersValidation.js"></script>
     <script type="text/javascript" src="../../resources/jquery.mask.js"></script>
-    <title>UserProfile</title>
+    <title>Профиль</title>
 </head>
 <body>
 <jsp:include page="topBar.jsp"/>
@@ -42,7 +42,7 @@
             </label>
             <label>
                 <form:input id="passwordConfirm" path="" type="password" class="input"
-                       placeholder="Подтвердите пароль"/>
+                            placeholder="Подтвердите пароль"/>
             </label>
 
             <div style="float: right">
@@ -50,7 +50,8 @@
                     <form:checkbox id="hotelOwner" path="hotelOwner"/>
                 </label>
             </div>
-            <div style="clear: right; padding-top: 8px;  padding-bottom: 8px; height: 22px"><span id="errorTextUserManagement"></span>
+            <div style="clear: right; padding-top: 8px;  padding-bottom: 8px; height: 22px"><span
+                    id="errorTextUserManagement"></span>
             </div>
         </div>
 

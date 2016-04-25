@@ -20,7 +20,7 @@
             dayNamesMin: ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"],
             minDate: 0,
             dateFormat: "dd.mm.yy",
-            onClose: function() {
+            onClose: function () {
                 checkDates('arrivalDate');
             }
         });
@@ -41,7 +41,7 @@
             dayNamesMin: ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"],
             minDate: 1,
             dateFormat: "dd.mm.yy",
-            onClose: function() {
+            onClose: function () {
                 checkDates('departureDate');
             }
         });

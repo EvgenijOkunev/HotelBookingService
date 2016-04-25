@@ -52,9 +52,9 @@ function prepareHotelInformation(childNodeIndex) {
         if (table.rows[r].cells[1].childNodes[childNodeIndex].value != '') {
             rooms.push({
                 roomType: table.rows[r].id,
-                roomsQuantity: table.rows[r].cells[1].childNodes[0].value,
-                numberOfGuests: table.rows[r].cells[2].childNodes[0].value,
-                pricePerNight: table.rows[r].cells[3].childNodes[0].value
+                roomsQuantity: table.rows[r].cells[1].childNodes[childNodeIndex].value,
+                numberOfGuests: table.rows[r].cells[2].childNodes[childNodeIndex].value,
+                pricePerNight: table.rows[r].cells[3].childNodes[childNodeIndex].value
             });
         }
     }
